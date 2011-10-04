@@ -1,16 +1,7 @@
-\documentclass{article}
+﻿\documentclass{article}
 \usepackage{tocloft}
 \usepackage{hyperref}
 \usepackage{multicol}
-
-\setlength{\paperwidth}{7in} 
-\setlength{\paperheight}{11in}
-\setlength{\topmargin}{0in}
-\setlength{\hoffset}{0.5in}
-\setlength{\voffset}{-0.5in}
-\setlength{\textheight}{9in}
-\setlength{\textwidth}{5.5in}
-\setlength{\oddsidemargin}{0.0in}
 
 
 \renewcommand{\labelitemi}{・}
@@ -40,7 +31,7 @@
   \end{enumerate}}
 
 % and the font switching magic
-\usepackage{ucharclasses}
+\usepackage[CJK, Latin, FullArabic, Hebrew, Thai, Sinhala, Malayalam, DominoTiles, MahjongTiles]{ucharclasses}
 \usepackage{fontspec}
 \usepackage{bidi}
 
@@ -55,12 +46,12 @@
 
 % overrides on the default rules for specific unicode blocks
 \setTransitionTo{CJKUnifiedIdeographsExtensionB}{\fontspec{SimSun-ExtB}}
-\setTransitionTo{Hebrew}{\fontspec{Times New Roman}}
 \setTransitionTo{Thai}{\fontspec{IrisUPC}}
 \setTransitionTo{Sinhala}{\fontspec{Iskoola Pota}}
 \setTransitionTo{Malayalam}{\fontspec{Arial Unicode MS}}
 \setTransitionTo{DominoTiles}{\fontspec{FreeSerif}}
 \setTransitionTo{MahjongTiles}{\fontspec{FreeSerif}}
+\setTransitionsFor{Hebrew}{\fontspec{Times New Roman}\setRTL}{\setLTR}
 
 \begin{document}
 
@@ -82,16 +73,15 @@
 		For instance, this document has no explicit font codes in the text itself, anywhere. Instead there are a few unicode block transition rules defined, which all say "when entering block ..., use fontspec to change the font to ...". As such, the following gibberish texts all just work:
 		
 		\begin{itemlist}
-			\item English: hfowehfoierfhioe (using Palatino Linotype)
-			\item Arabic: كطبعزذحقظر١٢٣٤٥ (using Tahoma and RTL/LTR rules)
-			\item Japanese: 飽コネ路は向声ふ語言 (using Ume Mincho)
-			\item Chinese: 么䛨䀃埳㡱𠁽𠔾𠣓 (Ume Mincho when overlapping Japanese, SimSun for the rest)
-			\item Hebrew: ץךהפסבכ֨֓ף֘ל֥דע֤֕ (using Times New Roman)
-			\item Thai: ฦษฤยคซหถฆบซตท (using IrisUPC)
-			\item Canadian first nations: ᔵᓇᒍᖚᗵᘼᙔᕒᓪ (using Code2000)
-			\item Sinhala: බඥඊගණජඑඎඞශ෴ (using Iskoola Pota)
-			\item Malayalam: ഢഘഴഒംഋഈമധറ (using Arial Unicode MS)
-			\item and even domino tiles, 🁇🀼🁐🁋🁚🁝, and mahjong tiles: 🀈🀈🀈🀉🀉🀉🀌🀌🀌🀎🀎🀎🀅🀅 (using FreeFont)
+			\item English: This is an English phrase.(using Palatino Linotype)
+			\item Arabic: أدرس اللغة العربية منذ شهر (using Tahoma and RTL/LTR rules)
+			\item Japanese: 日本語が分かりますか。 (using Ume Mincho)
+			\item Chinese: 我的母语是汉语。 (Ume Mincho when overlapping Japanese, SimSun for the rest)
+			\item Hebrew: אתה מדבר עברית? (using Times New Roman and RTL/LTR rules)
+			\item Thai: คุณพูดภาษาอังกฤษได้ไหม using IrisUPC)
+			\item Sinhala: කරැණාකරල ඒක නැවත කියන්න පුළුවන්ද (using Iskoola Pota)
+			\item Malayalam: നിങ്ങളുടെ പേരെന്താണ്? (using Arial Unicode MS)
+			\item and even domino tiles, 🁇 🀼 🁐 🁋 🁚 🁝, and mahjong tiles: 🀑 🀑 🀑 🀒 🀒 🀒 🀕 🀕 🀕 🀗 🀗 🀗 🀅 🀅 (using FreeFont)
 		\end{itemlist}
 
 		However, be aware that this only "just works" for unicode blocks. If you are working with typographically overlapping languages, such as combining English and Vietnamese in one document, things get a lot more complex if you want one font for English and another for Vietnamese. Both of these languagese use Latin blocks, so it is inherently impossible to tell which language is intended based on which unicode block a character in a word belongs to.
@@ -102,7 +92,8 @@
 		
 		\disableTransitionRules
 		\begin{verbatim}
-　　　　　　\usepackage{ucharclasses}
+　　　　　　\usepackage[CJK, Latin, FullArabic, Hebrew, Thai, Sinhala,
+                   Malayalam, DominoTiles, MahjongTiles]{ucharclasses}
 　　　　　　\usepackage{fontspec}
 　　　　　　\usepackage{bidi}
 
@@ -403,7 +394,6 @@
 				\item MiscellaneousTechnical
 				\item ModifierToneLetters
 				\item Mongolian
-				\item moo.txt
 				\item MusicalSymbols
 				\item Myanmar
 				\item NewTaiLue

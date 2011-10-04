@@ -1,15 +1,506 @@
-\ProvidesPackage{ucharclasses}[2009/10/08 v1.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2011/10/04 v2.0 Unicode block character classes for XeLaTeX]
 
 % because this package relies on XeTeX's intercharclass sytem, better require XeTeX
 \RequirePackage{ifxetex}
 \RequireXeTeX
 
-% this package relies on the newXeTeXintercharclass command
-\RequirePackage{newxetexintercharclass}
-
 % I like a slightly more intuitive programming interface than vanilla TeX
-\RequirePackage{ifthen}
+\RequirePackage{etoolbox}
 \RequirePackage{forloop}
+
+% ----------------------------------------------------------------------------
+% option handling - by default, 'all classes' should be loaded
+% ----------------------------------------------------------------------------
+\newtoggle{@loadAll}\toggletrue{@loadAll}
+\newtoggle{@loadAegeanNumbers}\togglefalse{@loadAegeanNumbers}
+\newtoggle{@loadAlphabeticPresentationForms}\togglefalse{@loadAlphabeticPresentationForms}
+\newtoggle{@loadAncientGreekMusicalNotation}\togglefalse{@loadAncientGreekMusicalNotation}
+\newtoggle{@loadAncientGreekNumbers}\togglefalse{@loadAncientGreekNumbers}
+\newtoggle{@loadAncientSymbols}\togglefalse{@loadAncientSymbols}
+\newtoggle{@loadArabic}\togglefalse{@loadArabic}
+\newtoggle{@loadArabicPresentationFormsA}\togglefalse{@loadArabicPresentationFormsA}
+\newtoggle{@loadArabicPresentationFormsB}\togglefalse{@loadArabicPresentationFormsB}
+\newtoggle{@loadArabicSupplement}\togglefalse{@loadArabicSupplement}
+\newtoggle{@loadArmenian}\togglefalse{@loadArmenian}
+\newtoggle{@loadArrows}\togglefalse{@loadArrows}
+\newtoggle{@loadBalinese}\togglefalse{@loadBalinese}
+\newtoggle{@loadBasicLatin}\togglefalse{@loadBasicLatin}
+\newtoggle{@loadBengali}\togglefalse{@loadBengali}
+\newtoggle{@loadBlockElements}\togglefalse{@loadBlockElements}
+\newtoggle{@loadBopomofo}\togglefalse{@loadBopomofo}
+\newtoggle{@loadBopomofoExtended}\togglefalse{@loadBopomofoExtended}
+\newtoggle{@loadBoxDrawing}\togglefalse{@loadBoxDrawing}
+\newtoggle{@loadBraillePatterns}\togglefalse{@loadBraillePatterns}
+\newtoggle{@loadBuginese}\togglefalse{@loadBuginese}
+\newtoggle{@loadBuhid}\togglefalse{@loadBuhid}
+\newtoggle{@loadByzantineMusicalSymbols}\togglefalse{@loadByzantineMusicalSymbols}
+\newtoggle{@loadCarian}\togglefalse{@loadCarian}
+\newtoggle{@loadCham}\togglefalse{@loadCham}
+\newtoggle{@loadCherokee}\togglefalse{@loadCherokee}
+\newtoggle{@loadCJKCompatibility}\togglefalse{@loadCJKCompatibility}
+\newtoggle{@loadCJKCompatibilityForms}\togglefalse{@loadCJKCompatibilityForms}
+\newtoggle{@loadCJKCompatibilityIdeographs}\togglefalse{@loadCJKCompatibilityIdeographs}
+\newtoggle{@loadCJKCompatibilityIdeographsSupplement}\togglefalse{@loadCJKCompatibilityIdeographsSupplement}
+\newtoggle{@loadCJKRadicalsSupplement}\togglefalse{@loadCJKRadicalsSupplement}
+\newtoggle{@loadCJKStrokes}\togglefalse{@loadCJKStrokes}
+\newtoggle{@loadCJKSymbolsandPunctuation}\togglefalse{@loadCJKSymbolsandPunctuation}
+\newtoggle{@loadCJKUnifiedIdeographs}\togglefalse{@loadCJKUnifiedIdeographs}
+\newtoggle{@loadCJKUnifiedIdeographsExtensionA}\togglefalse{@loadCJKUnifiedIdeographsExtensionA}
+\newtoggle{@loadCJKUnifiedIdeographsExtensionB}\togglefalse{@loadCJKUnifiedIdeographsExtensionB}
+\newtoggle{@loadCombiningDiacriticalMarks}\togglefalse{@loadCombiningDiacriticalMarks}
+\newtoggle{@loadCombiningDiacriticalMarksforSymbols}\togglefalse{@loadCombiningDiacriticalMarksforSymbols}
+\newtoggle{@loadCombiningDiacriticalMarksSupplement}\togglefalse{@loadCombiningDiacriticalMarksSupplement}
+\newtoggle{@loadCombiningHalfMarks}\togglefalse{@loadCombiningHalfMarks}
+\newtoggle{@loadControlPictures}\togglefalse{@loadControlPictures}
+\newtoggle{@loadCoptic}\togglefalse{@loadCoptic}
+\newtoggle{@loadCountingRodNumerals}\togglefalse{@loadCountingRodNumerals}
+\newtoggle{@loadCuneiform}\togglefalse{@loadCuneiform}
+\newtoggle{@loadCuneiformNumbersandPunctuation}\togglefalse{@loadCuneiformNumbersandPunctuation}
+\newtoggle{@loadCurrencySymbols}\togglefalse{@loadCurrencySymbols}
+\newtoggle{@loadCypriotSyllabary}\togglefalse{@loadCypriotSyllabary}
+\newtoggle{@loadCyrillic}\togglefalse{@loadCyrillic}
+\newtoggle{@loadCyrillicExtendedA}\togglefalse{@loadCyrillicExtendedA}
+\newtoggle{@loadCyrillicExtendedB}\togglefalse{@loadCyrillicExtendedB}
+\newtoggle{@loadCyrillicSupplement}\togglefalse{@loadCyrillicSupplement}
+\newtoggle{@loadDeseret}\togglefalse{@loadDeseret}
+\newtoggle{@loadDevanagari}\togglefalse{@loadDevanagari}
+\newtoggle{@loadDingbats}\togglefalse{@loadDingbats}
+\newtoggle{@loadDominoTiles}\togglefalse{@loadDominoTiles}
+\newtoggle{@loadEnclosedAlphanumerics}\togglefalse{@loadEnclosedAlphanumerics}
+\newtoggle{@loadEnclosedCJKLettersandMonths}\togglefalse{@loadEnclosedCJKLettersandMonths}
+\newtoggle{@loadEthiopic}\togglefalse{@loadEthiopic}
+\newtoggle{@loadEthiopicExtended}\togglefalse{@loadEthiopicExtended}
+\newtoggle{@loadEthiopicSupplement}\togglefalse{@loadEthiopicSupplement}
+\newtoggle{@loadGeneralPunctuation}\togglefalse{@loadGeneralPunctuation}
+\newtoggle{@loadGeometricShapes}\togglefalse{@loadGeometricShapes}
+\newtoggle{@loadGeorgian}\togglefalse{@loadGeorgian}
+\newtoggle{@loadGeorgianSupplement}\togglefalse{@loadGeorgianSupplement}
+\newtoggle{@loadGlagolitic}\togglefalse{@loadGlagolitic}
+\newtoggle{@loadGothic}\togglefalse{@loadGothic}
+\newtoggle{@loadGreekandCoptic}\togglefalse{@loadGreekandCoptic}
+\newtoggle{@loadGreekExtended}\togglefalse{@loadGreekExtended}
+\newtoggle{@loadGujarati}\togglefalse{@loadGujarati}
+\newtoggle{@loadGurmukhi}\togglefalse{@loadGurmukhi}
+\newtoggle{@loadHalfwidthandFullwidthForms}\togglefalse{@loadHalfwidthandFullwidthForms}
+\newtoggle{@loadHangulCompatibilityJamo}\togglefalse{@loadHangulCompatibilityJamo}
+\newtoggle{@loadHangulJamo}\togglefalse{@loadHangulJamo}
+\newtoggle{@loadHangulSyllables}\togglefalse{@loadHangulSyllables}
+\newtoggle{@loadHanunoo}\togglefalse{@loadHanunoo}
+\newtoggle{@loadHebrew}\togglefalse{@loadHebrew}
+\newtoggle{@loadHiragana}\togglefalse{@loadHiragana}
+\newtoggle{@loadIdeographicDescriptionCharacters}\togglefalse{@loadIdeographicDescriptionCharacters}
+\newtoggle{@loadIPAExtensions}\togglefalse{@loadIPAExtensions}
+\newtoggle{@loadKanbun}\togglefalse{@loadKanbun}
+\newtoggle{@loadKangxiRadicals}\togglefalse{@loadKangxiRadicals}
+\newtoggle{@loadKannada}\togglefalse{@loadKannada}
+\newtoggle{@loadKatakana}\togglefalse{@loadKatakana}
+\newtoggle{@loadKatakanaPhoneticExtensions}\togglefalse{@loadKatakanaPhoneticExtensions}
+\newtoggle{@loadKayahLi}\togglefalse{@loadKayahLi}
+\newtoggle{@loadKharoshthi}\togglefalse{@loadKharoshthi}
+\newtoggle{@loadKhmer}\togglefalse{@loadKhmer}
+\newtoggle{@loadKhmerSymbols}\togglefalse{@loadKhmerSymbols}
+\newtoggle{@loadLao}\togglefalse{@loadLao}
+\newtoggle{@loadLatinExtendedAdditional}\togglefalse{@loadLatinExtendedAdditional}
+\newtoggle{@loadLatinExtendedA}\togglefalse{@loadLatinExtendedA}
+\newtoggle{@loadLatinExtendedB}\togglefalse{@loadLatinExtendedB}
+\newtoggle{@loadLatinExtendedC}\togglefalse{@loadLatinExtendedC}
+\newtoggle{@loadLatinExtendedD}\togglefalse{@loadLatinExtendedD}
+\newtoggle{@loadLatinSupplement}\togglefalse{@loadLatinSupplement}
+\newtoggle{@loadLepcha}\togglefalse{@loadLepcha}
+\newtoggle{@loadLetterlikeSymbols}\togglefalse{@loadLetterlikeSymbols}
+\newtoggle{@loadLimbu}\togglefalse{@loadLimbu}
+\newtoggle{@loadLinearBIdeograms}\togglefalse{@loadLinearBIdeograms}
+\newtoggle{@loadLinearBSyllabary}\togglefalse{@loadLinearBSyllabary}
+\newtoggle{@loadLycian}\togglefalse{@loadLycian}
+\newtoggle{@loadLydian}\togglefalse{@loadLydian}
+\newtoggle{@loadMahjongTiles}\togglefalse{@loadMahjongTiles}
+\newtoggle{@loadMalayalam}\togglefalse{@loadMalayalam}
+\newtoggle{@loadMathematicalAlphanumericSymbols}\togglefalse{@loadMathematicalAlphanumericSymbols}
+\newtoggle{@loadMathematicalOperators}\togglefalse{@loadMathematicalOperators}
+\newtoggle{@loadMiscellaneousMathematicalSymbolsA}\togglefalse{@loadMiscellaneousMathematicalSymbolsA}
+\newtoggle{@loadMiscellaneousMathematicalSymbolsB}\togglefalse{@loadMiscellaneousMathematicalSymbolsB}
+\newtoggle{@loadMiscellaneousSymbols}\togglefalse{@loadMiscellaneousSymbols}
+\newtoggle{@loadMiscellaneousSymbolsandArrows}\togglefalse{@loadMiscellaneousSymbolsandArrows}
+\newtoggle{@loadMiscellaneousTechnical}\togglefalse{@loadMiscellaneousTechnical}
+\newtoggle{@loadModifierToneLetters}\togglefalse{@loadModifierToneLetters}
+\newtoggle{@loadMongolian}\togglefalse{@loadMongolian}
+\newtoggle{@loadMusicalSymbols}\togglefalse{@loadMusicalSymbols}
+\newtoggle{@loadMyanmar}\togglefalse{@loadMyanmar}
+\newtoggle{@loadNewTaiLue}\togglefalse{@loadNewTaiLue}
+\newtoggle{@loadNKo}\togglefalse{@loadNKo}
+\newtoggle{@loadNumberForms}\togglefalse{@loadNumberForms}
+\newtoggle{@loadOgham}\togglefalse{@loadOgham}
+\newtoggle{@loadOldChiki}\togglefalse{@loadOldChiki}
+\newtoggle{@loadOldItalic}\togglefalse{@loadOldItalic}
+\newtoggle{@loadOldPersian}\togglefalse{@loadOldPersian}
+\newtoggle{@loadOpticalCharacterRecognition}\togglefalse{@loadOpticalCharacterRecognition}
+\newtoggle{@loadOriya}\togglefalse{@loadOriya}
+\newtoggle{@loadOsmanya}\togglefalse{@loadOsmanya}
+\newtoggle{@loadPhagsPa}\togglefalse{@loadPhagsPa}
+\newtoggle{@loadPhaistosDisc}\togglefalse{@loadPhaistosDisc}
+\newtoggle{@loadPhoenician}\togglefalse{@loadPhoenician}
+\newtoggle{@loadPhoneticExtensions}\togglefalse{@loadPhoneticExtensions}
+\newtoggle{@loadPhoneticExtensionsSupplement}\togglefalse{@loadPhoneticExtensionsSupplement}
+\newtoggle{@loadPrivateUseArea}\togglefalse{@loadPrivateUseArea}
+\newtoggle{@loadRejang}\togglefalse{@loadRejang}
+\newtoggle{@loadRunic}\togglefalse{@loadRunic}
+\newtoggle{@loadSaurashtra}\togglefalse{@loadSaurashtra}
+\newtoggle{@loadShavian}\togglefalse{@loadShavian}
+\newtoggle{@loadSinhala}\togglefalse{@loadSinhala}
+\newtoggle{@loadSmallFormVariants}\togglefalse{@loadSmallFormVariants}
+\newtoggle{@loadSpacingModifierLetters}\togglefalse{@loadSpacingModifierLetters}
+\newtoggle{@loadSpecials}\togglefalse{@loadSpecials}
+\newtoggle{@loadSuperscriptsandSubscripts}\togglefalse{@loadSuperscriptsandSubscripts}
+\newtoggle{@loadSupplementalArrowsA}\togglefalse{@loadSupplementalArrowsA}
+\newtoggle{@loadSupplementalArrowsB}\togglefalse{@loadSupplementalArrowsB}
+\newtoggle{@loadSupplementalMathematicalOperators}\togglefalse{@loadSupplementalMathematicalOperators}
+\newtoggle{@loadSupplementalPunctuation}\togglefalse{@loadSupplementalPunctuation}
+\newtoggle{@loadSupplementaryPrivateUseAreaA}\togglefalse{@loadSupplementaryPrivateUseAreaA}
+\newtoggle{@loadSupplementaryPrivateUseAreaB}\togglefalse{@loadSupplementaryPrivateUseAreaB}
+\newtoggle{@loadSylotiNagri}\togglefalse{@loadSylotiNagri}
+\newtoggle{@loadSyriac}\togglefalse{@loadSyriac}
+\newtoggle{@loadTagalog}\togglefalse{@loadTagalog}
+\newtoggle{@loadTagbanwa}\togglefalse{@loadTagbanwa}
+\newtoggle{@loadTags}\togglefalse{@loadTags}
+\newtoggle{@loadTaiLe}\togglefalse{@loadTaiLe}
+\newtoggle{@loadTaiXuanJingSymbols}\togglefalse{@loadTaiXuanJingSymbols}
+\newtoggle{@loadTamil}\togglefalse{@loadTamil}
+\newtoggle{@loadTelugu}\togglefalse{@loadTelugu}
+\newtoggle{@loadThaana}\togglefalse{@loadThaana}
+\newtoggle{@loadThai}\togglefalse{@loadThai}
+\newtoggle{@loadTibetan}\togglefalse{@loadTibetan}
+\newtoggle{@loadTifinagh}\togglefalse{@loadTifinagh}
+\newtoggle{@loadUgaritic}\togglefalse{@loadUgaritic}
+\newtoggle{@loadUnifiedCanadianAboriginalSyllabics}\togglefalse{@loadUnifiedCanadianAboriginalSyllabics}
+\newtoggle{@loadVai}\togglefalse{@loadVai}
+\newtoggle{@loadVariationSelectors}\togglefalse{@loadVariationSelectors}
+\newtoggle{@loadVariationSelectorsSupplement}\togglefalse{@loadVariationSelectorsSupplement}
+\newtoggle{@loadVerticalForms}\togglefalse{@loadVerticalForms}
+\newtoggle{@loadYiRadicals}\togglefalse{@loadYiRadicals}
+\newtoggle{@loadYiSyllables}\togglefalse{@loadYiSyllables}
+\newtoggle{@loadYijingHexagramSymbols}\togglefalse{@loadYijingHexagramSymbols}
+
+\DeclareOption{AegeanNumbers}{\togglefalse{@loadAll}\toggletrue{@loadAegeanNumbers}}
+\DeclareOption{AlphabeticPresentationForms}{\togglefalse{@loadAll}\toggletrue{@loadAlphabeticPresentationForms}}
+\DeclareOption{AncientGreekMusicalNotation}{\togglefalse{@loadAll}\toggletrue{@loadAncientGreekMusicalNotation}}
+\DeclareOption{AncientGreekNumbers}{\togglefalse{@loadAll}\toggletrue{@loadAncientGreekNumbers}}
+\DeclareOption{AncientSymbols}{\togglefalse{@loadAll}\toggletrue{@loadAncientSymbols}}
+\DeclareOption{Arabic}{\togglefalse{@loadAll}\toggletrue{@loadArabic}}
+\DeclareOption{ArabicPresentationFormsA}{\togglefalse{@loadAll}\toggletrue{@loadArabicPresentationFormsA}}
+\DeclareOption{ArabicPresentationFormsB}{\togglefalse{@loadAll}\toggletrue{@loadArabicPresentationFormsB}}
+\DeclareOption{ArabicSupplement}{\togglefalse{@loadAll}\toggletrue{@loadArabicSupplement}}
+\DeclareOption{Armenian}{\togglefalse{@loadAll}\toggletrue{@loadArmenian}}
+\DeclareOption{Arrows}{\togglefalse{@loadAll}\toggletrue{@loadArrows}}
+\DeclareOption{Balinese}{\togglefalse{@loadAll}\toggletrue{@loadBalinese}}
+\DeclareOption{BasicLatin}{\togglefalse{@loadAll}\toggletrue{@loadBasicLatin}}
+\DeclareOption{Bengali}{\togglefalse{@loadAll}\toggletrue{@loadBengali}}
+\DeclareOption{BlockElements}{\togglefalse{@loadAll}\toggletrue{@loadBlockElements}}
+\DeclareOption{Bopomofo}{\togglefalse{@loadAll}\toggletrue{@loadBopomofo}}
+\DeclareOption{BopomofoExtended}{\togglefalse{@loadAll}\toggletrue{@loadBopomofoExtended}}
+\DeclareOption{BoxDrawing}{\togglefalse{@loadAll}\toggletrue{@loadBoxDrawing}}
+\DeclareOption{BraillePatterns}{\togglefalse{@loadAll}\toggletrue{@loadBraillePatterns}}
+\DeclareOption{Buginese}{\togglefalse{@loadAll}\toggletrue{@loadBuginese}}
+\DeclareOption{Buhid}{\togglefalse{@loadAll}\toggletrue{@loadBuhid}}
+\DeclareOption{ByzantineMusicalSymbols}{\togglefalse{@loadAll}\toggletrue{@loadByzantineMusicalSymbols}}
+\DeclareOption{Carian}{\togglefalse{@loadAll}\toggletrue{@loadCarian}}
+\DeclareOption{Cham}{\togglefalse{@loadAll}\toggletrue{@loadCham}}
+\DeclareOption{Cherokee}{\togglefalse{@loadAll}\toggletrue{@loadCherokee}}
+\DeclareOption{CJKCompatibility}{\togglefalse{@loadAll}\toggletrue{@loadCJKCompatibility}}
+\DeclareOption{CJKCompatibilityForms}{\togglefalse{@loadAll}\toggletrue{@loadCJKCompatibilityForms}}
+\DeclareOption{CJKCompatibilityIdeographs}{\togglefalse{@loadAll}\toggletrue{@loadCJKCompatibilityIdeographs}}
+\DeclareOption{CJKCompatibilityIdeographsSupplement}{\togglefalse{@loadAll}\toggletrue{@loadCJKCompatibilityIdeographsSupplement}}
+\DeclareOption{CJKRadicalsSupplement}{\togglefalse{@loadAll}\toggletrue{@loadCJKRadicalsSupplement}}
+\DeclareOption{CJKStrokes}{\togglefalse{@loadAll}\toggletrue{@loadCJKStrokes}}
+\DeclareOption{CJKSymbolsandPunctuation}{\togglefalse{@loadAll}\toggletrue{@loadCJKSymbolsandPunctuation}}
+\DeclareOption{CJKUnifiedIdeographs}{\togglefalse{@loadAll}\toggletrue{@loadCJKUnifiedIdeographs}}
+\DeclareOption{CJKUnifiedIdeographsExtensionA}{\togglefalse{@loadAll}\toggletrue{@loadCJKUnifiedIdeographsExtensionA}}
+\DeclareOption{CJKUnifiedIdeographsExtensionB}{\togglefalse{@loadAll}\toggletrue{@loadCJKUnifiedIdeographsExtensionB}}
+\DeclareOption{CombiningDiacriticalMarks}{\togglefalse{@loadAll}\toggletrue{@loadCombiningDiacriticalMarks}}
+\DeclareOption{CombiningDiacriticalMarksforSymbols}{\togglefalse{@loadAll}\toggletrue{@loadCombiningDiacriticalMarksforSymbols}}
+\DeclareOption{CombiningDiacriticalMarksSupplement}{\togglefalse{@loadAll}\toggletrue{@loadCombiningDiacriticalMarksSupplement}}
+\DeclareOption{CombiningHalfMarks}{\togglefalse{@loadAll}\toggletrue{@loadCombiningHalfMarks}}
+\DeclareOption{ControlPictures}{\togglefalse{@loadAll}\toggletrue{@loadControlPictures}}
+\DeclareOption{Coptic}{\togglefalse{@loadAll}\toggletrue{@loadCoptic}}
+\DeclareOption{CountingRodNumerals}{\togglefalse{@loadAll}\toggletrue{@loadCountingRodNumerals}}
+\DeclareOption{Cuneiform}{\togglefalse{@loadAll}\toggletrue{@loadCuneiform}}
+\DeclareOption{CuneiformNumbersandPunctuation}{\togglefalse{@loadAll}\toggletrue{@loadCuneiformNumbersandPunctuation}}
+\DeclareOption{CurrencySymbols}{\togglefalse{@loadAll}\toggletrue{@loadCurrencySymbols}}
+\DeclareOption{CypriotSyllabary}{\togglefalse{@loadAll}\toggletrue{@loadCypriotSyllabary}}
+\DeclareOption{Cyrillic}{\togglefalse{@loadAll}\toggletrue{@loadCyrillic}}
+\DeclareOption{CyrillicExtendedA}{\togglefalse{@loadAll}\toggletrue{@loadCyrillicExtendedA}}
+\DeclareOption{CyrillicExtendedB}{\togglefalse{@loadAll}\toggletrue{@loadCyrillicExtendedB}}
+\DeclareOption{CyrillicSupplement}{\togglefalse{@loadAll}\toggletrue{@loadCyrillicSupplement}}
+\DeclareOption{Deseret}{\togglefalse{@loadAll}\toggletrue{@loadDeseret}}
+\DeclareOption{Devanagari}{\togglefalse{@loadAll}\toggletrue{@loadDevanagari}}
+\DeclareOption{Dingbats}{\togglefalse{@loadAll}\toggletrue{@loadDingbats}}
+\DeclareOption{DominoTiles}{\togglefalse{@loadAll}\toggletrue{@loadDominoTiles}}
+\DeclareOption{EnclosedAlphanumerics}{\togglefalse{@loadAll}\toggletrue{@loadEnclosedAlphanumerics}}
+\DeclareOption{EnclosedCJKLettersandMonths}{\togglefalse{@loadAll}\toggletrue{@loadEnclosedCJKLettersandMonths}}
+\DeclareOption{Ethiopic}{\togglefalse{@loadAll}\toggletrue{@loadEthiopic}}
+\DeclareOption{EthiopicExtended}{\togglefalse{@loadAll}\toggletrue{@loadEthiopicExtended}}
+\DeclareOption{EthiopicSupplement}{\togglefalse{@loadAll}\toggletrue{@loadEthiopicSupplement}}
+\DeclareOption{GeneralPunctuation}{\togglefalse{@loadAll}\toggletrue{@loadGeneralPunctuation}}
+\DeclareOption{GeometricShapes}{\togglefalse{@loadAll}\toggletrue{@loadGeometricShapes}}
+\DeclareOption{Georgian}{\togglefalse{@loadAll}\toggletrue{@loadGeorgian}}
+\DeclareOption{GeorgianSupplement}{\togglefalse{@loadAll}\toggletrue{@loadGeorgianSupplement}}
+\DeclareOption{Glagolitic}{\togglefalse{@loadAll}\toggletrue{@loadGlagolitic}}
+\DeclareOption{Gothic}{\togglefalse{@loadAll}\toggletrue{@loadGothic}}
+\DeclareOption{GreekandCoptic}{\togglefalse{@loadAll}\toggletrue{@loadGreekandCoptic}}
+\DeclareOption{GreekExtended}{\togglefalse{@loadAll}\toggletrue{@loadGreekExtended}}
+\DeclareOption{Gujarati}{\togglefalse{@loadAll}\toggletrue{@loadGujarati}}
+\DeclareOption{Gurmukhi}{\togglefalse{@loadAll}\toggletrue{@loadGurmukhi}}
+\DeclareOption{HalfwidthandFullwidthForms}{\togglefalse{@loadAll}\toggletrue{@loadHalfwidthandFullwidthForms}}
+\DeclareOption{HangulCompatibilityJamo}{\togglefalse{@loadAll}\toggletrue{@loadHangulCompatibilityJamo}}
+\DeclareOption{HangulJamo}{\togglefalse{@loadAll}\toggletrue{@loadHangulJamo}}
+\DeclareOption{HangulSyllables}{\togglefalse{@loadAll}\toggletrue{@loadHangulSyllables}}
+\DeclareOption{Hanunoo}{\togglefalse{@loadAll}\toggletrue{@loadHanunoo}}
+\DeclareOption{Hebrew}{\togglefalse{@loadAll}\toggletrue{@loadHebrew}}
+\DeclareOption{Hiragana}{\togglefalse{@loadAll}\toggletrue{@loadHiragana}}
+\DeclareOption{IdeographicDescriptionCharacters}{\togglefalse{@loadAll}\toggletrue{@loadIdeographicDescriptionCharacters}}
+\DeclareOption{IPAExtensions}{\togglefalse{@loadAll}\toggletrue{@loadIPAExtensions}}
+\DeclareOption{Kanbun}{\togglefalse{@loadAll}\toggletrue{@loadKanbun}}
+\DeclareOption{KangxiRadicals}{\togglefalse{@loadAll}\toggletrue{@loadKangxiRadicals}}
+\DeclareOption{Kannada}{\togglefalse{@loadAll}\toggletrue{@loadKannada}}
+\DeclareOption{Katakana}{\togglefalse{@loadAll}\toggletrue{@loadKatakana}}
+\DeclareOption{KatakanaPhoneticExtensions}{\togglefalse{@loadAll}\toggletrue{@loadKatakanaPhoneticExtensions}}
+\DeclareOption{KayahLi}{\togglefalse{@loadAll}\toggletrue{@loadKayahLi}}
+\DeclareOption{Kharoshthi}{\togglefalse{@loadAll}\toggletrue{@loadKharoshthi}}
+\DeclareOption{Khmer}{\togglefalse{@loadAll}\toggletrue{@loadKhmer}}
+\DeclareOption{KhmerSymbols}{\togglefalse{@loadAll}\toggletrue{@loadKhmerSymbols}}
+\DeclareOption{Lao}{\togglefalse{@loadAll}\toggletrue{@loadLao}}
+\DeclareOption{LatinExtendedAdditional}{\togglefalse{@loadAll}\toggletrue{@loadLatinExtendedAdditional}}
+\DeclareOption{LatinExtendedA}{\togglefalse{@loadAll}\toggletrue{@loadLatinExtendedA}}
+\DeclareOption{LatinExtendedB}{\togglefalse{@loadAll}\toggletrue{@loadLatinExtendedB}}
+\DeclareOption{LatinExtendedC}{\togglefalse{@loadAll}\toggletrue{@loadLatinExtendedC}}
+\DeclareOption{LatinExtendedD}{\togglefalse{@loadAll}\toggletrue{@loadLatinExtendedD}}
+\DeclareOption{LatinSupplement}{\togglefalse{@loadAll}\toggletrue{@loadLatinSupplement}}
+\DeclareOption{Lepcha}{\togglefalse{@loadAll}\toggletrue{@loadLepcha}}
+\DeclareOption{LetterlikeSymbols}{\togglefalse{@loadAll}\toggletrue{@loadLetterlikeSymbols}}
+\DeclareOption{Limbu}{\togglefalse{@loadAll}\toggletrue{@loadLimbu}}
+\DeclareOption{LinearBIdeograms}{\togglefalse{@loadAll}\toggletrue{@loadLinearBIdeograms}}
+\DeclareOption{LinearBSyllabary}{\togglefalse{@loadAll}\toggletrue{@loadLinearBSyllabary}}
+\DeclareOption{Lycian}{\togglefalse{@loadAll}\toggletrue{@loadLycian}}
+\DeclareOption{Lydian}{\togglefalse{@loadAll}\toggletrue{@loadLydian}}
+\DeclareOption{MahjongTiles}{\togglefalse{@loadAll}\toggletrue{@loadMahjongTiles}}
+\DeclareOption{Malayalam}{\togglefalse{@loadAll}\toggletrue{@loadMalayalam}}
+\DeclareOption{MathematicalAlphanumericSymbols}{\togglefalse{@loadAll}\toggletrue{@loadMathematicalAlphanumericSymbols}}
+\DeclareOption{MathematicalOperators}{\togglefalse{@loadAll}\toggletrue{@loadMathematicalOperators}}
+\DeclareOption{MiscellaneousMathematicalSymbolsA}{\togglefalse{@loadAll}\toggletrue{@loadMiscellaneousMathematicalSymbolsA}}
+\DeclareOption{MiscellaneousMathematicalSymbolsB}{\togglefalse{@loadAll}\toggletrue{@loadMiscellaneousMathematicalSymbolsB}}
+\DeclareOption{MiscellaneousSymbols}{\togglefalse{@loadAll}\toggletrue{@loadMiscellaneousSymbols}}
+\DeclareOption{MiscellaneousSymbolsandArrows}{\togglefalse{@loadAll}\toggletrue{@loadMiscellaneousSymbolsandArrows}}
+\DeclareOption{MiscellaneousTechnical}{\togglefalse{@loadAll}\toggletrue{@loadMiscellaneousTechnical}}
+\DeclareOption{ModifierToneLetters}{\togglefalse{@loadAll}\toggletrue{@loadModifierToneLetters}}
+\DeclareOption{Mongolian}{\togglefalse{@loadAll}\toggletrue{@loadMongolian}}
+\DeclareOption{MusicalSymbols}{\togglefalse{@loadAll}\toggletrue{@loadMusicalSymbols}}
+\DeclareOption{Myanmar}{\togglefalse{@loadAll}\toggletrue{@loadMyanmar}}
+\DeclareOption{NewTaiLue}{\togglefalse{@loadAll}\toggletrue{@loadNewTaiLue}}
+\DeclareOption{NKo}{\togglefalse{@loadAll}\toggletrue{@loadNKo}}
+\DeclareOption{NumberForms}{\togglefalse{@loadAll}\toggletrue{@loadNumberForms}}
+\DeclareOption{Ogham}{\togglefalse{@loadAll}\toggletrue{@loadOgham}}
+\DeclareOption{OldChiki}{\togglefalse{@loadAll}\toggletrue{@loadOldChiki}}
+\DeclareOption{OldItalic}{\togglefalse{@loadAll}\toggletrue{@loadOldItalic}}
+\DeclareOption{OldPersian}{\togglefalse{@loadAll}\toggletrue{@loadOldPersian}}
+\DeclareOption{OpticalCharacterRecognition}{\togglefalse{@loadAll}\toggletrue{@loadOpticalCharacterRecognition}}
+\DeclareOption{Oriya}{\togglefalse{@loadAll}\toggletrue{@loadOriya}}
+\DeclareOption{Osmanya}{\togglefalse{@loadAll}\toggletrue{@loadOsmanya}}
+\DeclareOption{PhagsPa}{\togglefalse{@loadAll}\toggletrue{@loadPhagsPa}}
+\DeclareOption{PhaistosDisc}{\togglefalse{@loadAll}\toggletrue{@loadPhaistosDisc}}
+\DeclareOption{Phoenician}{\togglefalse{@loadAll}\toggletrue{@loadPhoenician}}
+\DeclareOption{PhoneticExtensions}{\togglefalse{@loadAll}\toggletrue{@loadPhoneticExtensions}}
+\DeclareOption{PhoneticExtensionsSupplement}{\togglefalse{@loadAll}\toggletrue{@loadPhoneticExtensionsSupplement}}
+\DeclareOption{PrivateUseArea}{\togglefalse{@loadAll}\toggletrue{@loadPrivateUseArea}}
+\DeclareOption{Rejang}{\togglefalse{@loadAll}\toggletrue{@loadRejang}}
+\DeclareOption{Runic}{\togglefalse{@loadAll}\toggletrue{@loadRunic}}
+\DeclareOption{Saurashtra}{\togglefalse{@loadAll}\toggletrue{@loadSaurashtra}}
+\DeclareOption{Shavian}{\togglefalse{@loadAll}\toggletrue{@loadShavian}}
+\DeclareOption{Sinhala}{\togglefalse{@loadAll}\toggletrue{@loadSinhala}}
+\DeclareOption{SmallFormVariants}{\togglefalse{@loadAll}\toggletrue{@loadSmallFormVariants}}
+\DeclareOption{SpacingModifierLetters}{\togglefalse{@loadAll}\toggletrue{@loadSpacingModifierLetters}}
+\DeclareOption{Specials}{\togglefalse{@loadAll}\toggletrue{@loadSpecials}}
+\DeclareOption{SuperscriptsandSubscripts}{\togglefalse{@loadAll}\toggletrue{@loadSuperscriptsandSubscripts}}
+\DeclareOption{SupplementalArrowsA}{\togglefalse{@loadAll}\toggletrue{@loadSupplementalArrowsA}}
+\DeclareOption{SupplementalArrowsB}{\togglefalse{@loadAll}\toggletrue{@loadSupplementalArrowsB}}
+\DeclareOption{SupplementalMathematicalOperators}{\togglefalse{@loadAll}\toggletrue{@loadSupplementalMathematicalOperators}}
+\DeclareOption{SupplementalPunctuation}{\togglefalse{@loadAll}\toggletrue{@loadSupplementalPunctuation}}
+\DeclareOption{SupplementaryPrivateUseAreaA}{\togglefalse{@loadAll}\toggletrue{@loadSupplementaryPrivateUseAreaA}}
+\DeclareOption{SupplementaryPrivateUseAreaB}{\togglefalse{@loadAll}\toggletrue{@loadSupplementaryPrivateUseAreaB}}
+\DeclareOption{SylotiNagri}{\togglefalse{@loadAll}\toggletrue{@loadSylotiNagri}}
+\DeclareOption{Syriac}{\togglefalse{@loadAll}\toggletrue{@loadSyriac}}
+\DeclareOption{Tagalog}{\togglefalse{@loadAll}\toggletrue{@loadTagalog}}
+\DeclareOption{Tagbanwa}{\togglefalse{@loadAll}\toggletrue{@loadTagbanwa}}
+\DeclareOption{Tags}{\togglefalse{@loadAll}\toggletrue{@loadTags}}
+\DeclareOption{TaiLe}{\togglefalse{@loadAll}\toggletrue{@loadTaiLe}}
+\DeclareOption{TaiXuanJingSymbols}{\togglefalse{@loadAll}\toggletrue{@loadTaiXuanJingSymbols}}
+\DeclareOption{Tamil}{\togglefalse{@loadAll}\toggletrue{@loadTamil}}
+\DeclareOption{Telugu}{\togglefalse{@loadAll}\toggletrue{@loadTelugu}}
+\DeclareOption{Thaana}{\togglefalse{@loadAll}\toggletrue{@loadThaana}}
+\DeclareOption{Thai}{\togglefalse{@loadAll}\toggletrue{@loadThai}}
+\DeclareOption{Tibetan}{\togglefalse{@loadAll}\toggletrue{@loadTibetan}}
+\DeclareOption{Tifinagh}{\togglefalse{@loadAll}\toggletrue{@loadTifinagh}}
+\DeclareOption{Ugaritic}{\togglefalse{@loadAll}\toggletrue{@loadUgaritic}}
+\DeclareOption{UnifiedCanadianAboriginalSyllabics}{\togglefalse{@loadAll}\toggletrue{@loadUnifiedCanadianAboriginalSyllabics}}
+\DeclareOption{Vai}{\togglefalse{@loadAll}\toggletrue{@loadVai}}
+\DeclareOption{VariationSelectors}{\togglefalse{@loadAll}\toggletrue{@loadVariationSelectors}}
+\DeclareOption{VariationSelectorsSupplement}{\togglefalse{@loadAll}\toggletrue{@loadVariationSelectorsSupplement}}
+\DeclareOption{VerticalForms}{\togglefalse{@loadAll}\toggletrue{@loadVerticalForms}}
+\DeclareOption{YiRadicals}{\togglefalse{@loadAll}\toggletrue{@loadYiRadicals}}
+\DeclareOption{YiSyllables}{\togglefalse{@loadAll}\toggletrue{@loadYiSyllables}}
+\DeclareOption{YijingHexagramSymbols}{\togglefalse{@loadAll}\toggletrue{@loadYijingHexagramSymbols}}
+
+\DeclareOption{FullArabic}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadArabic}
+  \toggletrue{@loadArabicPresentationFormsA}
+  \toggletrue{@loadArabicPresentationFormsB}
+  \toggletrue{@loadArabicSupplement}
+}
+
+\DeclareOption{Chinese}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadBopomofo}
+  \toggletrue{@loadBopomofoExtended}
+  \toggletrue{@loadCJKCompatibility}
+  \toggletrue{@loadCJKCompatibilityForms}
+  \toggletrue{@loadCJKCompatibilityIdeographs}
+  \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
+  \toggletrue{@loadCJKRadicalsSupplement}
+  \toggletrue{@loadCJKStrokes}
+  \toggletrue{@loadCJKSymbolsandPunctuation}
+  \toggletrue{@loadCJKUnifiedIdeographs}
+  \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
+  \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
+  \toggletrue{@loadEnclosedCJKLettersandMonths}
+  \toggletrue{@loadIdeographicDescriptionCharacters}
+  \toggletrue{@loadKangxiRadicals}
+}
+
+\DeclareOption{CJK}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadBopomofo}
+  \toggletrue{@loadBopomofoExtended}
+  \toggletrue{@loadCJKCompatibility}
+  \toggletrue{@loadCJKCompatibilityForms}
+  \toggletrue{@loadCJKCompatibilityIdeographs}
+  \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
+  \toggletrue{@loadCJKRadicalsSupplement}
+  \toggletrue{@loadCJKStrokes}
+  \toggletrue{@loadCJKSymbolsandPunctuation}
+  \toggletrue{@loadCJKUnifiedIdeographs}
+  \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
+  \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
+  \toggletrue{@loadEnclosedCJKLettersandMonths}
+  \toggletrue{@loadHalfwidthandFullwidthForms}
+  \toggletrue{@loadHangulCompatibilityJamo}
+  \toggletrue{@loadHangulJamo}
+  \toggletrue{@loadHangulSyllables}
+  \toggletrue{@loadHiragana}
+  \toggletrue{@loadIdeographicDescriptionCharacters}
+  \toggletrue{@loadKanbun}
+  \toggletrue{@loadKangxiRadicals}
+  \toggletrue{@loadKatakana}
+  \toggletrue{@loadKatakanaPhoneticExtensions}
+}
+
+\DeclareOption{FullCyrillic}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadCyrillic}
+  \toggletrue{@loadCyrillicExtendedA}
+  \toggletrue{@loadCyrillicExtendedB}
+  \toggletrue{@loadCyrillicSupplement}
+}
+
+\DeclareOption{Diacritics}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadCombiningDiacriticalMarks}
+  \toggletrue{@loadCombiningDiacriticalMarksforSymbols}
+  \toggletrue{@loadCombiningDiacriticalMarksSupplement}
+  \toggletrue{@loadCombiningHalfMarks}
+}
+
+\DeclareOption{Greek}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadCoptic}
+  \toggletrue{@loadGreekandCoptic}
+  \toggletrue{@loadGreekExtended}
+}
+
+\DeclareOption{Korean}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadHangulCompatibilityJamo}
+  \toggletrue{@loadHangulJamo}
+  \toggletrue{@loadHangulSyllables}
+}
+
+\DeclareOption{Japanese}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadHalfwidthandFullwidthForms}
+  \toggletrue{@loadHiragana}
+  \toggletrue{@loadKanbun}
+  \toggletrue{@loadKatakana}
+  \toggletrue{@loadKatakanaPhoneticExtensions}
+  \toggletrue{@loadKangxiRadicals}
+}
+
+\DeclareOption{Latin}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadBasicLatin}
+  \toggletrue{@loadLatinExtendedAdditional}
+  \toggletrue{@loadLatinExtendedA}
+  \toggletrue{@loadLatinExtendedB}
+  \toggletrue{@loadLatinExtendedC}
+  \toggletrue{@loadLatinExtendedD}
+  \toggletrue{@loadLatinSupplement}
+  \toggletrue{@loadAlphabeticPresentationForms}
+}
+
+\DeclareOption{Mathematics}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadMathematicalAlphanumericSymbols}
+  \toggletrue{@loadMathematicalOperators}
+  \toggletrue{@loadMiscellaneousMathematicalSymbolsA}
+  \toggletrue{@loadMiscellaneousMathematicalSymbolsB}
+  \toggletrue{@loadSupplementalMathematicalOperators}
+}
+
+\DeclareOption{Phonetics}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadIPAExtensions}
+  \toggletrue{@loadPhoneticExtensions}
+  \toggletrue{@loadPhoneticExtensionsSupplement}
+}
+
+\DeclareOption{Punctuation}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadGeneralPunctuation}
+  \toggletrue{@loadSupplementalPunctuation}
+}
+
+\DeclareOption{Symbols}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadArrows}
+  \toggletrue{@loadBoxDrawing}
+  \toggletrue{@loadByzantineMusicalSymbols}
+  \toggletrue{@loadControlPictures}
+  \toggletrue{@loadCurrencySymbols}
+  \toggletrue{@loadGeometricShapes}
+  \toggletrue{@loadLetterlikeSymbols}
+  \toggletrue{@loadMiscellaneousSymbols}
+  \toggletrue{@loadMiscellaneousSymbolsandArrows}
+  \toggletrue{@loadMiscellaneousTechnical}
+  \toggletrue{@loadSupplementalArrowsA}
+  \toggletrue{@loadSupplementalArrowsB}
+  \toggletrue{@loadVariationSelectors}
+  \toggletrue{@loadVariationSelectorsSupplement}
+}
+
+\DeclareOption{Yi}{
+  \togglefalse{@loadAll}
+  \toggletrue{@loadYiRadicals}
+  \toggletrue{@loadYiSyllables}
+}
+
+\ProcessOptions
 
 % ----------------------------------------------------------------------------
 %
@@ -44,174 +535,677 @@
 	\XeTeXcharclass#3=#1}
 
 \PackageInfo{ucharclasses}{Loading unicode blocks...}
+
 \newXeTeXintercharclass\@classstart
-\@defineUnicodeClass{\AegeanNumbersClass}{65792}{65855}
-\@defineUnicodeClass{\AlphabeticPresentationFormsClass}{64256}{64335}
-\@defineUnicodeClass{\AncientGreekMusicalNotationClass}{119296}{119375}
-\@defineUnicodeClass{\AncientGreekNumbersClass}{65856}{65935}
-\@defineUnicodeClass{\AncientSymbolsClass}{65936}{65999}
-\@defineUnicodeClass{\ArabicClass}{1536}{1791}
-\@defineUnicodeClass{\ArabicPresentationFormsAClass}{64336}{65023}
-\@defineUnicodeClass{\ArabicPresentationFormsBClass}{65136}{65279}
-\@defineUnicodeClass{\ArabicSupplementClass}{1872}{1919}
-\@defineUnicodeClass{\ArmenianClass}{1328}{1423}
-\@defineUnicodeClass{\ArrowsClass}{8592}{8703}
-\@defineUnicodeClass{\BalineseClass}{6912}{7039}
-\@defineUnicodeClass{\BasicLatinClass}{32}{127}
-\@defineUnicodeClass{\BengaliClass}{2432}{2559}
-\@defineUnicodeClass{\BlockElementsClass}{9600}{9631}
-\@defineUnicodeClass{\BopomofoClass}{12544}{12591}
-\@defineUnicodeClass{\BopomofoExtendedClass}{12704}{12735}
-\@defineUnicodeClass{\BoxDrawingClass}{9472}{9599}
-\@defineUnicodeClass{\BraillePatternsClass}{10240}{10495}
-\@defineUnicodeClass{\BugineseClass}{6656}{6687}
-\@defineUnicodeClass{\BuhidClass}{5952}{5983}
-\@defineUnicodeClass{\ByzantineMusicalSymbolsClass}{118784}{119039}
-\@defineUnicodeClass{\CarianClass}{66208}{66271}
-\@defineUnicodeClass{\ChamClass}{43520}{43615}
-\@defineUnicodeClass{\CherokeeClass}{5024}{5119}
-\@defineUnicodeClass{\CJKCompatibilityClass}{13056}{13311}
-\@defineUnicodeClass{\CJKCompatibilityFormsClass}{65072}{65103}
-\@defineUnicodeClass{\CJKCompatibilityIdeographsClass}{63744}{64255}
-\@defineUnicodeClass{\CJKCompatibilityIdeographsSupplementClass}{194560}{195103}
-\@defineUnicodeClass{\CJKRadicalsSupplementClass}{11904}{12031}
-\@defineUnicodeClass{\CJKStrokesClass}{12736}{12783}
-\@defineUnicodeClass{\CJKSymbolsandPunctuationClass}{12288}{12351}
-\@defineUnicodeClass{\CJKUnifiedIdeographsClass}{19968}{40959}
-\@defineUnicodeClass{\CJKUnifiedIdeographsExtensionAClass}{13312}{19903}
-\@defineUnicodeClass{\CJKUnifiedIdeographsExtensionBClass}{131072}{173791}
-\@defineUnicodeClass{\CombiningDiacriticalMarksClass}{768}{879}
-\@defineUnicodeClass{\CombiningDiacriticalMarksforSymbolsClass}{8400}{8447}
-\@defineUnicodeClass{\CombiningDiacriticalMarksSupplementClass}{7616}{7679}
-\@defineUnicodeClass{\CombiningHalfMarksClass}{65056}{65071}
-\@defineUnicodeClass{\ControlPicturesClass}{9216}{9279}
-\@defineUnicodeClass{\CopticClass}{11392}{11519}
-\@defineUnicodeClass{\CountingRodNumeralsClass}{119648}{119679}
-\@defineUnicodeClass{\CuneiformClass}{73728}{74751}
-\@defineUnicodeClass{\CuneiformNumbersandPunctuationClass}{74752}{74879}
-\@defineUnicodeClass{\CurrencySymbolsClass}{8352}{8399}
-\@defineUnicodeClass{\CypriotSyllabaryClass}{67584}{67647}
-\@defineUnicodeClass{\CyrillicClass}{1024}{1279}
-\@defineUnicodeClass{\CyrillicExtendedAClass}{11744}{11775}
-\@defineUnicodeClass{\CyrillicExtendedBClass}{42560}{42655}
-\@defineUnicodeClass{\CyrillicSupplementClass}{1280}{1327}
-\@defineUnicodeClass{\DeseretClass}{66560}{66639}
-\@defineUnicodeClass{\DevanagariClass}{2304}{2431}
-\@defineUnicodeClass{\DingbatsClass}{9984}{10175}
-\@defineUnicodeClass{\DominoTilesClass}{127024}{127135}
-\@defineUnicodeClass{\EnclosedAlphanumericsClass}{9312}{9471}
-\@defineUnicodeClass{\EnclosedCJKLettersandMonthsClass}{12800}{13055}
-\@defineUnicodeClass{\EthiopicClass}{4608}{4991}
-\@defineUnicodeClass{\EthiopicExtendedClass}{11648}{11743}
-\@defineUnicodeClass{\EthiopicSupplementClass}{4992}{5023}
-\@defineUnicodeClass{\GeneralPunctuationClass}{8192}{8303}
-\@defineUnicodeClass{\GeometricShapesClass}{9632}{9727}
-\@defineUnicodeClass{\GeorgianClass}{4256}{4351}
-\@defineUnicodeClass{\GeorgianSupplementClass}{11520}{11567}
-\@defineUnicodeClass{\GlagoliticClass}{11264}{11359}
-\@defineUnicodeClass{\GothicClass}{66352}{66383}
-\@defineUnicodeClass{\GreekandCopticClass}{880}{1023}
-\@defineUnicodeClass{\GreekExtendedClass}{7936}{8191}
-\@defineUnicodeClass{\GujaratiClass}{2688}{2815}
-\@defineUnicodeClass{\GurmukhiClass}{2560}{2687}
-\@defineUnicodeClass{\HalfwidthandFullwidthFormsClass}{65280}{65519}
-\@defineUnicodeClass{\HangulCompatibilityJamoClass}{12592}{12687}
-\@defineUnicodeClass{\HangulJamoClass}{4352}{4607}
-\@defineUnicodeClass{\HangulSyllablesClass}{44032}{55215}
-\@defineUnicodeClass{\HanunooClass}{5920}{5951}
-\@defineUnicodeClass{\HebrewClass}{1424}{1535}
-\@defineUnicodeClass{\HiraganaClass}{12352}{12447}
-\@defineUnicodeClass{\IdeographicDescriptionCharactersClass}{12272}{12287}
-\@defineUnicodeClass{\IPAExtensionsClass}{592}{687}
-\@defineUnicodeClass{\KanbunClass}{12688}{12703}
-\@defineUnicodeClass{\KangxiRadicalsClass}{12032}{12255}
-\@defineUnicodeClass{\KannadaClass}{3200}{3327}
-\@defineUnicodeClass{\KatakanaClass}{12448}{12543}
-\@defineUnicodeClass{\KatakanaPhoneticExtensionsClass}{12784}{12799}
-\@defineUnicodeClass{\KayahLiClass}{43264}{43311}
-\@defineUnicodeClass{\KharoshthiClass}{68096}{68191}
-\@defineUnicodeClass{\KhmerClass}{6016}{6143}
-\@defineUnicodeClass{\KhmerSymbolsClass}{6624}{6655}
-\@defineUnicodeClass{\LaoClass}{3712}{3839}
-\@defineUnicodeClass{\LatinExtendedAdditionalClass}{7680}{7935}
-\@defineUnicodeClass{\LatinExtendedAClass}{256}{383}
-\@defineUnicodeClass{\LatinExtendedBClass}{384}{591}
-\@defineUnicodeClass{\LatinExtendedCClass}{11360}{11391}
-\@defineUnicodeClass{\LatinExtendedDClass}{42784}{43007}
-\@defineUnicodeClass{\LatinSupplementClass}{128}{255}
-\@defineUnicodeClass{\LepchaClass}{7168}{7247}
-\@defineUnicodeClass{\LetterlikeSymbolsClass}{8448}{8527}
-\@defineUnicodeClass{\LimbuClass}{6400}{6479}
-\@defineUnicodeClass{\LinearBIdeogramsClass}{65664}{65791}
-\@defineUnicodeClass{\LinearBSyllabaryClass}{65536}{65663}
-\@defineUnicodeClass{\LycianClass}{66176}{66207}
-\@defineUnicodeClass{\LydianClass}{67872}{67903}
-\@defineUnicodeClass{\MahjongTilesClass}{126976}{127023}
-\@defineUnicodeClass{\MalayalamClass}{3328}{3455}
-\@defineUnicodeClass{\MathematicalAlphanumericSymbolsClass}{119808}{120831}
-\@defineUnicodeClass{\MathematicalOperatorsClass}{8704}{8959}
-\@defineUnicodeClass{\MiscellaneousMathematicalSymbolsAClass}{10176}{10223}
-\@defineUnicodeClass{\MiscellaneousMathematicalSymbolsBClass}{10624}{10751}
-\@defineUnicodeClass{\MiscellaneousSymbolsClass}{9728}{9983}
-\@defineUnicodeClass{\MiscellaneousSymbolsandArrowsClass}{11008}{11263}
-\@defineUnicodeClass{\MiscellaneousTechnicalClass}{8960}{9215}
-\@defineUnicodeClass{\ModifierToneLettersClass}{42752}{42783}
-\@defineUnicodeClass{\MongolianClass}{6144}{6319}
-\@defineUnicodeClass{\MusicalSymbolsClass}{119040}{119295}
-\@defineUnicodeClass{\MyanmarClass}{4096}{4255}
-\@defineUnicodeClass{\NewTaiLueClass}{6528}{6623}
-\@defineUnicodeClass{\NKoClass}{1984}{2047}
-\@defineUnicodeClass{\NumberFormsClass}{8528}{8591}
-\@defineUnicodeClass{\OghamClass}{5760}{5791}
-\@defineUnicodeClass{\OldChikiClass}{7248}{7295}
-\@defineUnicodeClass{\OldItalicClass}{66304}{66351}
-\@defineUnicodeClass{\OldPersianClass}{66464}{66527}
-\@defineUnicodeClass{\OpticalCharacterRecognitionClass}{9280}{9311}
-\@defineUnicodeClass{\OriyaClass}{2816}{2943}
-\@defineUnicodeClass{\OsmanyaClass}{66688}{66735}
-\@defineUnicodeClass{\PhagsPaClass}{43072}{43135}
-\@defineUnicodeClass{\PhaistosDiscClass}{66000}{66047}
-\@defineUnicodeClass{\PhoenicianClass}{67840}{67871}
-\@defineUnicodeClass{\PhoneticExtensionsClass}{7424}{7551}
-\@defineUnicodeClass{\PhoneticExtensionsSupplementClass}{7552}{7615}
-\@defineUnicodeClass{\PrivateUseAreaClass}{57344}{63743}
-\@defineUnicodeClass{\RejangClass}{43312}{43359}
-\@defineUnicodeClass{\RunicClass}{5792}{5887}
-\@defineUnicodeClass{\SaurashtraClass}{43136}{43231}
-\@defineUnicodeClass{\ShavianClass}{66640}{66687}
-\@defineUnicodeClass{\SinhalaClass}{3456}{3583}
-\@defineUnicodeClass{\SmallFormVariantsClass}{65104}{65135}
-\@defineUnicodeClass{\SpacingModifierLettersClass}{688}{767}
-\@defineUnicodeClass{\SpecialsClass}{65520}{65535}
-\@defineUnicodeClass{\SuperscriptsandSubscriptsClass}{8304}{8351}
-\@defineUnicodeClass{\SupplementalArrowsAClass}{10224}{10239}
-\@defineUnicodeClass{\SupplementalArrowsBClass}{10496}{10623}
-\@defineUnicodeClass{\SupplementalMathematicalOperatorsClass}{10752}{11007}
-\@defineUnicodeClass{\SupplementalPunctuationClass}{11776}{11903}
-\@defineUnicodeClass{\SupplementaryPrivateUseAreaAClass}{983040}{1048575}
-\@defineUnicodeClass{\SupplementaryPrivateUseAreaBClass}{1048576}{1114111}
-\@defineUnicodeClass{\SylotiNagriClass}{43008}{43055}
-\@defineUnicodeClass{\SyriacClass}{1792}{1871}
-\@defineUnicodeClass{\TagalogClass}{5888}{5919}
-\@defineUnicodeClass{\TagbanwaClass}{5984}{6015}
-\@defineUnicodeClass{\TagsClass}{917504}{917631}
-\@defineUnicodeClass{\TaiLeClass}{6480}{6527}
-\@defineUnicodeClass{\TaiXuanJingSymbolsClass}{119552}{119647}
-\@defineUnicodeClass{\TamilClass}{2944}{3071}
-\@defineUnicodeClass{\TeluguClass}{3072}{3199}
-\@defineUnicodeClass{\ThaanaClass}{1920}{1983}
-\@defineUnicodeClass{\ThaiClass}{3584}{3711}
-\@defineUnicodeClass{\TibetanClass}{3840}{4095}
-\@defineUnicodeClass{\TifinaghClass}{11568}{11647}
-\@defineUnicodeClass{\UgariticClass}{66432}{66463}
-\@defineUnicodeClass{\UnifiedCanadianAboriginalSyllabicsClass}{5120}{5759}
-\@defineUnicodeClass{\VaiClass}{42240}{42559}
-\@defineUnicodeClass{\VariationSelectorsClass}{65024}{65039}
-\@defineUnicodeClass{\VariationSelectorsSupplementClass}{917760}{917999}
-\@defineUnicodeClass{\VerticalFormsClass}{65040}{65055}
-\@defineUnicodeClass{\YiRadicalsClass}{42128}{42191}
-\@defineUnicodeClass{\YiSyllablesClass}{40960}{42127}
-\@defineUnicodeClass{\YijingHexagramSymbolsClass}{19904}{19967}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadAegeanNumbers}
+}{\@defineUnicodeClass{\AegeanNumbersClass}{65792}{65855}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadAlphabeticPresentationForms}
+}{\@defineUnicodeClass{\AlphabeticPresentationFormsClass}{64256}{64335}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadAncientGreekMusicalNotation}
+}{\@defineUnicodeClass{\AncientGreekMusicalNotationClass}{119296}{119375}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadAncientGreekNumbers}
+}{\@defineUnicodeClass{\AncientGreekNumbersClass}{65856}{65935}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadAncientSymbols}
+}{\@defineUnicodeClass{\AncientSymbolsClass}{65936}{65999}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArabic}
+}{\@defineUnicodeClass{\ArabicClass}{1536}{1791}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArabicPresentationFormsA}
+}{\@defineUnicodeClass{\ArabicPresentationFormsAClass}{64336}{65023}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArabicPresentationFormsB}
+}{\@defineUnicodeClass{\ArabicPresentationFormsBClass}{65136}{65279}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArabicSupplement}
+}{\@defineUnicodeClass{\ArabicSupplementClass}{1872}{1919}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArmenian}
+}{\@defineUnicodeClass{\ArmenianClass}{1328}{1423}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadArrows}
+}{\@defineUnicodeClass{\ArrowsClass}{8592}{8703}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBalinese}
+}{\@defineUnicodeClass{\BalineseClass}{6912}{7039}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBasicLatin}
+}{\@defineUnicodeClass{\BasicLatinClass}{32}{127}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBengali}
+}{\@defineUnicodeClass{\BengaliClass}{2432}{2559}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBlockElements}
+}{\@defineUnicodeClass{\BlockElementsClass}{9600}{9631}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBopomofo}
+}{\@defineUnicodeClass{\BopomofoClass}{12544}{12591}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBopomofoExtended}
+}{\@defineUnicodeClass{\BopomofoExtendedClass}{12704}{12735}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBoxDrawing}
+}{\@defineUnicodeClass{\BoxDrawingClass}{9472}{9599}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBraillePatterns}
+}{\@defineUnicodeClass{\BraillePatternsClass}{10240}{10495}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBuginese}
+}{\@defineUnicodeClass{\BugineseClass}{6656}{6687}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadBuhid}
+}{\@defineUnicodeClass{\BuhidClass}{5952}{5983}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadByzantineMusicalSymbols}
+}{\@defineUnicodeClass{\ByzantineMusicalSymbolsClass}{118784}{119039}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCarian}
+}{\@defineUnicodeClass{\CarianClass}{66208}{66271}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCham}
+}{\@defineUnicodeClass{\ChamClass}{43520}{43615}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCherokee}
+}{\@defineUnicodeClass{\CherokeeClass}{5024}{5119}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKCompatibility}
+}{\@defineUnicodeClass{\CJKCompatibilityClass}{13056}{13311}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKCompatibilityForms}
+}{\@defineUnicodeClass{\CJKCompatibilityFormsClass}{65072}{65103}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKCompatibilityIdeographs}
+}{\@defineUnicodeClass{\CJKCompatibilityIdeographsClass}{63744}{64255}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKCompatibilityIdeographsSupplement}
+}{\@defineUnicodeClass{\CJKCompatibilityIdeographsSupplementClass}{194560}{195103}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKRadicalsSupplement}
+}{\@defineUnicodeClass{\CJKRadicalsSupplementClass}{11904}{12031}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKStrokes}
+}{\@defineUnicodeClass{\CJKStrokesClass}{12736}{12783}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKSymbolsandPunctuation}
+}{\@defineUnicodeClass{\CJKSymbolsandPunctuationClass}{12288}{12351}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKUnifiedIdeographs}
+}{\@defineUnicodeClass{\CJKUnifiedIdeographsClass}{19968}{40959}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKUnifiedIdeographsExtensionA}
+}{\@defineUnicodeClass{\CJKUnifiedIdeographsExtensionAClass}{13312}{19903}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCJKUnifiedIdeographsExtensionB}
+}{\@defineUnicodeClass{\CJKUnifiedIdeographsExtensionBClass}{131072}{173791}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCombiningDiacriticalMarks}
+}{\@defineUnicodeClass{\CombiningDiacriticalMarksClass}{768}{879}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCombiningDiacriticalMarksforSymbols}
+}{\@defineUnicodeClass{\CombiningDiacriticalMarksforSymbolsClass}{8400}{8447}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCombiningDiacriticalMarksSupplement}
+}{\@defineUnicodeClass{\CombiningDiacriticalMarksSupplementClass}{7616}{7679}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCombiningHalfMarks}
+}{\@defineUnicodeClass{\CombiningHalfMarksClass}{65056}{65071}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadControlPictures}
+}{\@defineUnicodeClass{\ControlPicturesClass}{9216}{9279}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCoptic}
+}{\@defineUnicodeClass{\CopticClass}{11392}{11519}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCountingRodNumerals}
+}{\@defineUnicodeClass{\CountingRodNumeralsClass}{119648}{119679}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCuneiform}
+}{\@defineUnicodeClass{\CuneiformClass}{73728}{74751}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCuneiformNumbersandPunctuation}
+}{\@defineUnicodeClass{\CuneiformNumbersandPunctuationClass}{74752}{74879}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCurrencySymbols}
+}{\@defineUnicodeClass{\CurrencySymbolsClass}{8352}{8399}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCypriotSyllabary}
+}{\@defineUnicodeClass{\CypriotSyllabaryClass}{67584}{67647}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCyrillic}
+}{\@defineUnicodeClass{\CyrillicClass}{1024}{1279}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCyrillicExtendedA}
+}{\@defineUnicodeClass{\CyrillicExtendedAClass}{11744}{11775}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCyrillicExtendedB}
+}{\@defineUnicodeClass{\CyrillicExtendedBClass}{42560}{42655}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadCyrillicSupplement}
+}{\@defineUnicodeClass{\CyrillicSupplementClass}{1280}{1327}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadDeseret}
+}{\@defineUnicodeClass{\DeseretClass}{66560}{66639}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadDevanagari}
+}{\@defineUnicodeClass{\DevanagariClass}{2304}{2431}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadDingbats}
+}{\@defineUnicodeClass{\DingbatsClass}{9984}{10175}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadDominoTiles}
+}{\@defineUnicodeClass{\DominoTilesClass}{127024}{127135}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadEnclosedAlphanumerics}
+}{\@defineUnicodeClass{\EnclosedAlphanumericsClass}{9312}{9471}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadEnclosedCJKLettersandMonths}
+}{\@defineUnicodeClass{\EnclosedCJKLettersandMonthsClass}{12800}{13055}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadEthiopic}
+}{\@defineUnicodeClass{\EthiopicClass}{4608}{4991}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadEthiopicExtended}
+}{\@defineUnicodeClass{\EthiopicExtendedClass}{11648}{11743}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadEthiopicSupplement}
+}{\@defineUnicodeClass{\EthiopicSupplementClass}{4992}{5023}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGeneralPunctuation}
+}{\@defineUnicodeClass{\GeneralPunctuationClass}{8192}{8303}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGeometricShapes}
+}{\@defineUnicodeClass{\GeometricShapesClass}{9632}{9727}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGeorgian}
+}{\@defineUnicodeClass{\GeorgianClass}{4256}{4351}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGeorgianSupplement}
+}{\@defineUnicodeClass{\GeorgianSupplementClass}{11520}{11567}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGlagolitic}
+}{\@defineUnicodeClass{\GlagoliticClass}{11264}{11359}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGothic}
+}{\@defineUnicodeClass{\GothicClass}{66352}{66383}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGreekandCoptic}
+}{\@defineUnicodeClass{\GreekandCopticClass}{880}{1023}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGreekExtended}
+}{\@defineUnicodeClass{\GreekExtendedClass}{7936}{8191}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGujarati}
+}{\@defineUnicodeClass{\GujaratiClass}{2688}{2815}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadGurmukhi}
+}{\@defineUnicodeClass{\GurmukhiClass}{2560}{2687}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHalfwidthandFullwidthForms}
+}{\@defineUnicodeClass{\HalfwidthandFullwidthFormsClass}{65280}{65519}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHangulCompatibilityJamo}
+}{\@defineUnicodeClass{\HangulCompatibilityJamoClass}{12592}{12687}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHangulJamo}
+}{\@defineUnicodeClass{\HangulJamoClass}{4352}{4607}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHangulSyllables}
+}{\@defineUnicodeClass{\HangulSyllablesClass}{44032}{55215}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHanunoo}
+}{\@defineUnicodeClass{\HanunooClass}{5920}{5951}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHebrew}
+}{\@defineUnicodeClass{\HebrewClass}{1424}{1535}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadHiragana}
+}{\@defineUnicodeClass{\HiraganaClass}{12352}{12447}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadIdeographicDescriptionCharacters}
+}{\@defineUnicodeClass{\IdeographicDescriptionCharactersClass}{12272}{12287}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadIPAExtensions}
+}{\@defineUnicodeClass{\IPAExtensionsClass}{592}{687}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKanbun}
+}{\@defineUnicodeClass{\KanbunClass}{12688}{12703}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKangxiRadicals}
+}{\@defineUnicodeClass{\KangxiRadicalsClass}{12032}{12255}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKannada}
+}{\@defineUnicodeClass{\KannadaClass}{3200}{3327}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKatakana}
+}{\@defineUnicodeClass{\KatakanaClass}{12448}{12543}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKatakanaPhoneticExtensions}
+}{\@defineUnicodeClass{\KatakanaPhoneticExtensionsClass}{12784}{12799}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKayahLi}
+}{\@defineUnicodeClass{\KayahLiClass}{43264}{43311}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKharoshthi}
+}{\@defineUnicodeClass{\KharoshthiClass}{68096}{68191}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKhmer}
+}{\@defineUnicodeClass{\KhmerClass}{6016}{6143}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadKhmerSymbols}
+}{\@defineUnicodeClass{\KhmerSymbolsClass}{6624}{6655}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLao}
+}{\@defineUnicodeClass{\LaoClass}{3712}{3839}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinExtendedAdditional}
+}{\@defineUnicodeClass{\LatinExtendedAdditionalClass}{7680}{7935}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinExtendedA}
+}{\@defineUnicodeClass{\LatinExtendedAClass}{256}{383}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinExtendedB}
+}{\@defineUnicodeClass{\LatinExtendedBClass}{384}{591}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinExtendedC}
+}{\@defineUnicodeClass{\LatinExtendedCClass}{11360}{11391}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinExtendedD}
+}{\@defineUnicodeClass{\LatinExtendedDClass}{42784}{43007}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLatinSupplement}
+}{\@defineUnicodeClass{\LatinSupplementClass}{128}{255}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLepcha}
+}{\@defineUnicodeClass{\LepchaClass}{7168}{7247}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLetterlikeSymbols}
+}{\@defineUnicodeClass{\LetterlikeSymbolsClass}{8448}{8527}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLimbu}
+}{\@defineUnicodeClass{\LimbuClass}{6400}{6479}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLinearBIdeograms}
+}{\@defineUnicodeClass{\LinearBIdeogramsClass}{65664}{65791}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLinearBSyllabary}
+}{\@defineUnicodeClass{\LinearBSyllabaryClass}{65536}{65663}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLycian}
+}{\@defineUnicodeClass{\LycianClass}{66176}{66207}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadLydian}
+}{\@defineUnicodeClass{\LydianClass}{67872}{67903}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMahjongTiles}
+}{\@defineUnicodeClass{\MahjongTilesClass}{126976}{127023}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMalayalam}
+}{\@defineUnicodeClass{\MalayalamClass}{3328}{3455}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMathematicalAlphanumericSymbols}
+}{\@defineUnicodeClass{\MathematicalAlphanumericSymbolsClass}{119808}{120831}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMathematicalOperators}
+}{\@defineUnicodeClass{\MathematicalOperatorsClass}{8704}{8959}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMiscellaneousMathematicalSymbolsA}
+}{\@defineUnicodeClass{\MiscellaneousMathematicalSymbolsAClass}{10176}{10223}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMiscellaneousMathematicalSymbolsB}
+}{\@defineUnicodeClass{\MiscellaneousMathematicalSymbolsBClass}{10624}{10751}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMiscellaneousSymbols}
+}{\@defineUnicodeClass{\MiscellaneousSymbolsClass}{9728}{9983}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMiscellaneousSymbolsandArrows}
+}{\@defineUnicodeClass{\MiscellaneousSymbolsandArrowsClass}{11008}{11263}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMiscellaneousTechnical}
+}{\@defineUnicodeClass{\MiscellaneousTechnicalClass}{8960}{9215}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadModifierToneLetters}
+}{\@defineUnicodeClass{\ModifierToneLettersClass}{42752}{42783}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMongolian}
+}{\@defineUnicodeClass{\MongolianClass}{6144}{6319}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMusicalSymbols}
+}{\@defineUnicodeClass{\MusicalSymbolsClass}{119040}{119295}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadMyanmar}
+}{\@defineUnicodeClass{\MyanmarClass}{4096}{4255}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadNewTaiLue}
+}{\@defineUnicodeClass{\NewTaiLueClass}{6528}{6623}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadNKo}
+}{\@defineUnicodeClass{\NKoClass}{1984}{2047}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadNumberForms}
+}{\@defineUnicodeClass{\NumberFormsClass}{8528}{8591}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOgham}
+}{\@defineUnicodeClass{\OghamClass}{5760}{5791}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOldChiki}
+}{\@defineUnicodeClass{\OldChikiClass}{7248}{7295}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOldItalic}
+}{\@defineUnicodeClass{\OldItalicClass}{66304}{66351}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOldPersian}
+}{\@defineUnicodeClass{\OldPersianClass}{66464}{66527}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOpticalCharacterRecognition}
+}{\@defineUnicodeClass{\OpticalCharacterRecognitionClass}{9280}{9311}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOriya}
+}{\@defineUnicodeClass{\OriyaClass}{2816}{2943}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadOsmanya}
+}{\@defineUnicodeClass{\OsmanyaClass}{66688}{66735}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPhagsPa}
+}{\@defineUnicodeClass{\PhagsPaClass}{43072}{43135}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPhaistosDisc}
+}{\@defineUnicodeClass{\PhaistosDiscClass}{66000}{66047}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPhoenician}
+}{\@defineUnicodeClass{\PhoenicianClass}{67840}{67871}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPhoneticExtensions}
+}{\@defineUnicodeClass{\PhoneticExtensionsClass}{7424}{7551}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPhoneticExtensionsSupplement}
+}{\@defineUnicodeClass{\PhoneticExtensionsSupplementClass}{7552}{7615}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadPrivateUseArea}
+}{\@defineUnicodeClass{\PrivateUseAreaClass}{57344}{63743}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadRejang}
+}{\@defineUnicodeClass{\RejangClass}{43312}{43359}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadRunic}
+}{\@defineUnicodeClass{\RunicClass}{5792}{5887}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSaurashtra}
+}{\@defineUnicodeClass{\SaurashtraClass}{43136}{43231}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadShavian}
+}{\@defineUnicodeClass{\ShavianClass}{66640}{66687}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSinhala}
+}{\@defineUnicodeClass{\SinhalaClass}{3456}{3583}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSmallFormVariants}
+}{\@defineUnicodeClass{\SmallFormVariantsClass}{65104}{65135}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSpacingModifierLetters}
+}{\@defineUnicodeClass{\SpacingModifierLettersClass}{688}{767}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSpecials}
+}{\@defineUnicodeClass{\SpecialsClass}{65520}{65535}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSuperscriptsandSubscripts}
+}{\@defineUnicodeClass{\SuperscriptsandSubscriptsClass}{8304}{8351}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementalArrowsA}
+}{\@defineUnicodeClass{\SupplementalArrowsAClass}{10224}{10239}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementalArrowsB}
+}{\@defineUnicodeClass{\SupplementalArrowsBClass}{10496}{10623}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementalMathematicalOperators}
+}{\@defineUnicodeClass{\SupplementalMathematicalOperatorsClass}{10752}{11007}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementalPunctuation}
+}{\@defineUnicodeClass{\SupplementalPunctuationClass}{11776}{11903}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementaryPrivateUseAreaA}
+}{\@defineUnicodeClass{\SupplementaryPrivateUseAreaAClass}{983040}{1048575}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSupplementaryPrivateUseAreaB}
+}{\@defineUnicodeClass{\SupplementaryPrivateUseAreaBClass}{1048576}{1114111}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSylotiNagri}
+}{\@defineUnicodeClass{\SylotiNagriClass}{43008}{43055}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadSyriac}
+}{\@defineUnicodeClass{\SyriacClass}{1792}{1871}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTagalog}
+}{\@defineUnicodeClass{\TagalogClass}{5888}{5919}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTagbanwa}
+}{\@defineUnicodeClass{\TagbanwaClass}{5984}{6015}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTags}
+}{\@defineUnicodeClass{\TagsClass}{917504}{917631}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTaiLe}
+}{\@defineUnicodeClass{\TaiLeClass}{6480}{6527}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTaiXuanJingSymbols}
+}{\@defineUnicodeClass{\TaiXuanJingSymbolsClass}{119552}{119647}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTamil}
+}{\@defineUnicodeClass{\TamilClass}{2944}{3071}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTelugu}
+}{\@defineUnicodeClass{\TeluguClass}{3072}{3199}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadThaana}
+}{\@defineUnicodeClass{\ThaanaClass}{1920}{1983}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadThai}
+}{\@defineUnicodeClass{\ThaiClass}{3584}{3711}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTibetan}
+}{\@defineUnicodeClass{\TibetanClass}{3840}{4095}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadTifinagh}
+}{\@defineUnicodeClass{\TifinaghClass}{11568}{11647}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadUgaritic}
+}{\@defineUnicodeClass{\UgariticClass}{66432}{66463}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadUnifiedCanadianAboriginalSyllabics}
+}{\@defineUnicodeClass{\UnifiedCanadianAboriginalSyllabicsClass}{5120}{5759}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadVai}
+}{\@defineUnicodeClass{\VaiClass}{42240}{42559}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadVariationSelectors}
+}{\@defineUnicodeClass{\VariationSelectorsClass}{65024}{65039}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadVariationSelectorsSupplement}
+}{\@defineUnicodeClass{\VariationSelectorsSupplementClass}{917760}{917999}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadVerticalForms}
+}{\@defineUnicodeClass{\VerticalFormsClass}{65040}{65055}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadYiRadicals}
+}{\@defineUnicodeClass{\YiRadicalsClass}{42128}{42191}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadYiSyllables}
+}{\@defineUnicodeClass{\YiSyllablesClass}{40960}{42127}}
+
+\ifboolexpr{
+ togl {@loadAll} or togl {@loadYijingHexagramSymbols}
+}{\@defineUnicodeClass{\YijingHexagramSymbolsClass}{19904}{19967}}
+
 \newXeTeXintercharclass\@classend
 
 % ----------------------------------------------------------------------------
@@ -232,6 +1226,7 @@
 %
 
 \newcommand{\setTransitionsFor}[3]{
+  \ifcsname#1Class\endcsname
 	\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
 		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}
 		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
@@ -241,7 +1236,8 @@
 		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
 	% and a binding for the transitions to and from boundary characters
 	\@transition{255}{\@nameuse{#1Class}}{{#2}}
-	\@transition{\@nameuse{#1Class}}{255}{{#3}}}
+	\@transition{\@nameuse{#1Class}}{255}{{#3}}
+	\fi}
 
 %
 %	Use: \setUTransitionTo{when entering this block}
@@ -255,6 +1251,7 @@
 		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
 	% and a binding for the transition from boundary characters
 	\@transition{255}{\@nameuse{#1Class}}{{#2}}}
+	
 
 %
 %	Use: \setUTransitionFrom{when leaving this block}
