@@ -1,0 +1,26 @@
+Sometimes you don't want to have to bother with font switching
+just because you're languages that are distinct enough to use
+different unicode blocks, but aren't covered by the polyglossia
+package. Where normal word processing packages such as MS, 
+Star- or OpenOffice pretty much handle this for you, LaTeX
+(because it needs you to tell it what to do) has no default
+behaviour for this, and so we arrive at a need for a package
+that does this for us. You already discovered that regular LaTeX
+has no understanding of unicode (in fact, it has no understanding
+of 8-bit characters at all, it likes them in seven bits instead),
+and ended up going for Xe(La)TeX as your TeX compiler of choice,
+which means you now have two excellent resources available:
+
+  fontspec, and ucharclasses.
+
+The first of these lets you pick fonts based on what your system
+calls them, without needing to rewrite them as metafont files.
+This is convenient. This is good. The second lets you define what
+should happen when we change from a character in one unicode block,
+to a character in another. This is also convenient, and paired with
+fontspec it offers automatic fontswitching in the same way that
+normal Office applications take care of this with you. With one big
+difference: you stay in control. If at some point you need the switch
+rule to use a completely different rule, in an Office application
+that's just too bad for you. In Xe(La)TeX, you stay on top of things
+and still get to say exactly what happens, and when.
