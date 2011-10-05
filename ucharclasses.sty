@@ -7,9 +7,14 @@
 % I like a slightly more intuitive programming interface than vanilla TeX
 \RequirePackage{etoolbox}
 \RequirePackage{forloop}
+\RequirePackage{pstricks}
 
 % ----------------------------------------------------------------------------
-% option handling - by default, 'all classes' should be loaded
+% option handling - by default, 'all classes' should be loaded.
+%
+% If anyone knows how to make this more efficient, such as iterating
+% through a list of terms, please let me know. It seems to me that this
+% can be done so much better =)
 % ----------------------------------------------------------------------------
 \newtoggle{@loadAll}\toggletrue{@loadAll}
 \newtoggle{@loadAegeanNumbers}\togglefalse{@loadAegeanNumbers}
@@ -349,162 +354,162 @@
 \DeclareOption{YijingHexagramSymbols}{\togglefalse{@loadAll}\toggletrue{@loadYijingHexagramSymbols}}
 
 \DeclareOption{FullArabic}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadArabic}
-  \toggletrue{@loadArabicPresentationFormsA}
-  \toggletrue{@loadArabicPresentationFormsB}
-  \toggletrue{@loadArabicSupplement}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadArabic}
+ \toggletrue{@loadArabicPresentationFormsA}
+ \toggletrue{@loadArabicPresentationFormsB}
+ \toggletrue{@loadArabicSupplement}
 }
 
 \DeclareOption{Chinese}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadBopomofo}
-  \toggletrue{@loadBopomofoExtended}
-  \toggletrue{@loadCJKCompatibility}
-  \toggletrue{@loadCJKCompatibilityForms}
-  \toggletrue{@loadCJKCompatibilityIdeographs}
-  \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
-  \toggletrue{@loadCJKRadicalsSupplement}
-  \toggletrue{@loadCJKStrokes}
-  \toggletrue{@loadCJKSymbolsandPunctuation}
-  \toggletrue{@loadCJKUnifiedIdeographs}
-  \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
-  \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
-  \toggletrue{@loadEnclosedCJKLettersandMonths}
-  \toggletrue{@loadIdeographicDescriptionCharacters}
-  \toggletrue{@loadKangxiRadicals}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadBopomofo}
+ \toggletrue{@loadBopomofoExtended}
+ \toggletrue{@loadCJKCompatibility}
+ \toggletrue{@loadCJKCompatibilityForms}
+ \toggletrue{@loadCJKCompatibilityIdeographs}
+ \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
+ \toggletrue{@loadCJKRadicalsSupplement}
+ \toggletrue{@loadCJKStrokes}
+ \toggletrue{@loadCJKSymbolsandPunctuation}
+ \toggletrue{@loadCJKUnifiedIdeographs}
+ \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
+ \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
+ \toggletrue{@loadEnclosedCJKLettersandMonths}
+ \toggletrue{@loadIdeographicDescriptionCharacters}
+ \toggletrue{@loadKangxiRadicals}
 }
 
 \DeclareOption{CJK}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadBopomofo}
-  \toggletrue{@loadBopomofoExtended}
-  \toggletrue{@loadCJKCompatibility}
-  \toggletrue{@loadCJKCompatibilityForms}
-  \toggletrue{@loadCJKCompatibilityIdeographs}
-  \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
-  \toggletrue{@loadCJKRadicalsSupplement}
-  \toggletrue{@loadCJKStrokes}
-  \toggletrue{@loadCJKSymbolsandPunctuation}
-  \toggletrue{@loadCJKUnifiedIdeographs}
-  \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
-  \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
-  \toggletrue{@loadEnclosedCJKLettersandMonths}
-  \toggletrue{@loadHalfwidthandFullwidthForms}
-  \toggletrue{@loadHangulCompatibilityJamo}
-  \toggletrue{@loadHangulJamo}
-  \toggletrue{@loadHangulSyllables}
-  \toggletrue{@loadHiragana}
-  \toggletrue{@loadIdeographicDescriptionCharacters}
-  \toggletrue{@loadKanbun}
-  \toggletrue{@loadKangxiRadicals}
-  \toggletrue{@loadKatakana}
-  \toggletrue{@loadKatakanaPhoneticExtensions}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadBopomofo}
+ \toggletrue{@loadBopomofoExtended}
+ \toggletrue{@loadCJKCompatibility}
+ \toggletrue{@loadCJKCompatibilityForms}
+ \toggletrue{@loadCJKCompatibilityIdeographs}
+ \toggletrue{@loadCJKCompatibilityIdeographsSupplement}
+ \toggletrue{@loadCJKRadicalsSupplement}
+ \toggletrue{@loadCJKStrokes}
+ \toggletrue{@loadCJKSymbolsandPunctuation}
+ \toggletrue{@loadCJKUnifiedIdeographs}
+ \toggletrue{@loadCJKUnifiedIdeographsExtensionA}
+ \toggletrue{@loadCJKUnifiedIdeographsExtensionB}
+ \toggletrue{@loadEnclosedCJKLettersandMonths}
+ \toggletrue{@loadHalfwidthandFullwidthForms}
+ \toggletrue{@loadHangulCompatibilityJamo}
+ \toggletrue{@loadHangulJamo}
+ \toggletrue{@loadHangulSyllables}
+ \toggletrue{@loadHiragana}
+ \toggletrue{@loadIdeographicDescriptionCharacters}
+ \toggletrue{@loadKanbun}
+ \toggletrue{@loadKangxiRadicals}
+ \toggletrue{@loadKatakana}
+ \toggletrue{@loadKatakanaPhoneticExtensions}
 }
 
 \DeclareOption{FullCyrillic}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadCyrillic}
-  \toggletrue{@loadCyrillicExtendedA}
-  \toggletrue{@loadCyrillicExtendedB}
-  \toggletrue{@loadCyrillicSupplement}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadCyrillic}
+ \toggletrue{@loadCyrillicExtendedA}
+ \toggletrue{@loadCyrillicExtendedB}
+ \toggletrue{@loadCyrillicSupplement}
 }
 
 \DeclareOption{Diacritics}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadCombiningDiacriticalMarks}
-  \toggletrue{@loadCombiningDiacriticalMarksforSymbols}
-  \toggletrue{@loadCombiningDiacriticalMarksSupplement}
-  \toggletrue{@loadCombiningHalfMarks}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadCombiningDiacriticalMarks}
+ \toggletrue{@loadCombiningDiacriticalMarksforSymbols}
+ \toggletrue{@loadCombiningDiacriticalMarksSupplement}
+ \toggletrue{@loadCombiningHalfMarks}
 }
 
 \DeclareOption{Greek}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadCoptic}
-  \toggletrue{@loadGreekandCoptic}
-  \toggletrue{@loadGreekExtended}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadCoptic}
+ \toggletrue{@loadGreekandCoptic}
+ \toggletrue{@loadGreekExtended}
 }
 
 \DeclareOption{Korean}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadHangulCompatibilityJamo}
-  \toggletrue{@loadHangulJamo}
-  \toggletrue{@loadHangulSyllables}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadHangulCompatibilityJamo}
+ \toggletrue{@loadHangulJamo}
+ \toggletrue{@loadHangulSyllables}
 }
 
 \DeclareOption{Japanese}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadHalfwidthandFullwidthForms}
-  \toggletrue{@loadHiragana}
-  \toggletrue{@loadKanbun}
-  \toggletrue{@loadKatakana}
-  \toggletrue{@loadKatakanaPhoneticExtensions}
-  \toggletrue{@loadKangxiRadicals}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadHalfwidthandFullwidthForms}
+ \toggletrue{@loadHiragana}
+ \toggletrue{@loadKanbun}
+ \toggletrue{@loadKatakana}
+ \toggletrue{@loadKatakanaPhoneticExtensions}
+ \toggletrue{@loadKangxiRadicals}
 }
 
 \DeclareOption{Latin}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadBasicLatin}
-  \toggletrue{@loadLatinExtendedAdditional}
-  \toggletrue{@loadLatinExtendedA}
-  \toggletrue{@loadLatinExtendedB}
-  \toggletrue{@loadLatinExtendedC}
-  \toggletrue{@loadLatinExtendedD}
-  \toggletrue{@loadLatinSupplement}
-  \toggletrue{@loadAlphabeticPresentationForms}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadBasicLatin}
+ \toggletrue{@loadLatinExtendedAdditional}
+ \toggletrue{@loadLatinExtendedA}
+ \toggletrue{@loadLatinExtendedB}
+ \toggletrue{@loadLatinExtendedC}
+ \toggletrue{@loadLatinExtendedD}
+ \toggletrue{@loadLatinSupplement}
+ \toggletrue{@loadAlphabeticPresentationForms}
 }
 
 \DeclareOption{Mathematics}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadMathematicalAlphanumericSymbols}
-  \toggletrue{@loadMathematicalOperators}
-  \toggletrue{@loadMiscellaneousMathematicalSymbolsA}
-  \toggletrue{@loadMiscellaneousMathematicalSymbolsB}
-  \toggletrue{@loadSupplementalMathematicalOperators}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadMathematicalAlphanumericSymbols}
+ \toggletrue{@loadMathematicalOperators}
+ \toggletrue{@loadMiscellaneousMathematicalSymbolsA}
+ \toggletrue{@loadMiscellaneousMathematicalSymbolsB}
+ \toggletrue{@loadSupplementalMathematicalOperators}
 }
 
 \DeclareOption{Phonetics}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadIPAExtensions}
-  \toggletrue{@loadPhoneticExtensions}
-  \toggletrue{@loadPhoneticExtensionsSupplement}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadIPAExtensions}
+ \toggletrue{@loadPhoneticExtensions}
+ \toggletrue{@loadPhoneticExtensionsSupplement}
 }
 
 \DeclareOption{Punctuation}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadGeneralPunctuation}
-  \toggletrue{@loadSupplementalPunctuation}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadGeneralPunctuation}
+ \toggletrue{@loadSupplementalPunctuation}
 }
 
 \DeclareOption{Symbols}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadArrows}
-  \toggletrue{@loadBoxDrawing}
-  \toggletrue{@loadByzantineMusicalSymbols}
-  \toggletrue{@loadControlPictures}
-  \toggletrue{@loadCurrencySymbols}
-  \toggletrue{@loadGeometricShapes}
-  \toggletrue{@loadLetterlikeSymbols}
-  \toggletrue{@loadMiscellaneousSymbols}
-  \toggletrue{@loadMiscellaneousSymbolsandArrows}
-  \toggletrue{@loadMiscellaneousTechnical}
-  \toggletrue{@loadSupplementalArrowsA}
-  \toggletrue{@loadSupplementalArrowsB}
-  \toggletrue{@loadVariationSelectors}
-  \toggletrue{@loadVariationSelectorsSupplement}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadArrows}
+ \toggletrue{@loadBoxDrawing}
+ \toggletrue{@loadByzantineMusicalSymbols}
+ \toggletrue{@loadControlPictures}
+ \toggletrue{@loadCurrencySymbols}
+ \toggletrue{@loadGeometricShapes}
+ \toggletrue{@loadLetterlikeSymbols}
+ \toggletrue{@loadMiscellaneousSymbols}
+ \toggletrue{@loadMiscellaneousSymbolsandArrows}
+ \toggletrue{@loadMiscellaneousTechnical}
+ \toggletrue{@loadSupplementalArrowsA}
+ \toggletrue{@loadSupplementalArrowsB}
+ \toggletrue{@loadVariationSelectors}
+ \toggletrue{@loadVariationSelectorsSupplement}
 }
 
 \DeclareOption{Yi}{
-  \togglefalse{@loadAll}
-  \toggletrue{@loadYiRadicals}
-  \toggletrue{@loadYiSyllables}
+ \togglefalse{@loadAll}
+ \toggletrue{@loadYiRadicals}
+ \toggletrue{@loadYiSyllables}
 }
 
 \ProcessOptions
 
 % ----------------------------------------------------------------------------
 %
-% heavily exploit xetex's intercharclass system!
+% heavily exploit XeTeX's intercharclass system!
 %
 % ----------------------------------------------------------------------------
 
@@ -530,13 +535,21 @@
 
 \newcounter{glyphcounter}
 \newcommand{\@defineUnicodeClass}[3]{
-	\newXeTeXintercharclass#1
-	\forloop{glyphcounter}{#2}{\value{glyphcounter}<#3}{\XeTeXcharclass\value{glyphcounter}=#1}
-	\XeTeXcharclass#3=#1}
+ \newXeTeXintercharclass#1
+ \forloop{glyphcounter}{#2}{\value{glyphcounter}<#3}{\XeTeXcharclass\value{glyphcounter}=#1}
+ \XeTeXcharclass#3=#1}
 
 \PackageInfo{ucharclasses}{Loading unicode blocks...}
 
 \newXeTeXintercharclass\@classstart
+
+% ------------------------------------------------
+%
+% Much like the options, this ought to be doable
+% in a much more compact fashion. If anyone knows
+% how, do tell.
+%
+% ------------------------------------------------
 
 \ifboolexpr{
  togl {@loadAll} or togl {@loadAegeanNumbers}
@@ -1210,61 +1223,65 @@
 
 % ----------------------------------------------------------------------------
 %
-% The transition master commands
+% The transition commands
 %
 % ----------------------------------------------------------------------------
 
 \newcounter{iclass}
 
 \newcommand{\@transition}[3]{
-	%\PackageWarning{ucharclasses}{#1 #2 #3}
-	\XeTeXinterchartoks #1 #2=#3
+ %\PackageWarning{ucharclasses}{#1 #2 #3}
+ \XeTeXinterchartoks #1 #2=#3
 }
 
 %
-%	Use: \setUTransitions{when entering this block}{when leaving this block}
+% Use: \setUTransitions{when entering this block}{when leaving this block}
 %
 
 \newcommand{\setTransitionsFor}[3]{
-  \ifcsname#1Class\endcsname
-	\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}
-		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
-	\addtocounter{iclass}{2}
-	\forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
-		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}
-		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
-	% and a binding for the transitions to and from boundary characters
-	\@transition{255}{\@nameuse{#1Class}}{{#2}}
-	\@transition{\@nameuse{#1Class}}{255}{{#3}}
-	\fi}
+ \ifcsname#1Class\endcsname
+ \forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
+  \@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}
+  \@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
+ \addtocounter{iclass}{2}
+ \forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
+  \@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}
+  \@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#3}}}
+ % and a binding for the transitions to and from boundary characters
+ \@transition{255}{\@nameuse{#1Class}}{{#2}}
+ \@transition{\@nameuse{#1Class}}{255}{{#3}}
+ \fi}
 
 %
-%	Use: \setUTransitionTo{when entering this block}
+% Use: \setUTransitionTo{when entering this block}
 %
 
 \newcommand{\setTransitionTo}[2] {
-	\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
-	\addtocounter{iclass}{2}
-	\forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
-		\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
-	% and a binding for the transition from boundary characters
-	\@transition{255}{\@nameuse{#1Class}}{{#2}}}
-	
+ \ifcsname#1Class\endcsname
+ \forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
+  \@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
+ \addtocounter{iclass}{2}
+ \forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
+  \@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
+ % and a binding for the transition from boundary characters
+ \@transition{255}{\@nameuse{#1Class}}{{#2}}
+ \fi}
+ 
 
 %
-%	Use: \setUTransitionFrom{when leaving this block}
+% Use: \setUTransitionFrom{when leaving this block}
 %
 
 \newcommand{\setTransitionFrom}[2]{
-	\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
-	\addtocounter{iclass}{2}
-	\forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
-		\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
-	% and a binding for the transition to boundary characters
-	\@transition{\@nameuse{#1Class}}{255}{{#2}}}								
+ \ifcsname#1Class\endcsname
+ \forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
+  \@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
+ \addtocounter{iclass}{2}
+ \forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
+  \@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
+ % and a binding for the transition to boundary characters
+ \@transition{\@nameuse{#1Class}}{255}{{#2}}
+ \fi}
 
 % ----------------------------------------------------------------------------
 % Informal Block Rules - for these, to/from must always be defined
@@ -1277,7 +1294,7 @@
 %   - Cyrillic
 %   - Diacritics
 %   - Greek
-%   - Japanese	(it is advised to set CJK first to a catch-all, then set Japanese for specifics)
+%   - Japanese (it is advised to set CJK first to a catch-all, then set Japanese for specifics)
 %   - Korean (=Hangul) (same comment as for Japanese)
 %   - Latin
 %   - Mathematics
