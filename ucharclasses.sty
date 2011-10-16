@@ -1,4 +1,4 @@
-\ProvidesPackage{ucharclasses}[2011/10/04 v2.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2011/10/15 v2.0 Unicode block character classes for XeLaTeX]
 
 % because this package relies on XeTeX's intercharclass sytem, better require XeTeX
 \RequirePackage{ifxetex}
@@ -15,6 +15,10 @@
 % If anyone knows how to make this more efficient, such as iterating
 % through a list of terms, please let me know. It seems to me that this
 % can be done so much better =)
+%
+% I tried using list iteration, but I kept running into memory
+% limitations, so I'm going with what I know works, for the moment.
+%
 % ----------------------------------------------------------------------------
 \newtoggle{@loadAll}\toggletrue{@loadAll}
 \newtoggle{@loadAegeanNumbers}\togglefalse{@loadAegeanNumbers}
@@ -1229,10 +1233,7 @@
 
 \newcounter{iclass}
 
-\newcommand{\@transition}[3]{
- %\PackageWarning{ucharclasses}{#1 #2 #3}
- \XeTeXinterchartoks #1 #2=#3
-}
+\newcommand{\@transition}[3]{\XeTeXinterchartoks #1 #2=#3}
 
 %
 % Use: \setUTransitions{when entering this block}{when leaving this block}

@@ -54,10 +54,4 @@ So what is it?
 license?
 --------
 
- This package was written by Mike "Pomax" Kamermans, from
- nihongoresources and is © 2010, Michiel Kamermans. You
- may freely use this package, but you are discouraged from
- modifying this package and then redistributing it. Instead,
- please contact me (ideally on the XeTeX mailing list) and
- we can discuss the changes you wish to make. If they
- benefit everyone, they will be worked in as a new version.
+ MIT license ("expat" flavour)
