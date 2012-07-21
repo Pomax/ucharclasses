@@ -1,0 +1,13 @@
+\documentclass{article}
+\usepackage{fontspec}
+\usepackage{ucharclasses}
+\setTransitionsForCJK{\fontspec{SimSun}}{}
+\begin{document}
+
+This text should be typeset with SimSun: 手書きじゃない。
+
+The same text, with explicit fontspec command:
+
+This text should be typeset with SimSun: {\fontspec{SimSun} 手書きじゃない。}
+
+\end{document}
