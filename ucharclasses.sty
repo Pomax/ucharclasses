@@ -60,7 +60,6 @@
   \do{CJKUnifiedIdeographsExtensionA}{13312}{19903}
   \do{CJKUnifiedIdeographsExtensionB}{131072}{173791}
   \do{CJKUnifiedIdeographsExtensionC}{173824}{177983}
-%  \do{CJKUnifiedIdeographsExtensionD}{177984}{178207}
   \do{CombiningDiacriticalMarks}{768}{879}
   \do{CombiningDiacriticalMarksforSymbols}{8400}{8447}
   \do{CombiningDiacriticalMarksSupplement}{7616}{7679}
@@ -712,11 +711,7 @@
 
 % ----------------------------------------------------------------------------
 
-% Now we free the memory occupied by the |\enableX| commands
-\def\do#1#2#3{\expandafter\let\csname enable#1\endcsname\@undefined}
-\AllClasses
 \let\do\@undefined\let\doclass\@undefined
-
 \endinput
 %
 % End of file `ucharclasses.sty'.
