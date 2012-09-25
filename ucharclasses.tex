@@ -62,11 +62,11 @@
 
 	\section{Introduction}
 	
-		Sometimes you don't want to have to bother with font switching just because you're languages that are distinct enough to use different Unicode blocks, but aren't covered by the polyglossia package. Where normal word processing packages such as MS, Star- or OpenOffice pretty much handle this for you, \LaTeX\ (because it needs you to tell it what to do) has no default behaviour for this, and so we arrive at a need for a package that does this for us. You already discovered that regular \LaTeX\ has no understanding of Unicode (in fact, it has no understanding of 8-bit characters at all, it likes them in seven bits instead), and ended up going for Xe(La)TeX as your TeX compiler of choice, which means you now have two excellent resources available: fontspec, and ucharclasses.
+		Sometimes you don't want to have to bother with font switching just because you're using languages that are distinct enough to use different Unicode blocks, but aren't covered by the polyglossia package. Where normal word processing packages such as MS, Star- or OpenOffice pretty much handle this for you, \LaTeX\ (because it needs you to tell it what to do) has no default behaviour for this, and so we arrive at a need for a package that does this for us. You already discovered that regular \LaTeX\ has no understanding of Unicode (in fact, it has no understanding of 8-bit characters at all, it likes them in seven bits instead), and ended up going for Xe(La)TeX as your TeX compiler of choice, which means you now have two excellent resources available: fontspec, and ucharclasses.
 		
-		The first of these lets you pick fonts based on what your system calls them, without needing to rewrite them as metafont files. This is convenient. This is good. The second lets you define what should happen when we change from a character in one Unicode block, to a character in another. This is also convenient, and paired with fontspec it offers automatic fontswitching in the same way that normal Office applications take care of this with you. With one big difference: you stay in control. If at some point you need the switch rule to use a completely different rule, in an Office application that's just too bad for you. In Xe(La)TeX, you stay on top of things and still get to say exactly what happens, and when.
+		The first of these lets you pick fonts based on what your system calls them, without needing to rewrite them as MetaFont files. This is convenient. This is good. The second lets you define what should happen when we change from a character in one Unicode block to a character in another. This is also convenient, and paired with fontspec it offers automatic fontswitching in the same way that normal Office applications take care of this for you. With one big difference: you stay in control. In an Office application, if at some point you need the switch rule to use a completely different rule, that's just too bad for you. In Xe(La)TeX, you stay on top of things and still get to say exactly what happens, and when.
 		
-		For instance, this document has no explicit font codes in the text itself, anywhere. Instead there are a few Unicode block transition rules defined, which all say “when entering block ..., use fontspec to change the font to ...”. As such, typesetting the following list in the appropriate fonts just works:
+		For instance, this document has no explicit font codes in the text itself. Instead, there are a few Unicode block transition rules defined, which all say “when entering block ..., use fontspec to change the font to ...”. As such, typesetting the following list in the appropriate fonts just works:
 		
 		\begin{itemlist}
 			\item English: This is an English phrase (using Palatino Linotype)
@@ -79,13 +79,13 @@
 
 		However, be aware that this only “just works” for Unicode blocks. If you are working with typographically overlapping languages, such as combining English and Vietnamese in one document, things get a lot more complex if you want one font for English and another for Vietnamese. Both of these languagese use Latin blocks, so it is inherently impossible to tell which language is intended based on which Unicode block a character in a word belongs to.
 		
-		As an example, this document uses one rule for applying a font for general CJK, and an override with a different font for all Japanese-specific CJK characters. This causes a problem for Chinese, because most Japanese fonts contain fewer characters than are necessary to typeset Chinese:
+		As an example, this document uses one rule for applying a font for general CJK, and an override with a different font for all Japanese-specific CJK characters. This causes a problem for Chinese, because both Japanese and Chinese mostly use characters from the "CJK Unified Ideographs" block, but most Japanese fonts contain fewer characters than are necessary to typeset Chinese:
 
     \begin{itemlist}
 			\item Chinese, using the Japanese CJK font, which may have gaps: 我的母语是汉语 (uses Ume Mincho, which does not contain the three Chinese-specific characters used in that phrase)
     \end{itemlist}
 
-  We can get around this by turning off automatic font switching, and using an explicit command to temporarily set the font to one that has full Chinese support, using \{\textbackslash uccoff + a fontspec rule + the text we wanted to typeset + \textbackslash uccon\}. This gives us: {\uccoff \fontspec{HAN NOM A} 我的母语是汉语 \uccon} (This now explicitly uses Han Nom A)
+  We can get around this by explicitly setting the font to one that supports Chinese, turning off the switching rules for the stretch of Chinese text, using \{\textbackslash uccoff + a fontspec rule + the text we wanted to typeset + \textbackslash uccon\}. This gives us: {\uccoff \fontspec{HAN NOM A} 我的母语是汉语 \uccon} (This now explicitly uses Han Nom A).
 
 	\section{Use}
 
@@ -100,7 +100,7 @@
 
 　　　　　　\setDefaultTransitions{\fontspec{Code2000}}{}
 　　　　　　\setTransitionsForLatin{\fontspec{Palatino Linotype}}{}
-　　　　　　\setTransitionsForCJK{\fontspec{SimSun}{}
+　　　　　　\setTransitionsForCJK{\fontspec{HAN NOM A}{}
 　　　　　　\setTransitionsForJapanese{\fontspec{Ume Mincho}}{}
 
 　　　　　　\setTransitionTo{Thai}{\fontspec{IrisUPC}}
@@ -111,7 +111,7 @@
 		\end{verbatim}
 		\enableTransitionRules
 
-		By default, ucharclasses is agnostic with regards to what you want to at the start or end of Unicode blocks, so while using it for fontswitching is the most obvious application, you could also use it for far more creative purposes.
+		By default, ucharclasses is agnostic with regard to what you want inserted at the start or end of Unicode blocks, so while using this package for font switching is the most obvious application, you could also use it for far more creative purposes.
 
 		\subsection{Overriding ucharclass transitions}
 		
@@ -130,7 +130,7 @@
 		The overlapping block problem is especially notable when using RTL/LTR rules for languages such as Arabic or Hebrew. While you would want to be able to specify something along the lines of:
 		
 		\begin{verbatim}
-				\setTransitionsForArabic{\fontspec{Tahoma}\setRTL}{\setLTR}
+				\setTransitionsForArabics{\fontspec{Tahoma}\setRTL}{\setLTR}
 		\end{verbatim}
 	
 		this will not work, because Arabic (and Hebrew, and other RTL languages) has things like spaces in it, and so rather than ending with a full sentence that starts with \textbackslash setRTL, then the Arabic text, and then finally \textbackslash setLTR, every word in the Arabic sentence will be wrapped by \textbackslash setRTL and \textbackslash setLTR, effectively getting the typesetting all wrong, because going from Arabic to a space character “leaves” the Arabic block, so the transition rule for leaving the Arabic block is applied.
@@ -172,10 +172,10 @@
 			There are a number of these commands, pertaining to particular “informal groups”: collections of Unicode blocks which can be considered part of a single meta-block. Available informal groups (the names of which replace the XXXX in the section-stated command) are:
 			
 			\begin{itemlist}
-				\item FullArabic
+				\item Arabics
 				\item Chinese
 				\item CJK
-				\item FullCyrillic
+				\item Cyrillics
 				\item Diacritics
 				\item Greek
 				\item Korean
@@ -471,10 +471,10 @@
 		In addition, the informal blocks for use as package option are:
 		
 		\begin{itemlist}
-			\item FullArabic
+			\item Arabics
 			\item Chinese
 			\item CJK
-			\item FullCyrillic
+			\item Cyrillics
 			\item Diacritics
 			\item Greek
 			\item Korean
