@@ -38,7 +38,7 @@
 
 % overrides on the default rules for specific informal groups
 \setTransitionsForLatin{\fontspec{Palatino Linotype}}{}
-\setTransitionsForCJK{\fontspec{SimSun}}{}
+\setTransitionsForCJK{\fontspec{HAN NOM A}}{}
 \setTransitionsForJapanese{\fontspec{Ume Mincho}}{}
 
 % overrides on the default rules for specific unicode blocks
@@ -71,7 +71,6 @@
 		\begin{itemlist}
 			\item English: This is an English phrase (using Palatino Linotype)
 			\item Japanese: 日本語が分かりますか (using Ume Mincho)
-			\item Chinese: 我的母语是汉语 (Ume Mincho when overlapping Japanese, SimSun for the rest)
 			\item Thai: คุณพูดภาษาอังกฤษได้ไหม (using IrisUPC)
 			\item Sinhala: කරැණාකරල ඒක නැවත කියන්න පුළුවන්ද (using Iskoola Pota)
 			\item Malayalam: നിങ്ങളുടെ പേരെന്താണ്? (using Arial Unicode MS)
@@ -79,7 +78,14 @@
 		\end{itemlist}
 
 		However, be aware that this only “just works” for Unicode blocks. If you are working with typographically overlapping languages, such as combining English and Vietnamese in one document, things get a lot more complex if you want one font for English and another for Vietnamese. Both of these languagese use Latin blocks, so it is inherently impossible to tell which language is intended based on which Unicode block a character in a word belongs to.
+		
+		As an example, this document uses one rule for applying a font for general CJK, and an override with a different font for all Japanese-specific CJK characters. This causes a problem for Chinese, because most Japanese fonts contain fewer characters than are necessary to typeset Chinese:
 
+    \begin{itemlist}
+			\item Chinese, using the Japanese CJK font, which may have gaps: 我的母语是汉语 (uses Ume Mincho, which does not contain the three Chinese-specific characters used in that phrase)
+    \end{itemlist}
+
+  We can get around this by turning off automatic font switching, and using an explicit command to temporarily set the font to one that has full Chinese support, using \{\textbackslash uccoff + a fontspec rule + the text we wanted to typeset + \textbackslash uccon\}. This gives us: {\uccoff \fontspec{HAN NOM A} 我的母语是汉语 \uccon} (This now explicitly uses Han Nom A)
 
 	\section{Use}
 
