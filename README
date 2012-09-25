@@ -24,12 +24,12 @@ The brief
  such as turning them into metafonts. This is convenient,
  user friendly, and the way of the future (at least, it
  should be).
- 
+
  The second lets you define what should happen when your
  text changes from a character in one unicode block, to a
  character in another. This is also convenient, and paired
  with fontspec it offers automatic font switching in the
- same way that normal Office applications perform, with 
+ same way that normal Office applications perform, with
  one big difference: you stay in control. If at some point
  you need the switch rule to do something different,
  you will be out of luck using an Office application.
@@ -51,7 +51,13 @@ So what is it?
  I may have missed one or more blocks that were added
  between 5 and 6.
 
-license?
+Credits?
+--------
+
+ v1.0: Mike "Pomax" Kamermans
+ v2.0: rewritten by Enrico Gregorio
+
+License?
 --------
 
  Public Domain
