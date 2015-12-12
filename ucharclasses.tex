@@ -206,7 +206,7 @@
 
 	\section{Code}
 	
-		The code relies on running through individual definition blcosk for each Unicode blocks, conditioned to whether ucharclasses is loaded with package options or not:
+		The code relies on running through individual definition blocks for each Unicode blocks, conditioned to whether ucharclasses is loaded with package options or not:
 		
 		\pagebreak
 		
@@ -294,54 +294,71 @@
 		
 	\section{Package options and Unicode blocks}
 	
-		The following Unicode blocks are available for use in transition rules, as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document:
+		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 8.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document:
 		
 		\begin{multicols}{2}
 			\begin{itemlist}
 				\item AegeanNumbers
+				\item Ahom
+				\item AlchemicalSymbols
 				\item AlphabeticPresentationForms
+				\item AnatolianHieroglyphs
 				\item AncientGreekMusicalNotation
 				\item AncientGreekNumbers
 				\item AncientSymbols
 				\item Arabic
+				\item ArabicExtendedA
+				\item ArabicMathematicalAlphabeticSymbols
 				\item ArabicPresentationFormsA
 				\item ArabicPresentationFormsB
 				\item ArabicSupplement
 				\item Armenian
 				\item Arrows
 				\item Balinese
+				\item BamumSupplement
 				\item BasicLatin
+				\item BassaVah
+				\item Batak
 				\item Bengali
 				\item BlockElements
 				\item Bopomofo
 				\item BopomofoExtended
 				\item BoxDrawing
+				\item Brahmi
 				\item BraillePatterns
 				\item Buginese
 				\item Buhid
 				\item ByzantineMusicalSymbols
 				\item Carian
+				\item CaucasianAlbanian
+				\item Chakma
 				\item Cham
 				\item Cherokee
+				\item CherokeeSupplement
 				\item CJKCompatibility
 				\item CJKCompatibilityForms
 				\item CJKCompatibilityIdeographs
 				\item CJKCompatibilityIdeographsSupplement
 				\item CJKRadicalsSupplement
 				\item CJKStrokes
-				\item CJKSymbolsandPunctuation
+				\item CJKSymbolsAndPunctuation
 				\item CJKUnifiedIdeographs
 				\item CJKUnifiedIdeographsExtensionA
 				\item CJKUnifiedIdeographsExtensionB
+				\item CJKUnifiedIdeographsExtensionC
+				\item CJKUnifiedIdeographsExtensionD
+				\item CJKUnifiedIdeographsExtensionE
 				\item CombiningDiacriticalMarks
-				\item CombiningDiacriticalMarksforSymbols
+				\item CombiningDiacriticalMarksExtended
 				\item CombiningDiacriticalMarksSupplement
+				\item CombiningDiacriticalMarksforSymbols
 				\item CombiningHalfMarks
 				\item ControlPictures
 				\item Coptic
+				\item CopticEpactNumbers
 				\item CountingRodNumerals
 				\item Cuneiform
-				\item CuneiformNumbersandPunctuation
+				\item CuneiformNumbersAndPunctuation
 				\item CurrencySymbols
 				\item CypriotSyllabary
 				\item Cyrillic
@@ -352,32 +369,41 @@
 				\item Devanagari
 				\item Dingbats
 				\item DominoTiles
-				\item EnclosedAlphanumerics
-				\item EnclosedCJKLettersandMonths
+				\item Duployan
+				\item EarlyDynasticCuneiform
 				\item EgyptianHieroglyphs
+				\item Elbasan
+				\item Emoticons
+				\item EnclosedAlphanumerics
+				\item EnclosedCJKLettersAndMonths
 				\item Ethiopic
+				\item EthiopicExtendedA
 				\item EthiopicExtended
 				\item EthiopicSupplement
 				\item GeneralPunctuation
 				\item GeometricShapes
+				\item GeometricShapesExtended
 				\item Georgian
 				\item GeorgianSupplement
 				\item Glagolitic
 				\item Gothic
-				\item GreekandCoptic
+				\item Grantha
+				\item GreekAndCoptic
 				\item GreekExtended
 				\item Gujarati
 				\item Gurmukhi
-				\item HalfwidthandFullwidthForms
+				\item HalfwidthAndFullwidthForms
 				\item HangulCompatibilityJamo
 				\item HangulJamo
 				\item HangulSyllables
 				\item Hanunoo
+				\item Hatran
 				\item Hebrew
 				\item Hiragana
 				\item IdeographicDescriptionCharacters
 				\item ImperialAramaic
 				\item IPAExtensions
+				\item KanaSupplement
 				\item Kanbun
 				\item KangxiRadicals
 				\item Kannada
@@ -387,64 +413,100 @@
 				\item Kharoshthi
 				\item Khmer
 				\item KhmerSymbols
+				\item Khojki
+				\item Khudawadi
 				\item Lao
 				\item LatinExtendedAdditional
 				\item LatinExtendedA
 				\item LatinExtendedB
 				\item LatinExtendedC
 				\item LatinExtendedD
+				\item LatinExtendedE
 				\item LatinSupplement
 				\item Lepcha
 				\item LetterlikeSymbols
 				\item Limbu
+				\item LinearA
 				\item LinearBIdeograms
 				\item LinearBSyllabary
 				\item Lycian
 				\item Lydian
+				\item Mahajani
 				\item MahjongTiles
 				\item Malayalam
+				\item Mandaic
+				\item Manichaean
 				\item MathematicalAlphanumericSymbols
 				\item MathematicalOperators
+				\item MeeteiMayekExtensions
+				\item MendeKikakui
+				\item MeroiticCursive
+				\item MeroiticHieroglyphs
+				\item Miao
 				\item MiscellaneousMathematicalSymbolsA
 				\item MiscellaneousMathematicalSymbolsB
 				\item MiscellaneousSymbols
-				\item MiscellaneousSymbolsandArrows
+				\item MiscellaneousSymbolsAndArrows
+				\item MiscellaneousSymbolsAndPictographs
 				\item MiscellaneousTechnical
 				\item ModifierToneLetters
+				\item Modi
 				\item Mongolian
+				\item Mro
+				\item Multani
 				\item MusicalSymbols
 				\item Myanmar
+				\item MyanmarExtendedB
+				\item Nabataean
 				\item NewTaiLue
 				\item NKo
 				\item NumberForms
 				\item Ogham
 				\item OldChiki
+				\item OldHungarian
 				\item OldItalic
+				\item OldNorthArabian
+				\item OldPermic
 				\item OldPersian
 				\item OpticalCharacterRecognition
 				\item Oriya
+				\item OrnamentalDingbats
 				\item Osmanya
+				\item PahawhHmong
+				\item Palmyrene
+				\item PauCinHau
 				\item PhagsPa
 				\item PhaistosDisc
 				\item Phoenician
 				\item PhoneticExtensions
 				\item PhoneticExtensionsSupplement
+				\item PlayingCards
 				\item PrivateUseArea
+				\item PsalterPahlavi
 				\item Rejang
 				\item Runic
 				\item Saurashtra
+				\item Sharada
 				\item Shavian
+				\item ShorthandFormatControls
+				\item Siddham
 				\item Sinhala
+				\item SinhalaArchaicNumbers
 				\item SmallFormVariants
+				\item SoraSompeng
 				\item SpacingModifierLetters
 				\item Specials
-				\item SuperscriptsandSubscripts
+				\item SundaneseSupplement
+				\item SuperscriptsAndSubscripts
 				\item SupplementalArrowsA
 				\item SupplementalArrowsB
+				\item SupplementalArrowsC
 				\item SupplementalMathematicalOperators
 				\item SupplementalPunctuation
+				\item SupplementalSymbolsAndPictographs
 				\item SupplementaryPrivateUseAreaA
 				\item SupplementaryPrivateUseAreaB
+				\item SuttonSignWriting
 				\item SylotiNagri
 				\item Syriac
 				\item Tagalog
@@ -452,18 +514,22 @@
 				\item Tags
 				\item TaiLe
 				\item TaiXuanJingSymbols
+				\item Takri
 				\item Tamil
 				\item Telugu
 				\item Thaana
 				\item Thai
 				\item Tibetan
 				\item Tifinagh
+				\item Tirhuta
+				\item TransportAndMapSymbols
 				\item Ugaritic
 				\item UnifiedCanadianAboriginalSyllabics
 				\item Vai
 				\item VariationSelectors
 				\item VariationSelectorsSupplement
 				\item VerticalForms
+				\item WarangCiti
 				\item YiRadicals
 				\item YiSyllables
 				\item YijingHexagramSymbols
