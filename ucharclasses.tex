@@ -29,25 +29,36 @@
 {
   \end{enumerate}}
 
+\usepackage{fontspec}
+\newfontfamily{\defaultfont}{Code2000}
+\newfontfamily{\latinfont}{Palatino Linotype}
+\newfontfamily{\cjkfont}{HAN NOM A}
+\newfontfamily{\japanesefont}{Ume Mincho}
+\newfontfamily{\unifiedCJKfont}{SimSun-ExtB}
+\newfontfamily{\thaifont}{IrisUPC}
+\newfontfamily{\sinhalafont}{Iskoola Pota}
+\newfontfamily{\malayalamfont}{Arial Unicode MS}
+\newfontfamily{\dominofont}{FreeSerif}
+\newfontfamily{\mahjongfont}{FreeSerif}
+
 % and the font switching magic
 \usepackage[CJK, Latin, Thai, Sinhala, Malayalam, DominoTiles, MahjongTiles]{ucharclasses}
-\usepackage{fontspec}
 
-% default transition uses the widest coverage font I know of
-\setDefaultTransitions{\fontspec{Code2000}}{}
+% set the obvious default font
+\setDefaultTransitions{\defaultfont}{}
 
 % overrides on the default rules for specific informal groups
-\setTransitionsForLatin{\fontspec{Palatino Linotype}}{}
-\setTransitionsForCJK{\fontspec{HAN NOM A}}{}
-\setTransitionsForJapanese{\fontspec{Ume Mincho}}{}
+\setTransitionsForLatin{\latinfont}{}
+\setTransitionsForCJK{\cjkfont}{}
+\setTransitionsForJapanese{\japanesefont}{}
 
 % overrides on the default rules for specific unicode blocks
-\setTransitionTo{CJKUnifiedIdeographsExtensionB}{\fontspec{SimSun-ExtB}}
-\setTransitionTo{Thai}{\fontspec{IrisUPC}}
-\setTransitionTo{Sinhala}{\fontspec{Iskoola Pota}}
-\setTransitionTo{Malayalam}{\fontspec{Arial Unicode MS}}
-\setTransitionTo{DominoTiles}{\fontspec{FreeSerif}}
-\setTransitionTo{MahjongTiles}{\fontspec{FreeSerif}}
+\setTransitionTo{CJKUnifiedIdeographsExtensionB}{\unifiedCJKfont}
+\setTransitionTo{Thai}{\thaifont}
+\setTransitionTo{Sinhala}{\sinhalafont}
+\setTransitionTo{Malayalam}{\malayalamfont}
+\setTransitionTo{DominoTiles}{\dominofont}
+\setTransitionTo{MahjongTiles}{\mahjongfont}
 
 \begin{document}
 
@@ -61,13 +72,13 @@
 	\pagebreak
 
 	\section{Introduction}
-	
+
 		Sometimes you don't want to have to bother with font switching just because you're using languages that are distinct enough to use different Unicode blocks, but aren't covered by the polyglossia package. Where normal word processing packages such as MS, Star- or OpenOffice pretty much handle this for you, \LaTeX\ (because it needs you to tell it what to do) has no default behaviour for this, and so we arrive at a need for a package that does this for us. You already discovered that regular \LaTeX\ has no understanding of Unicode (in fact, it has no understanding of 8-bit characters at all, it likes them in seven bits instead), and ended up going for Xe(La)TeX as your TeX compiler of choice, which means you now have two excellent resources available: fontspec, and ucharclasses.
-		
+
 		The first of these lets you pick fonts based on what your system calls them, without needing to rewrite them as MetaFont files. This is convenient. This is good. The second lets you define what should happen when we change from a character in one Unicode block to a character in another. This is also convenient, and paired with fontspec it offers automatic fontswitching in the same way that normal Office applications take care of this for you. With one big difference: you stay in control. In an Office application, if at some point you need the switch rule to use a completely different rule, that's just too bad for you. In Xe(La)TeX, you stay on top of things and still get to say exactly what happens, and when.
-		
+
 		For instance, this document has no explicit font codes in the text itself. Instead, there are a few Unicode block transition rules defined, which all say “when entering block ..., use fontspec to change the font to ...”. As such, typesetting the following list in the appropriate fonts just works:
-		
+
 		\begin{itemlist}
 			\item English: This is an English phrase (using Palatino Linotype)
 			\item Japanese: 日本語が分かりますか (using Ume Mincho)
@@ -78,7 +89,7 @@
 		\end{itemlist}
 
 		However, be aware that this only “just works” for Unicode blocks. If you are working with typographically overlapping languages, such as combining English and Vietnamese in one document, things get a lot more complex if you want one font for English and another for Vietnamese. Both of these languagese use Latin blocks, so it is inherently impossible to tell which language is intended based on which Unicode block a character in a word belongs to.
-		
+
 		As an example, this document uses one rule for applying a font for general CJK, and an override with a different font for all Japanese-specific CJK characters. This causes a problem for Chinese, because both Japanese and Chinese mostly use characters from the "CJK Unified Ideographs" block, but most Japanese fonts contain fewer characters than are necessary to typeset Chinese:
 
     \begin{itemlist}
@@ -90,59 +101,71 @@
 	\section{Use}
 
 		In order to get this all to work, the only thing that had to be incidated was a set of transition rules in the preamble:
-		
+
 		\disableTransitionRules
 		\begin{verbatim}
-　　　　　　\usepackage[CJK, Latin, Thai, Sinhala, Malayalam,
-　　　　　　            DominoTiles, MahjongTiles]{ucharclasses}
-　　　　　　\usepackage{fontspec}
-　　　　　　\usepackage{bidi}
+				\usepackage{fontspec}
 
-　　　　　　\setDefaultTransitions{\fontspec{Code2000}}{}
-　　　　　　\setTransitionsForLatin{\fontspec{Palatino Linotype}}{}
-　　　　　　\setTransitionsForCJK{\fontspec{HAN NOM A}{}
-　　　　　　\setTransitionsForJapanese{\fontspec{Ume Mincho}}{}
+				\newfontfamily{\defaultfont}{Code2000}
+				\newfontfamily{\latinfont}{Palatino Linotype}
+				\newfontfamily{\cjkfont}{HAN NOM A}
+				\newfontfamily{\japanesefont}{Ume Mincho}
+				\newfontfamily{\unifiedCJKfont}{SimSun-ExtB}
+				\newfontfamily{\thaifont}{IrisUPC}
+				\newfontfamily{\sinhalafont}{Iskoola Pota}
+				\newfontfamily{\malayalamfont}{Arial Unicode MS}
+				\newfontfamily{\dominofont}{FreeSerif}
+				\newfontfamily{\mahjongfont}{FreeSerif}
 
-　　　　　　\setTransitionTo{Thai}{\fontspec{IrisUPC}}
-　　　　　　\setTransitionTo{Sinhala}{\fontspec{Iskoola Pota}}
-　　　　　　\setTransitionTo{Malayalam}{\fontspec{Arial Unicode MS}}
-　　　　　　\setTransitionTo{DominoTiles}{\fontspec{FreeSerif}}
-　　　　　　\setTransitionTo{MahjongTiles}{\fontspec{FreeSerif}}
+				\usepackage[CJK, Latin, Thai, Sinhala, Malayalam,
+				            DominoTiles, MahjongTiles]{ucharclasses}
+
+				\setDefaultTransitions{\defaultfont}{}
+
+				\setTransitionsForLatin{\latinfont}{}
+				\setTransitionsForCJK{\cjkfont}{}
+				\setTransitionsForJapanese{\japanesefont}{}
+				\setTransitionTo{CJKUnifiedIdeographsExtensionB}{\unifiedCJKfont}
+				\setTransitionTo{Thai}{\thaifont}
+				\setTransitionTo{Sinhala}{\sinhalafont}
+				\setTransitionTo{Malayalam}{\malayalamfont}
+				\setTransitionTo{DominoTiles}{\dominofont}
+				\setTransitionTo{MahjongTiles}{\mahjongfont}
 		\end{verbatim}
 		\enableTransitionRules
 
 		By default, ucharclasses is agnostic with regard to what you want inserted at the start or end of Unicode blocks, so while using this package for font switching is the most obvious application, you could also use it for far more creative purposes.
 
 		\subsection{Overriding ucharclass transitions}
-		
+
 			If you need to “override” ucharclass transition rules (for instance, you want a custom font for a bit of cross-Unicode-block text), you will want to temporarily disable and reenabled XeTeX's interchartoks state. You can do this in three ways:
-			
+
 			\begin{numberlist}
 				\item call [\textbackslash XeTeXinterchartokstate = 0] before, and [\textbackslash XeTeXinterchartokstate = 1] after you're done,
 				\item call the macros \textbackslash disableTransitionRules before, and \textbackslash enableTransitionRules after you're done, or
 				\item call \textbackslash uccoff before, and \textbackslash uccon after you're done.
 			\end{numberlist}
-			
+
 			This last option is mainly there because it's nice and short, and is more convenient in a scoped environment \{\textbackslash uccoff such as this\textbackslash uccon\} where you only want to override the transition behaviour within a paragraph. If you need it disabled for a few blocks of text instead, the full name commands are probably a better choice, because it makes your .tex more readable. As the base XeTeX command uses the un\LaTeX y “... = ...” construction, it's best to avoid it outside of the preamble (and when using ucharclasses, should not be in the preamble at all).
 
 	\section{Problems with RTL languages}
 
 		The overlapping block problem is especially notable when using RTL/LTR rules for languages such as Arabic or Hebrew. While you would want to be able to specify something along the lines of:
-		
+
 		\begin{verbatim}
-				\setTransitionsForArabics{\fontspec{Tahoma}\setRTL}{\setLTR}
+				\setTransitionsForArabics{\arabicfont\setRTL}{\setLTR}
 		\end{verbatim}
-	
+
 		this will not work, because Arabic (and Hebrew, and other RTL languages) has things like spaces in it, and so rather than ending with a full sentence that starts with \textbackslash setRTL, then the Arabic text, and then finally \textbackslash setLTR, every word in the Arabic sentence will be wrapped by \textbackslash setRTL and \textbackslash setLTR, effectively getting the typesetting all wrong, because going from Arabic to a space character “leaves” the Arabic block, so the transition rule for leaving the Arabic block is applied.
 
 		If you need script support, rather than Unicode blocks, you may want to have a look at the polyglossia package instead. You can try to combine the two packages by relying on \textbackslash uccoff and textbackslash uccon to turn off Unicode block transitions inside regions of text, but this may not always work, or may have interesting interaction side-effects.
 
 	\section{Commands}
-		
+
 		\subsection{\textbackslash setTransitionTo[2]}
 
 			This command has two arguments:
-			
+
 			\begin{numberlist}
 				\item The name of the Unicode class to which the transition should apply (see 'Unicode blocks' list)
 				\item The code you want used when entering this Unicode block
@@ -151,16 +174,16 @@
 		\subsection{\textbackslash setTransitionFrom[2]}
 
 			This command has two arguments:
-			
+
 			\begin{numberlist}
 				\item The name of the Unicode class to which the transition should apply (see 'Unicode blocks' list)
 				\item The code you want used when exiting this Unicode block
 			\end{numberlist}
-		
+
 		\subsection{\textbackslash setTransitions[3]}
-		
-			This command has three arguments:	
-		
+
+			This command has three arguments:
+
 			\begin{numberlist}
 				\item The name of the Unicode class to which the transition should apply (see 'Unicode blocks' list)
 				\item The code you want used when entering this Unicode block
@@ -170,7 +193,7 @@
 		\subsection{\textbackslash setTransitionsForXXXX[2]}
 
 			There are a number of these commands, pertaining to particular “informal groups”: collections of Unicode blocks which can be considered part of a single meta-block. Available informal groups (the names of which replace the XXXX in the section-stated command) are:
-			
+
 			\begin{itemlist}
 				\item Arabics
 				\item Chinese
@@ -187,59 +210,74 @@
 				\item Symbols
 				\item Yi
 			\end{itemlist}
-			
+
 			Furthermore, these commands have two arguments:
-			
+
 			\begin{numberlist}
 				\item The code you want used when entering blocks from the command's informal group
 				\item The code you want used when exiting blocks from the command's informal group
 			\end{numberlist}
-		
+
 		\subsection{\textbackslash setDefaultTransitions[2]}
-		
+
 			This is a blanket command that lets you set up the same to and from transition rules for all blocks in one go. It has (fairly obviously) two arguments:
-			
+
 			\begin{numberlist}
 				\item The code you want used when entering any Unicode block
 				\item The code you want used when exiting any Unicode block
 			\end{numberlist}
 
 	\section{Code}
-	
+
 		The code relies on running through individual definition blocks for each Unicode blocks, conditioned to whether ucharclasses is loaded with package options or not:
-		
+
 		\pagebreak
-		
+
 		\disableTransitionRules
 		\begin{verbatim}
-  ...
-  \ifboolexpr{
-   togl {@loadAll} or togl {@loadBasicLatin}
-  }{\@defineUnicodeClass{\BasicLatinClass}{32}{127}}
-  ...
+	  ...
+		\newif\if@overrideClassLoading
+		\newcommand{\overrideClassLoading}{\@overrideClassLoadingtrue
+		  \let\overrideClassLoading\relax}
+
+		\def\do#1#2#3{\DeclareOption{#1}%
+		  {\overrideClassLoading\expandafter\let\csname enable#1\endcsname\@empty}}
+		% We execute the list with this definition of \do
+		\AllClasses
+  	...
 		\end{verbatim}
 		\enableTransitionRules
-		
+
 		The classes are automatically numbered by using the \textbackslash newXeTeXintercharclass command, and every time a new class is defined, the class counter goes up. After all desired classes have been defined, the code iterates over the class numbers from lower bound to upper bound.
-		
+
 		The block loading code is defined as follows:
-		
+
 		\disableTransitionRules
 		\begin{verbatim}
-  \newcounter{glyphcounter}
-  \newcommand{\@defineUnicodeClass}[3]{
-      \newXeTeXintercharclass#1
-      \forloop{glyphcounter}{#2}{\value{glyphcounter}<#3}{
-          \XeTeXcharclass\value{glyphcounter}=#1}
-      \XeTeXcharclass#3=#1}
+	  \chardef\@classstart=\xe@alloc@intercharclass
 
-  \newXeTeXintercharclass\@classstart
-  ...
-  \ifboolexpr{
-   togl {@loadAll} or togl {@loadBasicLatin}
-  }{\@defineUnicodeClass{\BasicLatinClass}{32}{127}}
-  ...
-  \newXeTeXintercharclass\@classend
+		\providecommand\@gobblethree[3]{}
+		\def\do#1{%
+		  \ifcsname enable#1\endcsname
+		     \expandafter\@defineUnicodeClass
+		   \else
+		     \expandafter\@gobblethree
+		   \fi{#1}}
+
+		\def\@defineUnicodeClass#1#2#3{%
+		  \if@ucharclassverbose\typeout{Defining #1 Class}\fi
+		  \expandafter\newXeTeXintercharclass\csname #1Class\endcsname
+		  \count@=#2
+		  \loop
+		  \if@ucharclassverbose
+		    \typeout{\XeTeXcharclass\number\count@=
+		      \expandafter\string\csname #1Class\endcsname}%
+		  \fi
+		    \XeTeXcharclass\count@=\csname #1Class\endcsname
+		  \ifnum\count@<#3
+		    \advance\count@\@ne
+		  \repeat
+		}
 		\end{verbatim}
 		\enableTransitionRules
 
@@ -247,55 +285,84 @@
 
 		\disableTransitionRules
 		\begin{verbatim}
-  \newcommand{\setTransitionsFor}[3]{
-      \forloop{iclass}{he\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-　　　　　    \@transition{he\value{iclass}}{\@nameuse{#1Class}}{{#2}}
-　　　　　　　　\@transition{\@nameuse{#1Class}}{he\value{iclass}}{{#3}}}
-　　　　\addtocounter{iclass}{2}
-　　　　\forloop{iclass}{\value{iclass}}{\value{iclass} < he\@classend}{
-　　　　　　　　\@transition{he\value{iclass}}{\@nameuse{#1Class}}{{#2}}
-　　　　　　　　\@transition{\@nameuse{#1Class}}{he\value{iclass}}{{#3}}}
-　　　　% and a binding for the transitions to and from boundary characters
-　　　　\@transition{255}{\@nameuse{#1Class}}{{#2}}
-　　　　\@transition{\@nameuse{#1Class}}{255}{{#3}}}
-　　　　　　
- 　\newcommand{\setTransitionTo}[2] {
-　　　　\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-　　　　　　　　\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
-　　　　\addtocounter{iclass}{2}
-　　　　\forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
-　　　　　　　　\@transition{\the\value{iclass}}{\@nameuse{#1Class}}{{#2}}}
-　　　　% and a binding for the transition from boundary characters
-　　　　\@transition{255}{\@nameuse{#1Class}}{{#2}}}						
-　　　　　　
-　　\newcommand{\setTransitionFrom}[2]{
-　　　　\forloop{iclass}{\the\@classstart}{\value{iclass} < \@nameuse{#1Class}}{
-　　　　　　　　\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
-　　　　\addtocounter{iclass}{2}
-　　　　\forloop{iclass}{\value{iclass}}{\value{iclass} < \the\@classend}{
-　　　　　　　　\@transition{\@nameuse{#1Class}}{\the\value{iclass}}{{#2}}}
-　　　　% and a binding for the transition to boundary characters
-　　　　\@transition{\@nameuse{#1Class}}{255}{{#2}}}
+		\def\setTransitionsFor#1#2#3{%
+		  \ifcsname enable#1\endcsname
+		    \count@=\@classstart
+		    \loop\ifnum\count@<\@classend
+		      \advance\count@\@ne
+		      \ifnum\count@=\csname #1Class\endcsname\else
+		         \XeTeXinterchartoks\count@ \csname #1Class\endcsname={#2}%
+		         \XeTeXinterchartoks\csname #1Class\endcsname \count@={#3}%
+		      \fi
+		    \repeat
+		    \XeTeXinterchartoks\@ucharclass@boundary\csname #1Class\endcsname={#2}%
+		    \XeTeXinterchartoks\csname #1Class\endcsname\@ucharclass@boundary={#3}%
+		  \else
+		    \if@ucharclassverbose
+		      \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
+		                                          not loaded}%
+		    \fi
+		  \fi
+		}
+
+		\def\setTransitionTo#1#2{%
+		  \ifcsname enable#1\endcsname
+		    \count@=\@classstart
+		    \loop\ifnum\count@<\@classend
+		      \advance\count@\@ne
+		      \ifnum\count@=\csname #1Class\endcsname\else
+		        \XeTeXinterchartoks\count@ \csname #1Class\endcsname={#2}%
+		      \fi
+		    \repeat
+		    \XeTeXinterchartoks\@ucharclass@boundary\csname #1Class\endcsname={#2}%
+		  \else
+		    \if@ucharclassverbose
+		      \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
+		                                          not loaded}%
+		    \fi
+		  \fi
+		}
+
+		\def\setTransitionFrom#1#2{%
+		  \ifcsname enable#1\endcsname
+		    \count@=\@classstart
+		    \loop\ifnum\count@<\@classend
+		      \advance\count@\@ne
+		      \ifnum\count@=\csname #1Class\endcsname\else
+		        \XeTeXinterchartoks\csname #1Class\endcsname \count@={#2}%
+		      \fi
+		    \repeat
+		    \XeTeXinterchartoks\csname #1Class\endcsname\@ucharclass@boundary={#2}%
+		  \else
+		    \if@ucharclassverbose
+		      \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
+		                                          not loaded}%
+		    \fi
+		  \fi
+		}
 		\end{verbatim}
 		\enableTransitionRules
-		
-		The broad level \textbackslash setTransitionsFor(InformalGroupName)[2] commands are essentially wrapper commands, calling \textbackslash setTransitionsFor for each blocks that is in the informal group. For Arabic, for instance, the code is:
-		
+
+		The broad level \textbackslash setTransitionsFor(InformalGroupName)[2] commands are essentially wrapper commands, calling \textbackslash setTransitionsFor for each blocks that is in the informal group. For Arabic, for instance, uses the following code:
+
 		\disableTransitionRules
 		\begin{verbatim}
-　　　　　　\newcommand{\setTransitionsForArabic}[2]{
-　　　　　　　　　　\setTransitionsFor{Arabic}{#1}{#2}
-　　　　　　　　　　\setTransitionsFor{ArabicPresentationFormsA}{#1}{#2}
-　　　　　　　　　　\setTransitionsFor{ArabicPresentationFormsB}{#1}{#2}
-　　　　　　　　　　\setTransitionsFor{ArabicSupplement}{#1}{#2}
-　　　　　　}
+		\def\doclass#1{%
+		  \expandafter\noexpand\csname setTransitionsFor#1\endcsname{####1}{####2}}
+		\begingroup\edef\x{\endgroup
+		  \noexpand\newcommand\noexpand\setDefaultTransitions[2]{%
+		    \ClassGroups}}\x
+
+	  ...
+
+    \doclass{Arabics}
 		\end{verbatim}
 		\enableTransitionRules
-		
+
 	\section{Package options and Unicode blocks}
-	
+
 		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 8.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document:
-		
+
 		\begin{multicols}{2}
 			\begin{itemlist}
 				\item AegeanNumbers
@@ -537,7 +604,7 @@
 		\end{multicols}
 
 		In addition, the informal blocks for use as package option are:
-		
+
 		\begin{itemlist}
 			\item Arabics
 			\item Chinese
@@ -554,5 +621,5 @@
 			\item Symbols
 			\item Yi
 		\end{itemlist}
-			
+
 \end{document}

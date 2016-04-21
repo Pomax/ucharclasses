@@ -9,19 +9,24 @@
 %  more blocks that were added between 5 and 6.
 %
 %  Credits:
-%   v1.0: Mike "Pomax" Kamermans
 %   v2.0: rewritten by Enrico Gregorio
+%   v1.0: Mike "Pomax" Kamermans
+%
+%  Significant updates:
+%   v2.1: Uplift for the intercharclass updates introduced in XeTeX 0.99994
+%   v2.0: Vastly improved performance.
+%   v1.0: Unicode block switching using XeTeX intercharclasses.
 %
 %  License: public domain (http://www.tex.ac.uk/CTAN/help/Catalogue/licenses.pd.html)
 %
 % ----------------------------------------------------------------------------
 
-\ProvidesPackage{ucharclasses}[2012/09/25 v2.0x Unicode block
+\ProvidesPackage{ucharclasses}[2016/04/21 v2.1x Unicode block
   character classes for XeLaTeX]
 
 \newif\if@ucharclassverbose
 \DeclareOption{verbose}{\@ucharclassverbosetrue}
-	
+
 % ----------------------------------------------------------------------------
 %  The package options allow you to selectively enable certain unicode blocks
 % ----------------------------------------------------------------------------
