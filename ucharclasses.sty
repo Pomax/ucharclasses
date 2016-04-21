@@ -1,8 +1,8 @@
 % ----------------------------------------------------------------------------
-%  This "ucharclasses" package sets up XeTeX character classes based on which 
+%  This "ucharclasses" package sets up XeTeX character classes based on which
 %  unicode block a character is found in. It then allows transition rules to be defined
 %  when entering or leaving particular unicode blocks, the code of which gets inserted
-%  automatically when a transition from a character from one unicode block to a 
+%  automatically when a transition from a character from one unicode block to a
 %  character from another unicode block is encountered by XeTeX
 %
 %  Current compatibility should be Unicode 6.0, although I may have missed one or
@@ -272,7 +272,7 @@
   \do{SuttonSignWriting}{"01D800}{"01DAAF}
 }
 % ----------------------------------------------------------------------------
-%  Option handling lets the user turn off "load all" and selectively enable only those blocks 
+%  Option handling lets the user turn off "load all" and selectively enable only those blocks
 %  they are interested in
 % ----------------------------------------------------------------------------
 
@@ -702,7 +702,19 @@
 % finally, we record the end of our charclass range
 \chardef\@classend=\xe@alloc@intercharclass
 
+
 %%% Our assigned classes go from \@classstart (excluded) to \@classend (included)
+
+
+% The limit for character class has been enlarged from 256 to 4096 since
+% XeTeX 0.99994. So the boundary of character class is changed from 255 to 4095.
+% Primitive \XeTeXinterwordspaceshaping is introduced by XeTeX 0.99994.
+% We can use it as a flag.
+\ifdefined\XeTeXinterwordspaceshaping
+  \chardef\@ucharclass@boundary=4095 %
+\else
+  \chardef\@ucharclass@boundary=\@cclv
+\fi
 
 % ----------------------------------------------------------------------------
 %	Use: \setTransitionsFor{block name}{when entering this block}{when leaving this block}
@@ -718,8 +730,8 @@
          \XeTeXinterchartoks\csname #1Class\endcsname \count@={#3}%
       \fi
     \repeat
-    \XeTeXinterchartoks\@cclv\csname #1Class\endcsname={#2}%
-    \XeTeXinterchartoks\csname #1Class\endcsname\@cclv={#3}%
+    \XeTeXinterchartoks\@ucharclass@boundary\csname #1Class\endcsname={#2}%
+    \XeTeXinterchartoks\csname #1Class\endcsname\@ucharclass@boundary={#3}%
   \else
     \if@ucharclassverbose
       \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
@@ -741,7 +753,7 @@
         \XeTeXinterchartoks\count@ \csname #1Class\endcsname={#2}%
       \fi
     \repeat
-    \XeTeXinterchartoks\@cclv\csname #1Class\endcsname={#2}%
+    \XeTeXinterchartoks\@ucharclass@boundary\csname #1Class\endcsname={#2}%
   \else
     \if@ucharclassverbose
       \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
@@ -763,7 +775,7 @@
         \XeTeXinterchartoks\csname #1Class\endcsname \count@={#2}%
       \fi
     \repeat
-    \XeTeXinterchartoks\csname #1Class\endcsname\@cclv={#2}%
+    \XeTeXinterchartoks\csname #1Class\endcsname\@ucharclass@boundary={#2}%
   \else
     \if@ucharclassverbose
       \PackageWarningNoLine{ucharclasses}{Class #1\MessageBreak
