@@ -361,7 +361,9 @@
 
 	\section{Package options and Unicode blocks}
 
-		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 8.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document:
+		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 8.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document.
+
+		Starting with XeTeX version 0.99994, the number of \textbackslash XeTeXcharclass registers was extended from 256 to 4096; some not so important blocks are thus provided only for this and newer versions; in the list below, those blocks are put into parentheses.
 
 		\begin{multicols}{2}
 			\begin{itemlist}
@@ -440,7 +442,7 @@
 				\item DevanagariExtended
 				\item Dingbats
 				\item DominoTiles
-				\item Duployan
+				\item (Duployan)
 				\item EarlyDynasticCuneiform
 				\item EgyptianHieroglyphs
 				\item Elbasan
@@ -574,14 +576,13 @@
 				\item Saurashtra
 				\item Sharada
 				\item Shavian
-				\item ShorthandFormatControls
+				\item (ShorthandFormatControls)
 				\item Siddham
 				\item Sinhala
 				\item SinhalaArchaicNumbers
 				\item SmallFormVariants
 				\item SoraSompeng
 				\item SpacingModifierLetters
-				\item Specials
 				\item Sundanese
 				\item SundaneseSupplement
 				\item SuperscriptsAndSubscripts
@@ -591,9 +592,9 @@
 				\item SupplementalMathematicalOperators
 				\item SupplementalPunctuation
 				\item SupplementalSymbolsAndPictographs
-				\item SupplementaryPrivateUseAreaA
-				\item SupplementaryPrivateUseAreaB
-				\item SuttonSignWriting
+				\item (SupplementaryPrivateUseAreaA)
+				\item (SupplementaryPrivateUseAreaB)
+				\item (SuttonSignWriting)
 				\item SylotiNagri
 				\item Syriac
 				\item Tagalog
@@ -616,8 +617,6 @@
 				\item UnifiedCanadianAboriginalSyllabics
 				\item UnifiedCanadianAboriginalSyllabicsExtended
 				\item Vai
-				\item VariationSelectors
-				\item VariationSelectorsSupplement
 				\item VedicExtensions
 				\item VerticalForms
 				\item WarangCiti
