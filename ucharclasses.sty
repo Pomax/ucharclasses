@@ -745,8 +745,8 @@
 % ----------------------------------------------------------------------------
 
 % enable/disable commands
-\newcommand{\disableTransitionRules}{\XeTeXinterchartokenstate = 0}
-\newcommand{\enableTransitionRules}{\XeTeXinterchartokenstate = 1}
+\newcommand{\disableTransitionRules}{\XeTeXinterchartokenstate = \z@}
+\newcommand{\enableTransitionRules}{\XeTeXinterchartokenstate = \@ne}
 
 % shorthand commands
 \let\uccoff\disableTransitionRules
