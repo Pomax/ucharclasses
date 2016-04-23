@@ -36,14 +36,23 @@
 % Starting with XeTeX version 3.14159265-2.6-0.99994, the number of
 % \XeTeXcharclass registers was extended from 256 to 4096 entries; some not
 % so important blocks are thus provided only for this and newer versions.
+% The boundary of character class was changed from 255 to 4095 correspondingly.
 % The primitive \XeTeXinterwordspaceshaping was introduced by XeTeX 0.99994;
 % we use it as a flag to identify this version.
 %
-% However, LaTeX2e itself currently doesn't provide support for 4096
-% entries; we thus have to override the hard-coded limit.
-\ifdefined\XeTeXinterwordspaceshaping
-  \def\newXeTeXintercharclass{%
-    \e@alloc\XeTeXcharclass\chardef\xe@alloc@intercharclass\m@ne{4095 }}
+% However, earlier version of LaTeX2e (before 2016/04/22 v2.0q) didn't provide
+% support for 4096 entries; we thus have to override the hard-coded limit.
+\ifdefined\e@alloc@intercharclass@top
+  \chardef\@ucharclass@boundary=\e@alloc@intercharclass@top
+\else
+  \ifdefined\XeTeXinterwordspaceshaping
+    \chardef\@ucharclass@boundary=4095 %
+    \def\newXeTeXintercharclass{%
+      \e@alloc\XeTeXcharclass\chardef
+              \xe@alloc@intercharclass\m@ne\@ucharclass@boundary}
+  \else
+    \chardef\@ucharclass@boundary=\@cclv
+  \fi
 \fi
 
 \def\AllClasses{
@@ -800,14 +809,6 @@
 
 
 %%% Our assigned classes go from \@classstart (excluded) to \@classend (included)
-
-% The boundary of character class is changed from 255 to 4095 in XeTeX
-% 0.99994.  As above, we use \XeTeXinterwordspaceshaping as a flag.
-\ifdefined\XeTeXinterwordspaceshaping
-  \chardef\@ucharclass@boundary=4095 %
-\else
-  \chardef\@ucharclass@boundary=\@cclv
-\fi
 
 % ----------------------------------------------------------------------------
 %	Use: \setTransitionsFor{block name}{when entering this block}{when leaving this block}
