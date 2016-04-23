@@ -42,8 +42,12 @@
 % However, LaTeX2e itself currently doesn't provide support for 4096
 % entries; we thus have to override the hard-coded limit.
 \ifdefined\XeTeXinterwordspaceshaping
+  \chardef\@ucharclass@boundary=4095
   \def\newXeTeXintercharclass{%
-    \e@alloc\XeTeXcharclass\chardef\xe@alloc@intercharclass\m@ne{4095 }}
+    \e@alloc\XeTeXcharclass
+      \chardef\xe@alloc@intercharclass\m@ne\@ucharclass@boundary}
+\else
+  \chardef\@ucharclass@boundary=\@cclv
 \fi
 
 \def\AllClasses{
@@ -800,14 +804,6 @@
 
 
 %%% Our assigned classes go from \@classstart (excluded) to \@classend (included)
-
-% The boundary of character class is changed from 255 to 4095 in XeTeX
-% 0.99994.  As above, we use \XeTeXinterwordspaceshaping as a flag.
-\ifdefined\XeTeXinterwordspaceshaping
-  \chardef\@ucharclass@boundary=4095 %
-\else
-  \chardef\@ucharclass@boundary=\@cclv
-\fi
 
 % ----------------------------------------------------------------------------
 %	Use: \setTransitionsFor{block name}{when entering this block}{when leaving this block}
