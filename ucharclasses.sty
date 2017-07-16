@@ -80,7 +80,7 @@
   \do{Buginese}{"01A00}{"01A1F}
   \do{Buhid}{"01740}{"0175F}
   \do{ByzantineMusicalSymbols}{"01D000}{"01D0FF}
-  \do{Carian}{"0102A0}{"0102DF}
+%     Carian (see below)
   \do{Cham}{"0AA00}{"0AA5F}
   \do{Cherokee}{"013A0}{"013FF}
   \do{CJKCompatibility}{"03300}{"033FF}
@@ -310,7 +310,7 @@
   \do{WarangCiti}{"0118A0}{"0118FF}
 % Unicode 8.0 additions
   \do{Ahom}{"011700}{"01173F}
-  \do{AnatolianHieroglyphs}{"014400}{"01467F}
+%     AnatolianHieroglyphs (see below)
   \do{CherokeeSupplement}{"0AB70}{"0ABBF}
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
   \do{EarlyDynasticCuneiform}{"012480}{"01254F}
@@ -328,6 +328,8 @@
 %     SuttonSignWriting (see below)
 %
   \ifdefined\XeTeXinterwordspaceshaping
+    \do{AnatolianHieroglyphs}{"014400}{"01467F}
+    \do{Carian}{"0102A0}{"0102DF}
     \do{Duployan}{"01BC00}{"01BC9F}
     \do{OldItalic}{"010300}{"01032F}
     \do{OldNorthArabian}{"010A80}{"010A9F}
@@ -616,7 +618,7 @@
 \def\OtherClasses{
   \do{AegeanNumbers}
   \do{Ahom}
-  \do{AnatolianHieroglyphs}
+%     AnatolianHieroglyphs (see below)
   \do{AncientGreekMusicalNotation}
   \do{AncientGreekNumbers}
   \do{AncientSymbols}
@@ -633,7 +635,7 @@
   \do{BraillePatterns}
   \do{Buginese}
   \do{Buhid}
-  \do{Carian}
+%     Carian (see below)
   \do{Cham}
   \do{CaucasianAlbanian}
   \do{Chakma}
@@ -763,7 +765,9 @@
 %
   \ifdefined\XeTeXinterwordspaceshaping
     \do{Adlam}
+    \do{AnatolianHieroglyphs}
     \do{Bhaiksuki}
+    \do{Carian}
     \do{Duployan}
     \do{Marchen}
     \do{MasaramGondi}
