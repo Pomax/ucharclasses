@@ -5,7 +5,7 @@
 %  automatically when a transition from a character from one unicode block to a
 %  character from another unicode block is encountered by XeTeX
 %
-%  Current compatibility should be Unicode 8.0.
+%  Current compatibility should be Unicode 10.0.
 %
 %  Credits:
 %   v2.1-2.2: Qing Lee, Werner Lemberg
@@ -318,6 +318,13 @@
   \do{Multani}{"011280}{"0112AF}
   \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
+% Unicode 9.0 additions needed for classes
+  \do{CyrillicExtendedC}{"01C80}{"01C8F}
+  \do{GlagoliticSupplement}{"01E000}{"01E02F}
+  \do{IdeographicSymbolsAndPunctuation}{"016FE0}{"016FFF}
+% Unicode 10.0 additions needed for classes
+  \do{CJKUnifiedIdeographsExtensionF}{"02CEB0}{"02EBEF}
+  \do{KanaExtendedA}{"01B100}{"01B12F}
 %     SuttonSignWriting (see below)
 %
   \ifdefined\XeTeXinterwordspaceshaping
@@ -331,8 +338,24 @@
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
     \do{SupplementaryPrivateUseAreaB}{"0100000}{"010FFFF}
     \do{SuttonSignWriting}{"01D800}{"01DAAF}
+%   Unicode 9.0 additions
+    \do{Adlam}{"01E900}{"01E95F}
+    \do{Bhaiksuki}{"011C00}{"011C6F}
+    \do{Marchen}{"011C70}{"011CBF}
+    \do{MongolianSupplement}{"011660}{"01167F}
+    \do{Newa}{"011400}{"01147F}
+    \do{Osage}{"0104B0}{"0104FF}
+    \do{Tangut}{"017000}{"0187FF}
+    \do{TangutComponents}{"018800}{"018AFF}
+%   Unicode 10.0 additions
+    \do{MasaramGondi}{"011D00}{"011D5F}
+    \do{Nushu}{"01B170}{"01B2FF}
+    \do{Soyombo}{"011A50}{"011AAF}
+    \do{SyriacSupplement}{"0860}{"086F}
+    \do{ZanabazarSquare}{"011A00}{"011A4F}
   \fi
 }
+
 % ----------------------------------------------------------------------------
 %  Option handling lets the user turn off "load all" and selectively enable only those blocks
 %  they are interested in
@@ -398,9 +421,11 @@
   \do{CJKUnifiedIdeographsExtensionC}
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
+  \do{CJKUnifiedIdeographsExtensionF}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{IdeographicDescriptionCharacters}
+  \do{IdeographicSymbolsAndPunctuation}
   \do{KangxiRadicals}
 }
 
@@ -420,6 +445,7 @@
   \do{CJKUnifiedIdeographsExtensionC}
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
+  \do{CJKUnifiedIdeographsExtensionF}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{HalfwidthAndFullwidthForms}
@@ -430,18 +456,22 @@
   \do{HangulSyllables}
   \do{Hiragana}
   \do{IdeographicDescriptionCharacters}
+  \do{IdeographicSymbolsAndPunctuation}
+  \do{KanaSupplement}
+  \do{KanaExtendedA}
   \do{Kanbun}
   \do{KangxiRadicals}
   \do{Katakana}
   \do{KatakanaPhoneticExtensions}
-  \do{KanaSupplement}
 }
 
 \def\CyrillicsClasses{
   \do{Cyrillic}
   \do{CyrillicExtendedA}
   \do{CyrillicExtendedB}
+  \do{CyrillicExtendedC}
   \do{CyrillicSupplement}
+  \do{GlagoliticSupplement}
   \do{Glagolitic}
 }
 
@@ -474,11 +504,12 @@
   \do{CJKUnifiedIdeographs}
   \do{HalfwidthAndFullwidthForms}
   \do{Hiragana}
+  \do{KanaSupplement}
+  \do{KanaExtendedA}
   \do{Kanbun}
   \do{KangxiRadicals}
   \do{Katakana}
   \do{KatakanaPhoneticExtensions}
-  \do{KanaSupplement}
 }
 
 \def\LatinClasses{
@@ -707,16 +738,29 @@
   \do{YijingHexagramSymbols}
 %
   \ifdefined\XeTeXinterwordspaceshaping
+    \do{Adlam}
+    \do{Bhaiksuki}
     \do{Duployan}
+    \do{Marchen}
+    \do{MasaramGondi}
+    \do{MongolianSupplement}
+    \do{Newa}
+    \do{Nushu}
     \do{OldItalic}
     \do{OldNorthArabian}
     \do{OldSouthArabian}
     \do{OldTurkic}
+    \do{Osage}
     \do{PhaistosDisc}
     \do{ShorthandFormatControls}
+    \do{Soyombo}
     \do{SupplementaryPrivateUseAreaA}
     \do{SupplementaryPrivateUseAreaB}
     \do{SuttonSignWriting}
+    \do{SyriacSupplement}
+    \do{Tangut}
+    \do{TangutComponents}
+    \do{ZanabazarSquare}
   \fi
 }
 
