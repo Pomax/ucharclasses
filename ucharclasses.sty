@@ -318,14 +318,16 @@
   \do{Multani}{"011280}{"0112AF}
   \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
+%     SuttonSignWriting (see below)
 % Unicode 9.0 additions needed for classes
   \do{CyrillicExtendedC}{"01C80}{"01C8F}
   \do{GlagoliticSupplement}{"01E000}{"01E02F}
   \do{IdeographicSymbolsAndPunctuation}{"016FE0}{"016FFF}
+  \do{MongolianSupplement}{"011660}{"01167F}
 % Unicode 10.0 additions needed for classes
   \do{CJKUnifiedIdeographsExtensionF}{"02CEB0}{"02EBEF}
   \do{KanaExtendedA}{"01B100}{"01B12F}
-%     SuttonSignWriting (see below)
+  \do{SyriacSupplement}{"0860}{"086F}
 %
   \ifdefined\XeTeXinterwordspaceshaping
     \do{AnatolianHieroglyphs}{"014400}{"01467F}
@@ -344,7 +346,6 @@
     \do{Adlam}{"01E900}{"01E95F}
     \do{Bhaiksuki}{"011C00}{"011C6F}
     \do{Marchen}{"011C70}{"011CBF}
-    \do{MongolianSupplement}{"011660}{"01167F}
     \do{Newa}{"011400}{"01147F}
     \do{Osage}{"0104B0}{"0104FF}
     \do{Tangut}{"017000}{"0187FF}
@@ -353,7 +354,6 @@
     \do{MasaramGondi}{"011D00}{"011D5F}
     \do{Nushu}{"01B170}{"01B2FF}
     \do{Soyombo}{"011A50}{"011AAF}
-    \do{SyriacSupplement}{"0860}{"086F}
     \do{ZanabazarSquare}{"011A00}{"011A4F}
   \fi
 }
@@ -396,11 +396,13 @@
   \doclass{Japanese}
   \doclass{Latin}
   \doclass{Mathematics}
+  \doclass{MongolianFull}
   \doclass{MyanmarFull}
   \doclass{Phonetics}
   \doclass{Punctuation}
   \doclass{SundaneseFull}
   \doclass{Symbols}
+  \doclass{SyriacFull}
   \doclass{Yi}
   \doclass{Other}
 }
@@ -563,6 +565,11 @@
   \do{SupplementalMathematicalOperators}
 }
 
+\def\MongolianFullClasses{
+  \do{Mongolian}
+    \do{MongolianSupplement}
+}
+
 \def\MyanmarFullClasses{
   \do{Myanmar}
   \do{MyanmarExtendedA}
@@ -608,6 +615,11 @@
   \do{SupplementalArrowsC}
   \do{SupplementalSymbolsAndPictographs}
   \do{TransportAndMapSymbols}
+}
+
+\def\SyriacFullClasses{
+  \do{Syriac}
+  \do{SyriacSupplement}
 }
 
 \def\YiClasses{
@@ -694,7 +706,6 @@
   \do{MeroiticHieroglyphs}
   \do{Miao}
   \do{Modi}
-  \do{Mongolian}
   \do{Mro}
   \do{Multani}
   \do{MusicalSymbols}
@@ -740,7 +751,6 @@
 %     SupplementaryPrivateUseAreaB (see below)
 %     SuttonSignWriting (see below)
   \do{SylotiNagri}
-  \do{Syriac}
   \do{Tagalog}
   \do{Tagbanwa}
   \do{Tags}
@@ -771,7 +781,6 @@
     \do{Duployan}
     \do{Marchen}
     \do{MasaramGondi}
-    \do{MongolianSupplement}
     \do{Newa}
     \do{Nushu}
     \do{OldItalic}
@@ -785,7 +794,6 @@
     \do{SupplementaryPrivateUseAreaA}
     \do{SupplementaryPrivateUseAreaB}
     \do{SuttonSignWriting}
-    \do{SyriacSupplement}
     \do{Tangut}
     \do{TangutComponents}
     \do{ZanabazarSquare}
