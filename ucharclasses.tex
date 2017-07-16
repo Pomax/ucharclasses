@@ -196,17 +196,23 @@
 
 			\begin{itemlist}
 				\item Arabics
+				\item CanadianSyllabics
+				\item CherokeeFull
 				\item Chinese
 				\item CJK
 				\item Cyrillics
 				\item Diacritics
+				\item EthiopicFull
+				\item GeorgianFull
 				\item Greek
 				\item Korean
 				\item Japanese
 				\item Latin
 				\item Mathematics
+				\item MyanmarFull
 				\item Phonetics
 				\item Punctuation
+				\item SundaneseFull
 				\item Symbols
 				\item Yi
 			\end{itemlist}
@@ -361,12 +367,13 @@
 
 	\section{Package options and Unicode blocks}
 
-		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 8.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document.
+		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 10.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document.
 
 		Starting with XeTeX version 0.99994, the number of \textbackslash XeTeXcharclass registers was extended from 256 to 4096; some not so important blocks are thus provided only for this and newer versions; in the list below, those blocks are put into parentheses.
 
 		\begin{multicols}{2}
 			\begin{itemlist}
+				\item (Adlam)
 				\item AegeanNumbers
 				\item Ahom
 				\item AlchemicalSymbols
@@ -391,6 +398,7 @@
 				\item BassaVah
 				\item Batak
 				\item Bengali
+				\item (Bhaiksuki)
 				\item BlockElements
 				\item Bopomofo
 				\item BopomofoExtended
@@ -419,6 +427,7 @@
 				\item CJKUnifiedIdeographsExtensionC
 				\item CJKUnifiedIdeographsExtensionD
 				\item CJKUnifiedIdeographsExtensionE
+				\item CJKUnifiedIdeographsExtensionF
 				\item CombiningDiacriticalMarks
 				\item CombiningDiacriticalMarksExtended
 				\item CombiningDiacriticalMarksForSymbols
@@ -436,6 +445,7 @@
 				\item Cyrillic
 				\item CyrillicExtendedA
 				\item CyrillicExtendedB
+				\item CyrillicExtendedC
 				\item CyrillicSupplement
 				\item Deseret
 				\item Devanagari
@@ -461,6 +471,7 @@
 				\item Georgian
 				\item GeorgianSupplement
 				\item Glagolitic
+				\item GlagoliticSupplement
 				\item Gothic
 				\item Grantha
 				\item GreekAndCoptic
@@ -478,12 +489,14 @@
 				\item Hebrew
 				\item Hiragana
 				\item IdeographicDescriptionCharacters
+				\item IdeographicSymbolsAndPunctuation
 				\item ImperialAramaic
 				\item InscriptionalPahlavi
 				\item InscriptionalParthian
 				\item IPAExtensions
 				\item Javanese
 				\item Kaithi
+				\item KanaExtendedA
 				\item KanaSupplement
 				\item Kanbun
 				\item KangxiRadicals
@@ -518,6 +531,8 @@
 				\item Malayalam
 				\item Mandaic
 				\item Manichaean
+				\item (Marchen)
+				\item (MasaramGondi)
 				\item MathematicalAlphanumericSymbols
 				\item MathematicalOperators
 				\item MeeteiMayek
@@ -535,6 +550,7 @@
 				\item Modi
 				\item ModifierToneLetters
 				\item Mongolian
+				\item (MongolianSupplement)
 				\item Mro
 				\item Multani
 				\item MusicalSymbols
@@ -542,27 +558,30 @@
 				\item MyanmarExtendedA
 				\item MyanmarExtendedB
 				\item Nabataean
+				\item (Newa)
 				\item NewTaiLue
 				\item NKo
 				\item NumberForms
+				\item (Nushu)
 				\item Ogham
 				\item OlChiki
 				\item OldHungarian
-				\item OldItalic
-				\item OldNorthArabian
+				\item (OldItalic)
+				\item (OldNorthArabian)
 				\item OldPermic
 				\item OldPersian
-				\item OldSouthArabian
-				\item OldTurkic
+				\item (OldSouthArabian)
+				\item (OldTurkic)
 				\item OpticalCharacterRecognition
 				\item Oriya
 				\item OrnamentalDingbats
+				\item (Osage)
 				\item Osmanya
 				\item PahawhHmong
 				\item Palmyrene
 				\item PauCinHau
 				\item PhagsPa
-				\item PhaistosDisc
+				\item (PhaistosDisc)
 				\item Phoenician
 				\item PhoneticExtensions
 				\item PhoneticExtensionsSupplement
@@ -582,6 +601,7 @@
 				\item SinhalaArchaicNumbers
 				\item SmallFormVariants
 				\item SoraSompeng
+				\item (Soyombo)
 				\item SpacingModifierLetters
 				\item Sundanese
 				\item SundaneseSupplement
@@ -597,6 +617,7 @@
 				\item (SuttonSignWriting)
 				\item SylotiNagri
 				\item Syriac
+				\item (SyriacSupplement)
 				\item Tagalog
 				\item Tagbanwa
 				\item Tags
@@ -606,6 +627,8 @@
 				\item TaiXuanJingSymbols
 				\item Takri
 				\item Tamil
+				\item (Tangut)
+				\item (TangutComponents)
 				\item Telugu
 				\item Thaana
 				\item Thai
@@ -623,6 +646,7 @@
 				\item YiRadicals
 				\item YiSyllables
 				\item YijingHexagramSymbols
+				\item (ZanabazarSquare)
 			\end{itemlist}
 		\end{multicols}
 
@@ -630,17 +654,23 @@
 
 		\begin{itemlist}
 			\item Arabics
+			\item CanadianSyllabics
+			\item CherokeeFull
 			\item Chinese
 			\item CJK
 			\item Cyrillics
 			\item Diacritics
+			\item EthiopicFull
+			\item GeorgianFull
 			\item Greek
 			\item Korean
 			\item Japanese
 			\item Latin
 			\item Mathematics
+			\item MyanmarFull
 			\item Phonetics
 			\item Punctuation
+			\item SundaneseFull
 			\item Symbols
 			\item Yi
 		\end{itemlist}
