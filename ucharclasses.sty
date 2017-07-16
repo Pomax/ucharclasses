@@ -381,17 +381,23 @@
 
 \def\ClassGroups{
   \doclass{Arabics}
+  \doclass{CanadianSyllabics}
+  \doclass{CherokeeFull}
   \doclass{Chinese}
   \doclass{CJK}
   \doclass{Cyrillics}
   \doclass{Diacritics}
+  \doclass{EthiopicFull}
+  \doclass{GeorgianFull}
   \doclass{Greek}
   \doclass{Korean}
   \doclass{Japanese}
   \doclass{Latin}
   \doclass{Mathematics}
+  \doclass{MyanmarFull}
   \doclass{Phonetics}
   \doclass{Punctuation}
+  \doclass{SundaneseFull}
   \doclass{Symbols}
   \doclass{Yi}
   \doclass{Other}
@@ -403,6 +409,16 @@
   \do{ArabicPresentationFormsA}
   \do{ArabicPresentationFormsB}
   \do{ArabicSupplement}
+}
+
+\def\CanadianSyllabics{
+  \do{UnifiedCanadianAboriginalSyllabics}
+  \do{UnifiedCanadianAboriginalSyllabicsExtended}
+}
+
+\def\CherokeeFullClasses{
+  \do{Cherokee}
+  \do{CherokeeSupplement}
 }
 
 \def\ChineseClasses{
@@ -485,6 +501,18 @@
   \do{SpacingModifierLetters}
 }
 
+\def\EthiopicFullClasses{
+  \do{Ethiopic}
+  \do{EthiopicExtended}
+  \do{EthiopicExtendedA}
+  \do{EthiopicSupplement}
+}
+
+\def\GeorgianFullClasses{
+  \do{Georgian}
+  \do{GeorgianSupplement}
+}
+
 \def\GreekClasses{
   \do{Coptic}
   \do{CopticEpactNumbers}
@@ -533,6 +561,12 @@
   \do{SupplementalMathematicalOperators}
 }
 
+\def\MyanmarFullClasses{
+  \do{Myanmar}
+  \do{MyanmarExtendedA}
+  \do{MyanmarExtendedB}
+}
+
 \def\PhoneticsClasses{
   \do{IPAExtensions}
   \do{PhoneticExtensions}
@@ -542,6 +576,11 @@
 \def\PunctuationClasses{
   \do{GeneralPunctuation}
   \do{SupplementalPunctuation}
+}
+
+\def\SundaneseFullClasses{
+  \do{Sundanese}
+  \do{SundaneseSupplement}
 }
 
 \def\SymbolsClasses{
@@ -598,8 +637,6 @@
   \do{Cham}
   \do{CaucasianAlbanian}
   \do{Chakma}
-  \do{Cherokee}
-  \do{CherokeeSupplement}
   \do{CommonIndicNumberForms}
   \do{Coptic}
   \do{CountingRodNumerals}
@@ -615,12 +652,6 @@
   \do{Elbasan}
   \do{EnclosedAlphanumerics}
   \do{EnclosedAlphanumericSupplement}
-  \do{Ethiopic}
-  \do{EthiopicExtended}
-  \do{EthiopicExtendedA}
-  \do{EthiopicSupplement}
-  \do{Georgian}
-  \do{GeorgianSupplement}
   \do{Gothic}
   \do{Grantha}
   \do{Gujarati}
@@ -665,9 +696,6 @@
   \do{Mro}
   \do{Multani}
   \do{MusicalSymbols}
-  \do{Myanmar}
-  \do{MyanmarExtendedA}
-  \do{MyanmarExtendedB}
   \do{Nabataean}
   \do{NewTaiLue}
   \do{NKo}
@@ -705,8 +733,6 @@
   \do{SinhalaArchaicNumbers}
   \do{SmallFormVariants}
   \do{SoraSompeng}
-  \do{Sundanese}
-  \do{SundaneseSupplement}
   \do{SuperscriptsAndSubscripts}
 %     SupplementaryPrivateUseAreaA (see below)
 %     SupplementaryPrivateUseAreaB (see below)
@@ -729,8 +755,6 @@
   \do{Tifinagh}
   \do{Tirhuta}
   \do{Ugaritic}
-  \do{UnifiedCanadianAboriginalSyllabics}
-  \do{UnifiedCanadianAboriginalSyllabicsExtended}
   \do{Vai}
   \do{VedicExtensions}
   \do{VerticalForms}
@@ -939,17 +963,24 @@
 % Available informal groups are:
 %
 %   - Arabics
+%   - CanadianSyllabics
+%   - CherokeeFull
 %   - Chinese (including bopomofo)
 %   - CJK (Chinese/Japanese/Korean)
 %   - Cyrillics
 %   - Diacritics
+%   - EthiopicFull
+%   - GeorgianFull
 %   - Greek
-%   - Japanese	(it is advised to set CJK first to a catch-all, then set Japanese for specifics)
+%   - Japanese (it is advised to set CJK first to a catch-all, then set
+%               Japanese for specifics)
 %   - Korean (=Hangul) (same comment as for Japanese)
 %   - Latin
 %   - Mathematics
+%   - MyanmarFull
 %   - Phonetics
 %   - Punctuation
+%   - SundaneseFull
 %   - Symbols
 %   - Yi
 %   - Other (I am not a fan of lump groups. I hope to un-lump most of it)
