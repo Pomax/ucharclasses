@@ -5,7 +5,7 @@
 %  automatically when a transition from a character from one unicode block to a
 %  character from another unicode block is encountered by XeTeX
 %
-%  Current compatibility should be Unicode 8.0.
+%  Current compatibility should be Unicode 10.0.
 %
 %  Credits:
 %   v2.1-2.2: Qing Lee, Werner Lemberg
@@ -80,7 +80,7 @@
   \do{Buginese}{"01A00}{"01A1F}
   \do{Buhid}{"01740}{"0175F}
   \do{ByzantineMusicalSymbols}{"01D000}{"01D0FF}
-  \do{Carian}{"0102A0}{"0102DF}
+%     Carian (see below)
   \do{Cham}{"0AA00}{"0AA5F}
   \do{Cherokee}{"013A0}{"013FF}
   \do{CJKCompatibility}{"03300}{"033FF}
@@ -177,13 +177,13 @@
   \do{NumberForms}{"02150}{"0218F}
   \do{Ogham}{"01680}{"0169F}
   \do{OlChiki}{"01C50}{"01C7F}
-  \do{OldItalic}{"010300}{"01032F}
+%     OldItalic (see below)
   \do{OldPersian}{"0103A0}{"0103DF}
   \do{OpticalCharacterRecognition}{"02440}{"0245F}
   \do{Oriya}{"0B00}{"0B7F}
   \do{Osmanya}{"010480}{"0104AF}
   \do{PhagsPa}{"0A840}{"0A87F}
-  \do{PhaistosDisc}{"0101D0}{"0101FF}
+%     PhaistosDisc (see below)
   \do{Phoenician}{"010900}{"01091F}
   \do{PhoneticExtensions}{"01D00}{"01D7F}
   \do{PhoneticExtensionsSupplement}{"01D80}{"01DBF}
@@ -242,8 +242,8 @@
   \do{Lisu}{"0A4D0}{"0A4FF}
   \do{MeeteiMayek}{"0ABC0}{"0ABFF}
   \do{MyanmarExtendedA}{"0AA60}{"0AA7F}
-  \do{OldSouthArabian}{"010A60}{"010A7F}
-  \do{OldTurkic}{"010C00}{"010C4F}
+%     OldSouthArabian (see below)
+%     OldTurkic (see below)
   \do{RumiNumeralSymbols}{"010E60}{"010E7F}
   \do{Samaritan}{"0800}{"083F}
   \do{TaiTham}{"01A20}{"01AAF}
@@ -295,7 +295,7 @@
   \do{Mro}{"016A40}{"016A6F}
   \do{MyanmarExtendedB}{"0A9E0}{"0A9FF}
   \do{Nabataean}{"010880}{"0108AF}
-  \do{OldNorthArabian}{"010A80}{"010A9F}
+%     OldNorthArabian (see below)
   \do{OldPermic}{"010350}{"01037F}
   \do{OrnamentalDingbats}{"01F650}{"01F67F}
   \do{PahawhHmong}{"016B00}{"016B8F}
@@ -310,7 +310,7 @@
   \do{WarangCiti}{"0118A0}{"0118FF}
 % Unicode 8.0 additions
   \do{Ahom}{"011700}{"01173F}
-  \do{AnatolianHieroglyphs}{"014400}{"01467F}
+%     AnatolianHieroglyphs (see below)
   \do{CherokeeSupplement}{"0AB70}{"0ABBF}
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
   \do{EarlyDynasticCuneiform}{"012480}{"01254F}
@@ -319,15 +319,45 @@
   \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
 %     SuttonSignWriting (see below)
+% Unicode 9.0 additions needed for classes
+  \do{CyrillicExtendedC}{"01C80}{"01C8F}
+  \do{GlagoliticSupplement}{"01E000}{"01E02F}
+  \do{IdeographicSymbolsAndPunctuation}{"016FE0}{"016FFF}
+  \do{MongolianSupplement}{"011660}{"01167F}
+% Unicode 10.0 additions needed for classes
+  \do{CJKUnifiedIdeographsExtensionF}{"02CEB0}{"02EBEF}
+  \do{KanaExtendedA}{"01B100}{"01B12F}
+  \do{SyriacSupplement}{"0860}{"086F}
 %
   \ifdefined\XeTeXinterwordspaceshaping
+    \do{AnatolianHieroglyphs}{"014400}{"01467F}
+    \do{Carian}{"0102A0}{"0102DF}
+    \do{Duployan}{"01BC00}{"01BC9F}
+    \do{OldItalic}{"010300}{"01032F}
+    \do{OldNorthArabian}{"010A80}{"010A9F}
+    \do{OldSouthArabian}{"010A60}{"010A7F}
+    \do{OldTurkic}{"010C00}{"010C4F}
+    \do{PhaistosDisc}{"0101D0}{"0101FF}
+    \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
     \do{SupplementaryPrivateUseAreaB}{"0100000}{"010FFFF}
-    \do{Duployan}{"01BC00}{"01BC9F}
-    \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
     \do{SuttonSignWriting}{"01D800}{"01DAAF}
+%   Unicode 9.0 additions
+    \do{Adlam}{"01E900}{"01E95F}
+    \do{Bhaiksuki}{"011C00}{"011C6F}
+    \do{Marchen}{"011C70}{"011CBF}
+    \do{Newa}{"011400}{"01147F}
+    \do{Osage}{"0104B0}{"0104FF}
+    \do{Tangut}{"017000}{"0187FF}
+    \do{TangutComponents}{"018800}{"018AFF}
+%   Unicode 10.0 additions
+    \do{MasaramGondi}{"011D00}{"011D5F}
+    \do{Nushu}{"01B170}{"01B2FF}
+    \do{Soyombo}{"011A50}{"011AAF}
+    \do{ZanabazarSquare}{"011A00}{"011A4F}
   \fi
 }
+
 % ----------------------------------------------------------------------------
 %  Option handling lets the user turn off "load all" and selectively enable only those blocks
 %  they are interested in
@@ -353,18 +383,26 @@
 
 \def\ClassGroups{
   \doclass{Arabics}
+  \doclass{CanadianSyllabics}
+  \doclass{CherokeeFull}
   \doclass{Chinese}
   \doclass{CJK}
   \doclass{Cyrillics}
   \doclass{Diacritics}
+  \doclass{EthiopicFull}
+  \doclass{GeorgianFull}
   \doclass{Greek}
   \doclass{Korean}
   \doclass{Japanese}
   \doclass{Latin}
   \doclass{Mathematics}
+  \doclass{MongolianFull}
+  \doclass{MyanmarFull}
   \doclass{Phonetics}
   \doclass{Punctuation}
+  \doclass{SundaneseFull}
   \doclass{Symbols}
+  \doclass{SyriacFull}
   \doclass{Yi}
   \doclass{Other}
 }
@@ -375,6 +413,16 @@
   \do{ArabicPresentationFormsA}
   \do{ArabicPresentationFormsB}
   \do{ArabicSupplement}
+}
+
+\def\CanadianSyllabics{
+  \do{UnifiedCanadianAboriginalSyllabics}
+  \do{UnifiedCanadianAboriginalSyllabicsExtended}
+}
+
+\def\CherokeeFullClasses{
+  \do{Cherokee}
+  \do{CherokeeSupplement}
 }
 
 \def\ChineseClasses{
@@ -393,9 +441,11 @@
   \do{CJKUnifiedIdeographsExtensionC}
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
+  \do{CJKUnifiedIdeographsExtensionF}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{IdeographicDescriptionCharacters}
+  \do{IdeographicSymbolsAndPunctuation}
   \do{KangxiRadicals}
 }
 
@@ -415,6 +465,7 @@
   \do{CJKUnifiedIdeographsExtensionC}
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
+  \do{CJKUnifiedIdeographsExtensionF}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{HalfwidthAndFullwidthForms}
@@ -425,18 +476,22 @@
   \do{HangulSyllables}
   \do{Hiragana}
   \do{IdeographicDescriptionCharacters}
+  \do{IdeographicSymbolsAndPunctuation}
+  \do{KanaSupplement}
+  \do{KanaExtendedA}
   \do{Kanbun}
   \do{KangxiRadicals}
   \do{Katakana}
   \do{KatakanaPhoneticExtensions}
-  \do{KanaSupplement}
 }
 
 \def\CyrillicsClasses{
   \do{Cyrillic}
   \do{CyrillicExtendedA}
   \do{CyrillicExtendedB}
+  \do{CyrillicExtendedC}
   \do{CyrillicSupplement}
+  \do{GlagoliticSupplement}
   \do{Glagolitic}
 }
 
@@ -448,6 +503,18 @@
   \do{CombiningHalfMarks}
   \do{ModifierToneLetters}
   \do{SpacingModifierLetters}
+}
+
+\def\EthiopicFullClasses{
+  \do{Ethiopic}
+  \do{EthiopicExtended}
+  \do{EthiopicExtendedA}
+  \do{EthiopicSupplement}
+}
+
+\def\GeorgianFullClasses{
+  \do{Georgian}
+  \do{GeorgianSupplement}
 }
 
 \def\GreekClasses{
@@ -469,11 +536,12 @@
   \do{CJKUnifiedIdeographs}
   \do{HalfwidthAndFullwidthForms}
   \do{Hiragana}
+  \do{KanaSupplement}
+  \do{KanaExtendedA}
   \do{Kanbun}
   \do{KangxiRadicals}
   \do{Katakana}
   \do{KatakanaPhoneticExtensions}
-  \do{KanaSupplement}
 }
 
 \def\LatinClasses{
@@ -497,6 +565,17 @@
   \do{SupplementalMathematicalOperators}
 }
 
+\def\MongolianFullClasses{
+  \do{Mongolian}
+    \do{MongolianSupplement}
+}
+
+\def\MyanmarFullClasses{
+  \do{Myanmar}
+  \do{MyanmarExtendedA}
+  \do{MyanmarExtendedB}
+}
+
 \def\PhoneticsClasses{
   \do{IPAExtensions}
   \do{PhoneticExtensions}
@@ -506,6 +585,11 @@
 \def\PunctuationClasses{
   \do{GeneralPunctuation}
   \do{SupplementalPunctuation}
+}
+
+\def\SundaneseFullClasses{
+  \do{Sundanese}
+  \do{SundaneseSupplement}
 }
 
 \def\SymbolsClasses{
@@ -533,6 +617,11 @@
   \do{TransportAndMapSymbols}
 }
 
+\def\SyriacFullClasses{
+  \do{Syriac}
+  \do{SyriacSupplement}
+}
+
 \def\YiClasses{
   \do{YiRadicals}
   \do{YiSyllables}
@@ -541,7 +630,7 @@
 \def\OtherClasses{
   \do{AegeanNumbers}
   \do{Ahom}
-  \do{AnatolianHieroglyphs}
+%     AnatolianHieroglyphs (see below)
   \do{AncientGreekMusicalNotation}
   \do{AncientGreekNumbers}
   \do{AncientSymbols}
@@ -558,12 +647,10 @@
   \do{BraillePatterns}
   \do{Buginese}
   \do{Buhid}
-  \do{Carian}
+%     Carian (see below)
   \do{Cham}
   \do{CaucasianAlbanian}
   \do{Chakma}
-  \do{Cherokee}
-  \do{CherokeeSupplement}
   \do{CommonIndicNumberForms}
   \do{Coptic}
   \do{CountingRodNumerals}
@@ -579,12 +666,6 @@
   \do{Elbasan}
   \do{EnclosedAlphanumerics}
   \do{EnclosedAlphanumericSupplement}
-  \do{Ethiopic}
-  \do{EthiopicExtended}
-  \do{EthiopicExtendedA}
-  \do{EthiopicSupplement}
-  \do{Georgian}
-  \do{GeorgianSupplement}
   \do{Gothic}
   \do{Grantha}
   \do{Gujarati}
@@ -625,25 +706,21 @@
   \do{MeroiticHieroglyphs}
   \do{Miao}
   \do{Modi}
-  \do{Mongolian}
   \do{Mro}
   \do{Multani}
   \do{MusicalSymbols}
-  \do{Myanmar}
-  \do{MyanmarExtendedA}
-  \do{MyanmarExtendedB}
   \do{Nabataean}
   \do{NewTaiLue}
   \do{NKo}
   \do{Ogham}
   \do{OlChiki}
   \do{OldHungarian}
-  \do{OldItalic}
-  \do{OldNorthArabian}
+%     OldItalic (see below)
+%     OldNorthArabian (see below)
   \do{OldPermic}
   \do{OldPersian}
-  \do{OldSouthArabian}
-  \do{OldTurkic}
+%     OldSouthArabian (see below)
+%     OldTurkic (see below)
   \do{OpticalCharacterRecognition}
   \do{Oriya}
   \do{Osmanya}
@@ -651,7 +728,7 @@
   \do{Palmyrene}
   \do{PauCinHau}
   \do{PhagsPa}
-  \do{PhaistosDisc}
+%     PhaistosDisc (see below)
   \do{Phoenician}
   \do{PlayingCards}
   \do{PrivateUseArea}
@@ -669,14 +746,11 @@
   \do{SinhalaArchaicNumbers}
   \do{SmallFormVariants}
   \do{SoraSompeng}
-  \do{Sundanese}
-  \do{SundaneseSupplement}
   \do{SuperscriptsAndSubscripts}
 %     SupplementaryPrivateUseAreaA (see below)
 %     SupplementaryPrivateUseAreaB (see below)
 %     SuttonSignWriting (see below)
   \do{SylotiNagri}
-  \do{Syriac}
   \do{Tagalog}
   \do{Tagbanwa}
   \do{Tags}
@@ -693,8 +767,6 @@
   \do{Tifinagh}
   \do{Tirhuta}
   \do{Ugaritic}
-  \do{UnifiedCanadianAboriginalSyllabics}
-  \do{UnifiedCanadianAboriginalSyllabicsExtended}
   \do{Vai}
   \do{VedicExtensions}
   \do{VerticalForms}
@@ -702,11 +774,29 @@
   \do{YijingHexagramSymbols}
 %
   \ifdefined\XeTeXinterwordspaceshaping
+    \do{Adlam}
+    \do{AnatolianHieroglyphs}
+    \do{Bhaiksuki}
+    \do{Carian}
+    \do{Duployan}
+    \do{Marchen}
+    \do{MasaramGondi}
+    \do{Newa}
+    \do{Nushu}
+    \do{OldItalic}
+    \do{OldNorthArabian}
+    \do{OldSouthArabian}
+    \do{OldTurkic}
+    \do{Osage}
+    \do{PhaistosDisc}
+    \do{ShorthandFormatControls}
+    \do{Soyombo}
     \do{SupplementaryPrivateUseAreaA}
     \do{SupplementaryPrivateUseAreaB}
-    \do{Duployan}
-    \do{ShorthandFormatControls}
     \do{SuttonSignWriting}
+    \do{Tangut}
+    \do{TangutComponents}
+    \do{ZanabazarSquare}
   \fi
 }
 
@@ -885,18 +975,27 @@
 % Available informal groups are:
 %
 %   - Arabics
+%   - CanadianSyllabics
+%   - CherokeeFull
 %   - Chinese (including bopomofo)
 %   - CJK (Chinese/Japanese/Korean)
 %   - Cyrillics
 %   - Diacritics
+%   - EthiopicFull
+%   - GeorgianFull
 %   - Greek
-%   - Japanese	(it is advised to set CJK first to a catch-all, then set Japanese for specifics)
+%   - Japanese (it is advised to set CJK first to a catch-all, then set
+%               Japanese for specifics)
 %   - Korean (=Hangul) (same comment as for Japanese)
 %   - Latin
 %   - Mathematics
+%   - MongolianFull
+%   - MyanmarFull
 %   - Phonetics
 %   - Punctuation
+%   - SundaneseFull
 %   - Symbols
+%   - SyriacFull
 %   - Yi
 %   - Other (I am not a fan of lump groups. I hope to un-lump most of it)
 %
