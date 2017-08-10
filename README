@@ -59,10 +59,11 @@ Unicode Compatibility
 ---------------------
 
  Current compatibility is Unicode 8.0
- 
+
 Changelog
 ---------
 
+ v2.3: Unicode 10 support
  v2.2: Unicode 8.0 and LaTeX2e support
  v2.1: Uplift for the updates introduced in XeTeX 0.99994
  v2.0: Rewritten to Vastly improve performance + Unicode 6.0
@@ -71,7 +72,7 @@ Changelog
 Contributors
 ------------
 
- v2.1-2.2: Qing Lee, Werner Lemberg
+ v2.1-2.3: Qing Lee, Werner Lemberg
  v2.0: Enrico Gregorio
  v1.0: Mike "Pomax" Kamermans
 
@@ -79,7 +80,7 @@ License?
 --------
 
  Public Domain
- http://www.tex.ac.uk/CTAN/help/Catalogue/licenses.pd.html
+ https://www.ctan.org/license/pd
 
 Repository?
 -----------

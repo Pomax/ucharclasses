@@ -1,4 +1,5 @@
-﻿\documentclass{article}
+\documentclass{article}
+\usepackage[margin={4cm,4cm}]{geometry}
 \usepackage{tocloft}
 \usepackage[pdfborder=0]{hyperref}
 \usepackage{multicol}
@@ -30,16 +31,16 @@
   \end{enumerate}}
 
 \usepackage{fontspec}
-\newfontfamily{\defaultfont}{Code2000}
-\newfontfamily{\latinfont}{Palatino Linotype}
-\newfontfamily{\cjkfont}{HAN NOM A}
-\newfontfamily{\japanesefont}{Ume Mincho}
-\newfontfamily{\unifiedCJKfont}{SimSun-ExtB}
-\newfontfamily{\thaifont}{IrisUPC}
-\newfontfamily{\sinhalafont}{Iskoola Pota}
-\newfontfamily{\malayalamfont}{Arial Unicode MS}
-\newfontfamily{\dominofont}{FreeSerif}
-\newfontfamily{\mahjongfont}{FreeSerif}
+\newfontfamily{\defaultfont}[Path=fonts/]{CODE2000.TTF}
+\newfontfamily{\latinfont}[Path=fonts/]{pala.ttf}
+\newfontfamily{\cjkfont}[Path=fonts/]{HAN_NOM_A.ttf}
+\newfontfamily{\japanesefont}[Path=fonts/]{ume-tms3.ttf}
+\newfontfamily{\unifiedCJKfont}[Path=fonts/]{simsunb.ttf}
+\newfontfamily{\thaifont}[Path=fonts/]{upcil.ttf}
+\newfontfamily{\sinhalafont}[Path=fonts/]{iskpota.ttf}
+\newfontfamily{\malayalamfont}[Path=fonts/]{arialuni.ttf}
+\newfontfamily{\dominofont}[Path=fonts/]{seguisym.ttf}
+\newfontfamily{\mahjongfont}[Path=fonts/]{seguiemj.ttf}
 
 % and the font switching magic
 \usepackage[CJK, Latin, Thai, Sinhala, Malayalam, DominoTiles, MahjongTiles]{ucharclasses}
@@ -85,7 +86,7 @@
 			\item Thai: คุณพูดภาษาอังกฤษได้ไหม (using IrisUPC)
 			\item Sinhala: කරැණාකරල ඒක නැවත කියන්න පුළුවන්ද (using Iskoola Pota)
 			\item Malayalam: നിങ്ങളുടെ പേരെന്താണ്? (using Arial Unicode MS)
-			\item and even domino tiles, 🁇 🀼 🁐 🁋 🁚 🁝, and mahjong tiles: 🀑 🀑 🀑 🀒 🀒 🀒 🀕 🀕 🀕 🀗 🀗 🀗 🀅 🀅 (using FreeFont)
+			\item and even domino tiles, 🁇 🀼 🁐 🁋 🁚 🁝 (using Segoe UI Symbol) and mahjong tiles: 🀑 🀑 🀑 🀒 🀒 🀒 🀕 🀕 🀕 🀗 🀗 🀗 🀅 🀅 (using Segoe UI Emoji)
 		\end{itemlist}
 
 		However, be aware that this only “just works” for Unicode blocks. If you are working with typographically overlapping languages, such as combining English and Vietnamese in one document, things get a lot more complex if you want one font for English and another for Vietnamese. Both of these languagese use Latin blocks, so it is inherently impossible to tell which language is intended based on which Unicode block a character in a word belongs to.
@@ -96,7 +97,7 @@
 			\item Chinese, using the Japanese CJK font, which may have gaps: 我的母语是汉语 (uses Ume Mincho, which does not contain the three Chinese-specific characters used in that phrase)
     \end{itemlist}
 
-  We can get around this by explicitly setting the font to one that supports Chinese, turning off the switching rules for the stretch of Chinese text, using \{\textbackslash uccoff + a fontspec rule + the text we wanted to typeset + \textbackslash uccon\}. This gives us: {\uccoff \fontspec{HAN NOM A} 我的母语是汉语 \uccon} (This now explicitly uses Han Nom A).
+  We can get around this by explicitly setting the font to one that supports Chinese, turning off the switching rules for the stretch of Chinese text, using \{\textbackslash uccoff + a fontspec rule + the text we wanted to typeset + \textbackslash uccon\}. This gives us: {\uccoff \fontspec[Path=fonts/]{HAN_NOM_A.ttf} 我的母语是汉语 \uccon} (This now explicitly uses Han Nom A).
 
 	\section{Use}
 
@@ -114,8 +115,8 @@
 				\newfontfamily{\thaifont}{IrisUPC}
 				\newfontfamily{\sinhalafont}{Iskoola Pota}
 				\newfontfamily{\malayalamfont}{Arial Unicode MS}
-				\newfontfamily{\dominofont}{FreeSerif}
-				\newfontfamily{\mahjongfont}{FreeSerif}
+				\newfontfamily{\dominofont}{Segoe UI Symbol}
+				\newfontfamily{\mahjongfont}{Segoe UI Emoji}
 
 				\usepackage[CJK, Latin, Thai, Sinhala, Malayalam,
 				            DominoTiles, MahjongTiles]{ucharclasses}
@@ -160,6 +161,7 @@
 
 		If you need script support, rather than Unicode blocks, you may want to have a look at the polyglossia package instead. You can try to combine the two packages by relying on \textbackslash uccoff and textbackslash uccon to turn off Unicode block transitions inside regions of text, but this may not always work, or may have interesting interaction side-effects.
 
+	\pagebreak
 	\section{Commands}
 
 		\subsection{\textbackslash setTransitionTo[2]}
@@ -235,11 +237,10 @@
 				\item The code you want used when exiting any Unicode block
 			\end{numberlist}
 
+	\pagebreak
 	\section{Code}
 
 		The code relies on running through individual definition blocks for each Unicode blocks, conditioned to whether ucharclasses is loaded with package options or not:
-
-		\pagebreak
 
 		\disableTransitionRules
 		\begin{verbatim}
@@ -367,13 +368,14 @@
 		\end{verbatim}
 		\enableTransitionRules
 
+	\pagebreak
 	\section{Package options and Unicode blocks}
 
 		The following Unicode blocks are available for use in transition rules (corresponding to Unicode version 10.0), as well as for use as package options when you want ucharclasses to only load those classes that you know are used in your document.
 
 		Starting with XeTeX version 0.99994, the number of \textbackslash XeTeXcharclass registers was extended from 256 to 4096; some not so important blocks are thus provided only for this and newer versions; in the list below, those blocks are put into parentheses.
 
-		\begin{multicols}{2}
+		\begin{multicols*}{2}
 			\begin{itemlist}
 				\item (Adlam)
 				\item AegeanNumbers
@@ -650,33 +652,35 @@
 				\item YijingHexagramSymbols
 				\item (ZanabazarSquare)
 			\end{itemlist}
-		\end{multicols}
+		\end{multicols*}
 
 		In addition, the informal blocks for use as package option are:
 
-		\begin{itemlist}
-			\item Arabics
-			\item CanadianSyllabics
-			\item CherokeeFull
-			\item Chinese
-			\item CJK
-			\item Cyrillics
-			\item Diacritics
-			\item EthiopicFull
-			\item GeorgianFull
-			\item Greek
-			\item Korean
-			\item Japanese
-			\item Latin
-			\item Mathematics
-			\item MongolianFull
-			\item MyanmarFull
-			\item Phonetics
-			\item Punctuation
-			\item SundaneseFull
-			\item Symbols
-			\item SyriacFull
-			\item Yi
-		\end{itemlist}
+		\begin{multicols*}{2}
+			\begin{itemlist}
+				\item Arabics
+				\item CanadianSyllabics
+				\item CherokeeFull
+				\item Chinese
+				\item CJK
+				\item Cyrillics
+				\item Diacritics
+				\item EthiopicFull
+				\item GeorgianFull
+				\item Greek
+				\item Korean
+				\item Japanese
+				\item Latin
+				\item Mathematics
+				\item MongolianFull
+				\item MyanmarFull
+				\item Phonetics
+				\item Punctuation
+				\item SundaneseFull
+				\item Symbols
+				\item SyriacFull
+				\item Yi
+			\end{itemlist}
+		\end{multicols*}
 
 \end{document}
