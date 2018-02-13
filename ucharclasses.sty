@@ -110,7 +110,11 @@
   \do{CyrillicExtendedB}{"0A640}{"0A69F}
   \do{CyrillicSupplement}{"0500}{"052F}
   \do{Deseret}{"010400}{"01044F}
-  \do{Devanagari}{"0900}{"097F}
+  \do{DevanagariPreMarks}{"0900}{"0950}
+  \do{DevanagariMarks}{"0951}{"0954}
+  \do{DevanagariPostMarks}{"0955}{"0963}
+  \do{DevanagariDanDa}{"0964}{"0965}
+  \do{DevanagariPostDanDa}{"0966}{"097F}
   \do{Dingbats}{"02700}{"027BF}
   \do{DominoTiles}{"01F030}{"01F09F}
   \do{EnclosedAlphanumerics}{"02460}{"024FF}
@@ -389,6 +393,7 @@
   \doclass{Chinese}
   \doclass{CJK}
   \doclass{Cyrillics}
+  \doclass{Devanagari}  
   \doclass{Diacritics}
   \doclass{EthiopicFull}
   \doclass{GeorgianFull}
@@ -403,6 +408,7 @@
   \doclass{Punctuation}
   \doclass{SundaneseFull}
   \doclass{Symbols}
+  \doclass{VedicMarks}  
   \doclass{SyriacFull}
   \doclass{Yi}
   \doclass{Other}
@@ -494,6 +500,13 @@
   \do{CyrillicSupplement}
   \do{GlagoliticSupplement}
   \do{Glagolitic}
+}
+
+\def\DevanagariClasses{
+  \do{DevanagariPreMarks}
+  \do{DevanagariPostMarks}
+  \do{DevanagariDanDa}
+  \do{DevanagariPostDanDa}
 }
 
 \def\DiacriticsClasses{
@@ -623,6 +636,12 @@
   \do{SyriacSupplement}
 }
 
+\def\VedicMarksClasses{
+  \do{DevanagariMarks}
+  \do{DevanagariExtended}
+  \do{VedicExtensions}
+}
+
 \def\YiClasses{
   \do{YiRadicals}
   \do{YiSyllables}
@@ -659,7 +678,6 @@
   \do{CuneiformNumbersAndPunctuation}
   \do{CypriotSyllabary}
   \do{Deseret}
-  \do{Devanagari}
   \do{DominoTiles}
 %     Duployan (see below)
   \do{EarlyDynasticCuneiform}
@@ -769,7 +787,6 @@
   \do{Tirhuta}
   \do{Ugaritic}
   \do{Vai}
-  \do{VedicExtensions}
   \do{VerticalForms}
   \do{WarangCiti}
   \do{YijingHexagramSymbols}
