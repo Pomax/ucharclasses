@@ -13,6 +13,7 @@
 %   v1.0: Mike "Pomax" Kamermans
 %
 %  Significant updates:
+%   v2.4: Unicode 11 support
 %   v2.3: Unicode 10 support
 %   v2.2: Unicode 8.0 and LaTeX2e support
 %   v2.1: Uplift for the intercharclass updates introduced in XeTeX 0.99994
@@ -23,7 +24,7 @@
 %
 % ----------------------------------------------------------------------------
 
-\ProvidesPackage{ucharclasses}[2017/08/10 v2.3.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2019/08/20 v2.4.0 Unicode block character classes for XeLaTeX]
 
 \newif\if@ucharclassverbose
 \DeclareOption{verbose}{\@ucharclassverbosetrue}
@@ -110,11 +111,11 @@
   \do{CyrillicExtendedB}{"0A640}{"0A69F}
   \do{CyrillicSupplement}{"0500}{"052F}
   \do{Deseret}{"010400}{"01044F}
-  \do{DevanagariPreMarks}{"0900}{"0950}
-  \do{DevanagariMarks}{"0951}{"0954}
-  \do{DevanagariPostMarks}{"0955}{"0963}
   \do{DevanagariDanDa}{"0964}{"0965}
+  \do{DevanagariMarks}{"0951}{"0954}
   \do{DevanagariPostDanDa}{"0966}{"097F}
+  \do{DevanagariPostMarks}{"0955}{"0963}
+  \do{DevanagariPreMarks}{"0900}{"0950}
   \do{Dingbats}{"02700}{"027BF}
   \do{DominoTiles}{"01F030}{"01F09F}
   \do{EnclosedAlphanumerics}{"02460}{"024FF}
@@ -320,7 +321,7 @@
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
   \do{EarlyDynasticCuneiform}{"012480}{"01254F}
   \do{Hatran}{"0108E0}{"0108FF}
-  \do{Multani}{"011280}{"0112AF}
+%     Multani (see below)
   \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
 %     SuttonSignWriting (see below)
@@ -333,6 +334,8 @@
   \do{CJKUnifiedIdeographsExtensionF}{"02CEB0}{"02EBEF}
   \do{KanaExtendedA}{"01B100}{"01B12F}
   \do{SyriacSupplement}{"0860}{"086F}
+% Unicode 11.0 additions needed for classes
+  \do{GeorgianExtended}{"01C90}{"01CBF}
 %
   \ifdefined\XeTeXinterwordspaceshaping
     \do{AnatolianHieroglyphs}{"014400}{"01467F}
@@ -346,6 +349,8 @@
     \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
     \do{SupplementaryPrivateUseAreaB}{"0100000}{"010FFFF}
+%   Unicode 8.0 additions
+    \do{Multani}{"011280}{"0112AF}
     \do{SuttonSignWriting}{"01D800}{"01DAAF}
 %   Unicode 9.0 additions
     \do{Adlam}{"01E900}{"01E95F}
@@ -360,6 +365,17 @@
     \do{Nushu}{"01B170}{"01B2FF}
     \do{Soyombo}{"011A50}{"011AAF}
     \do{ZanabazarSquare}{"011A00}{"011A4F}
+%   Unicode 11.0 additions
+    \do{ChessSymbols}{"01FA00}{"01FA6F}
+    \do{Dogra}{"011800}{"01184F}
+    \do{GunjalaGondi}{"011D60}{"011DAF}
+    \do{HanifiRohingya}{"010D00}{"010D3F}
+    \do{IndicSiyaqNumbers}{"01EC70}{"01ECBF}
+    \do{Makasar}{"011EE0}{"011EFF}
+    \do{MayanNumerals}{"01D2E0}{"01D2FF}
+    \do{Medefaidrin}{"016E40}{"016E9F}
+    \do{OldSogdian}{"010F00}{"010F2F}
+    \do{Sogdian}{"010F30}{"010F6F}
   \fi
 }
 
@@ -393,13 +409,13 @@
   \doclass{Chinese}
   \doclass{CJK}
   \doclass{Cyrillics}
-  \doclass{Devanagari}  
+  \doclass{Devanagari}
   \doclass{Diacritics}
   \doclass{EthiopicFull}
   \doclass{GeorgianFull}
   \doclass{Greek}
-  \doclass{Korean}
   \doclass{Japanese}
+  \doclass{Korean}
   \doclass{Latin}
   \doclass{Mathematics}
   \doclass{MongolianFull}
@@ -408,8 +424,8 @@
   \doclass{Punctuation}
   \doclass{SundaneseFull}
   \doclass{Symbols}
-  \doclass{VedicMarks}  
   \doclass{SyriacFull}
+  \doclass{VedicMarks}
   \doclass{Yi}
   \doclass{Other}
 }
@@ -503,10 +519,10 @@
 }
 
 \def\DevanagariClasses{
-  \do{DevanagariPreMarks}
-  \do{DevanagariPostMarks}
   \do{DevanagariDanDa}
   \do{DevanagariPostDanDa}
+  \do{DevanagariPostMarks}
+  \do{DevanagariPreMarks}
 }
 
 \def\DiacriticsClasses{
@@ -528,6 +544,7 @@
 
 \def\GeorgianFullClasses{
   \do{Georgian}
+  \do{GeorgianExtended}
   \do{GeorgianSupplement}
 }
 
@@ -637,8 +654,8 @@
 }
 
 \def\VedicMarksClasses{
-  \do{DevanagariMarks}
   \do{DevanagariExtended}
+  \do{DevanagariMarks}
   \do{VedicExtensions}
 }
 
@@ -726,7 +743,6 @@
   \do{Miao}
   \do{Modi}
   \do{Mro}
-  \do{Multani}
   \do{MusicalSymbols}
   \do{Nabataean}
   \do{NewTaiLue}
@@ -796,18 +812,30 @@
     \do{AnatolianHieroglyphs}
     \do{Bhaiksuki}
     \do{Carian}
+    \do{ChessSymbols}
+    \do{Dogra}
     \do{Duployan}
+    \do{GeorgianExtended}
+    \do{GunjalaGondi}
+    \do{HanifiRohingya}
+    \do{IndicSiyaqNumbers}
+    \do{Makasar}
     \do{Marchen}
     \do{MasaramGondi}
+    \do{MayanNumerals}
+    \do{Medefaidrin}
+    \do{Multani}
     \do{Newa}
     \do{Nushu}
     \do{OldItalic}
     \do{OldNorthArabian}
+    \do{OldSogdian}
     \do{OldSouthArabian}
     \do{OldTurkic}
     \do{Osage}
     \do{PhaistosDisc}
     \do{ShorthandFormatControls}
+    \do{Sogdian}
     \do{Soyombo}
     \do{SupplementaryPrivateUseAreaA}
     \do{SupplementaryPrivateUseAreaB}
@@ -998,6 +1026,7 @@
 %   - Chinese (including bopomofo)
 %   - CJK (Chinese/Japanese/Korean)
 %   - Cyrillics
+%   - Devanagari
 %   - Diacritics
 %   - EthiopicFull
 %   - GeorgianFull
@@ -1014,6 +1043,7 @@
 %   - SundaneseFull
 %   - Symbols
 %   - SyriacFull
+%   - VedicMarks
 %   - Yi
 %   - Other (I am not a fan of lump groups. I hope to un-lump most of it)
 %
