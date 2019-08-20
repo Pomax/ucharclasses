@@ -13,7 +13,7 @@
 %   v1.0: Mike "Pomax" Kamermans
 %
 %  Significant updates:
-%   v2.4: Unicode 11 support
+%   v2.4: Unicode 12 support
 %   v2.3: Unicode 10 support
 %   v2.2: Unicode 8.0 and LaTeX2e support
 %   v2.1: Uplift for the intercharclass updates introduced in XeTeX 0.99994
@@ -319,8 +319,8 @@
 %     AnatolianHieroglyphs (see below)
   \do{CherokeeSupplement}{"0AB70}{"0ABBF}
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
-  \do{EarlyDynasticCuneiform}{"012480}{"01254F}
-  \do{Hatran}{"0108E0}{"0108FF}
+%     EarlyDynasticCuneiform (see below)
+%     Hatran (see below)
 %     Multani (see below)
   \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
@@ -336,6 +336,9 @@
   \do{SyriacSupplement}{"0860}{"086F}
 % Unicode 11.0 additions needed for classes
   \do{GeorgianExtended}{"01C90}{"01CBF}
+% Unicode 12.0 additions needed for classes
+  \do{SmallKanaExtension}{"01B130}{"01B16F}
+  \do{SymbolsAndPictographsExtendedA}{"01FA70}{"01FAFF}
 %
   \ifdefined\XeTeXinterwordspaceshaping
     \do{AnatolianHieroglyphs}{"014400}{"01467F}
@@ -350,6 +353,8 @@
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
     \do{SupplementaryPrivateUseAreaB}{"0100000}{"010FFFF}
 %   Unicode 8.0 additions
+    \do{EarlyDynasticCuneiform}{"012480}{"01254F}
+    \do{Hatran}{"0108E0}{"0108FF}
     \do{Multani}{"011280}{"0112AF}
     \do{SuttonSignWriting}{"01D800}{"01DAAF}
 %   Unicode 9.0 additions
@@ -376,6 +381,14 @@
     \do{Medefaidrin}{"016E40}{"016E9F}
     \do{OldSogdian}{"010F00}{"010F2F}
     \do{Sogdian}{"010F30}{"010F6F}
+%   Unicode 12.0 additions
+    \do{EgyptianHieroglyphFormatControls}{"013430}{"01343F}
+    \do{Elymaic}{"010FE0}{"010FFF}
+    \do{Nandinagari}{"0119A0}{"0119FF}
+    \do{NyiakengPuachueHmong}{"01E100}{"01E14F}
+    \do{OttomanSiyaqNumbers}{"01ED00}{"01ED4F}
+    \do{TamilSupplement}{"011FC0}{"011FFF}
+    \do{Wancho}{"01E2C0}{"01E2FF}
   \fi
 }
 
@@ -506,6 +519,7 @@
   \do{KangxiRadicals}
   \do{Katakana}
   \do{KatakanaPhoneticExtensions}
+  \do{SmallKanaExtension}
 }
 
 \def\CyrillicsClasses{
@@ -645,6 +659,7 @@
   \do{SupplementalArrowsB}
   \do{SupplementalArrowsC}
   \do{SupplementalSymbolsAndPictographs}
+  \do{SymbolsAndPictographsExtendedA}
   \do{TransportAndMapSymbols}
 }
 
