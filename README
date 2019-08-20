@@ -58,11 +58,12 @@ So what is it?
 Unicode Compatibility
 ---------------------
 
- Current compatibility is Unicode 8.0
+ Current compatibility is Unicode 12.0
 
 Changelog
 ---------
 
+ v2.3: Unicode 11 + 12.0 support
  v2.3: Unicode 10 support
  v2.2: Unicode 8.0 and LaTeX2e support
  v2.1: Uplift for the updates introduced in XeTeX 0.99994
@@ -72,6 +73,7 @@ Changelog
 Contributors
 ------------
 
+ v2.4: Werner Lemberg
  v2.1-2.3: Qing Lee, Werner Lemberg
  v2.0: Enrico Gregorio
  v1.0: Mike "Pomax" Kamermans
