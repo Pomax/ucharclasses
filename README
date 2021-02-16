@@ -8,7 +8,7 @@
 
               ucharclasses package for XeLaTex
               --------------------------------
-              Michiel Kamermans, October 2011
+              Michiel Kamermans, February 2021
 
 The brief
 ---------
@@ -63,7 +63,7 @@ Unicode Compatibility
 Changelog
 ---------
 
- v2.4: Unicode 11 + 12.0 support
+ v2.4: Unicode 11, 12, and 13 support
  v2.3: Unicode 10 support
  v2.2: Unicode 8.0 and LaTeX2e support
  v2.1: Uplift for the updates introduced in XeTeX 0.99994
