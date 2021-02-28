@@ -13,7 +13,7 @@
 %   v1.0: Mike "Pomax" Kamermans
 %
 %  Significant updates:
-%   v2.4: Unicode 12 support
+%   v2.4: Unicode 13 support
 %   v2.3: Unicode 10 support
 %   v2.2: Unicode 8.0 and LaTeX2e support
 %   v2.1: Uplift for the intercharclass updates introduced in XeTeX 0.99994
@@ -24,7 +24,7 @@
 %
 % ----------------------------------------------------------------------------
 
-\ProvidesPackage{ucharclasses}[2019/08/20 v2.4.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2021/02/16 v2.4.0 Unicode block character classes for XeLaTeX]
 
 \newif\if@ucharclassverbose
 \DeclareOption{verbose}{\@ucharclassverbosetrue}
@@ -315,7 +315,7 @@
   \do{Tirhuta}{"011480}{"0114DF}
   \do{WarangCiti}{"0118A0}{"0118FF}
 % Unicode 8.0 additions
-  \do{Ahom}{"011700}{"01173F}
+%     Ahom (see below)
 %     AnatolianHieroglyphs (see below)
   \do{CherokeeSupplement}{"0AB70}{"0ABBF}
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
@@ -339,20 +339,26 @@
 % Unicode 12.0 additions needed for classes
   \do{SmallKanaExtension}{"01B130}{"01B16F}
   \do{SymbolsAndPictographsExtendedA}{"01FA70}{"01FAFF}
+% Unicode 13.0 additions needed for classes
+  \do{CJKUnifiedIdeographsExtensionG}{"030000}{"03134F}
 %
   \ifdefined\XeTeXinterwordspaceshaping
-    \do{AnatolianHieroglyphs}{"014400}{"01467F}
+%   Unicode 5.1 block definitions
     \do{Carian}{"0102A0}{"0102DF}
-    \do{Duployan}{"01BC00}{"01BC9F}
     \do{OldItalic}{"010300}{"01032F}
-    \do{OldNorthArabian}{"010A80}{"010A9F}
-    \do{OldSouthArabian}{"010A60}{"010A7F}
-    \do{OldTurkic}{"010C00}{"010C4F}
     \do{PhaistosDisc}{"0101D0}{"0101FF}
-    \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
     \do{SupplementaryPrivateUseAreaB}{"0100000}{"010FFFF}
+%   Unicode 5.2 additions
+    \do{OldSouthArabian}{"010A60}{"010A7F}
+    \do{OldTurkic}{"010C00}{"010C4F}
+%   Unicode 7.0 additions
+    \do{Duployan}{"01BC00}{"01BC9F}
+    \do{OldNorthArabian}{"010A80}{"010A9F}
+    \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
 %   Unicode 8.0 additions
+    \do{Ahom}{"011700}{"01173F}
+    \do{AnatolianHieroglyphs}{"014400}{"01467F}
     \do{EarlyDynasticCuneiform}{"012480}{"01254F}
     \do{Hatran}{"0108E0}{"0108FF}
     \do{Multani}{"011280}{"0112AF}
@@ -389,6 +395,14 @@
     \do{OttomanSiyaqNumbers}{"01ED00}{"01ED4F}
     \do{TamilSupplement}{"011FC0}{"011FFF}
     \do{Wancho}{"01E2C0}{"01E2FF}
+%   Unicode 13.0 additions
+    \do{Chorasmian}{"010FB0}{"010FDF}
+    \do{DivesAkuru}{"011900}{"01195F}
+    \do{KhitanSmallScript}{"018B00}{"018CFF}
+    \do{LisuSupplement}{"011FB0}{"011FBF}
+    \do{SymbolsForLegacyComputing}{"01FB00}{"01FBFF}
+    \do{TangutSupplement}{"018D00}{"018D8F}
+    \do{Yezidi}{"010E80}{"010EBF}
   \fi
 }
 
@@ -478,6 +492,7 @@
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
   \do{CJKUnifiedIdeographsExtensionF}
+  \do{CJKUnifiedIdeographsExtensionG}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{IdeographicDescriptionCharacters}
@@ -502,6 +517,7 @@
   \do{CJKUnifiedIdeographsExtensionD}
   \do{CJKUnifiedIdeographsExtensionE}
   \do{CJKUnifiedIdeographsExtensionF}
+  \do{CJKUnifiedIdeographsExtensionG}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{HalfwidthAndFullwidthForms}
@@ -612,7 +628,7 @@
 
 \def\MongolianFullClasses{
   \do{Mongolian}
-    \do{MongolianSupplement}
+  \do{MongolianSupplement}
 }
 
 \def\MyanmarFullClasses{
@@ -681,7 +697,7 @@
 
 \def\OtherClasses{
   \do{AegeanNumbers}
-  \do{Ahom}
+%     Ahom (see below)
 %     AnatolianHieroglyphs (see below)
   \do{AncientGreekMusicalNotation}
   \do{AncientGreekNumbers}
@@ -824,30 +840,40 @@
 %
   \ifdefined\XeTeXinterwordspaceshaping
     \do{Adlam}
+    \do{Ahom}
     \do{AnatolianHieroglyphs}
     \do{Bhaiksuki}
     \do{Carian}
     \do{ChessSymbols}
+    \do{Chorasmian}
+    \do{DivesAkuru}
     \do{Dogra}
     \do{Duployan}
+    \do{EgyptianHieroglyphFormatControls}
+    \do{Elymaic}
     \do{GeorgianExtended}
     \do{GunjalaGondi}
     \do{HanifiRohingya}
     \do{IndicSiyaqNumbers}
+    \do{LisuSupplement}
+    \do{KhitanSmallScript}
     \do{Makasar}
     \do{Marchen}
     \do{MasaramGondi}
     \do{MayanNumerals}
     \do{Medefaidrin}
     \do{Multani}
+    \do{Nandinagari}
     \do{Newa}
     \do{Nushu}
+    \do{NyiakengPuachueHmong}
     \do{OldItalic}
     \do{OldNorthArabian}
     \do{OldSogdian}
     \do{OldSouthArabian}
     \do{OldTurkic}
     \do{Osage}
+    \do{OttomanSiyaqNumbers}
     \do{PhaistosDisc}
     \do{ShorthandFormatControls}
     \do{Sogdian}
@@ -855,8 +881,13 @@
     \do{SupplementaryPrivateUseAreaA}
     \do{SupplementaryPrivateUseAreaB}
     \do{SuttonSignWriting}
+    \do{SymbolsForLegacyComputing}
+    \do{TamilSupplement}
     \do{Tangut}
     \do{TangutComponents}
+    \do{TangutSupplement}
+    \do{Wancho}
+    \do{Yezidi}
     \do{ZanabazarSquare}
   \fi
 }
