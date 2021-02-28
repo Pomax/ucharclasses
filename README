@@ -6,9 +6,9 @@
 ===========================================================
 
 
-              ucharclasses package for XeLaTex
-              --------------------------------
-              Michiel Kamermans, February 2021
+            ucharclasses package for XeLaTex
+         --------------------------------------
+         Michiel Kamermans, v2.4, February 2021
 
 The brief
 ---------
@@ -58,7 +58,7 @@ So what is it?
 Unicode Compatibility
 ---------------------
 
- Current compatibility is Unicode 12.0
+ Current compatibility is Unicode 13.0
 
 Changelog
 ---------
