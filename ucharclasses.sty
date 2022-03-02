@@ -8,12 +8,13 @@
 %  Current compatibility should be Unicode 13.0
 %
 %  Credits:
-%   v2.4: Werner Lemberg
+%   v2.4-2.5: Werner Lemberg
 %   v2.1-2.3: Qing Lee, Werner Lemberg
 %   v2.0: Enrico Gregorio
 %   v1.0: Mike "Pomax" Kamermans
 %
 %  Significant updates:
+%   v2.5: Unicode 14 support
 %   v2.4: Unicode 13 support
 %   v2.3: Unicode 10 support
 %   v2.2: Unicode 8.0 and LaTeX2e support
@@ -25,7 +26,7 @@
 %
 % ----------------------------------------------------------------------------
 
-\ProvidesPackage{ucharclasses}[2021/02/16 v2.4.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2022/03/01 v2.5.0 Unicode block character classes for XeLaTeX]
 
 \newif\if@ucharclassverbose
 \DeclareOption{verbose}{\@ucharclassverbosetrue}
@@ -296,36 +297,29 @@
   \do{LatinExtendedE}{"0AB30}{"0AB6F}
   \do{LinearA}{"010600}{"01077F}
   \do{Mahajani}{"011150}{"01117F}
-  \do{Manichaean}{"010AC0}{"010AFF}
+%     Manichaean (see below)
   \do{MendeKikakui}{"01E800}{"01E8DF}
   \do{Modi}{"011600}{"01165F}
   \do{Mro}{"016A40}{"016A6F}
   \do{MyanmarExtendedB}{"0A9E0}{"0A9FF}
-  \do{Nabataean}{"010880}{"0108AF}
+%     Nabataean (see below)
 %     OldNorthArabian (see below)
-  \do{OldPermic}{"010350}{"01037F}
+%     OldPermic (see below)
   \do{OrnamentalDingbats}{"01F650}{"01F67F}
   \do{PahawhHmong}{"016B00}{"016B8F}
-  \do{Palmyrene}{"010860}{"01087F}
+%     Palmyrene (see below)
   \do{PauCinHau}{"011AC0}{"011AFF}
-  \do{PsalterPahlavi}{"010B80}{"010BAF}
+%     PsalterPahlavi (see below)
 %     ShorthandFormatControls (see below)
   \do{Siddham}{"011580}{"0115FF}
   \do{SinhalaArchaicNumbers}{"0111E0}{"0111FF}
   \do{SupplementalArrowsC}{"01F800}{"01F8FF}
   \do{Tirhuta}{"011480}{"0114DF}
   \do{WarangCiti}{"0118A0}{"0118FF}
-% Unicode 8.0 additions
-%     Ahom (see below)
-%     AnatolianHieroglyphs (see below)
+% Unicode 8.0 additions needed for classes
   \do{CherokeeSupplement}{"0AB70}{"0ABBF}
   \do{CJKUnifiedIdeographsExtensionE}{"02B820}{"02CEAF}
-%     EarlyDynasticCuneiform (see below)
-%     Hatran (see below)
-%     Multani (see below)
-  \do{OldHungarian}{"010C80}{"010CFF}
   \do{SupplementalSymbolsAndPictographs}{"01F900}{"01F9FF}
-%     SuttonSignWriting (see below)
 % Unicode 9.0 additions needed for classes
   \do{CyrillicExtendedC}{"01C80}{"01C8F}
   \do{GlagoliticSupplement}{"01E000}{"01E02F}
@@ -342,6 +336,13 @@
   \do{SymbolsAndPictographsExtendedA}{"01FA70}{"01FAFF}
 % Unicode 13.0 additions needed for classes
   \do{CJKUnifiedIdeographsExtensionG}{"030000}{"03134F}
+% Unicode 14.0 additions needed for classes
+  \do{ArabicExtendedB}{"0870}{"089F}
+  \do{EthiopicExtendedB}{"01E7E0}{"01E7FF}
+  \do{KanaExtendedB}{"01AFF0}{"01AFFF}
+  \do{LatinExtendedF}{"010780}{"0107BF}
+  \do{LatinExtendedG}{"01DF00}{"01DFFF}
+  \do{UnifiedCanadianAboriginalSyllabicsExtendedA}{"011AB0}{"011ABF}
 %
   \ifdefined\XeTeXinterwordspaceshaping
 %   Unicode 5.1 block definitions
@@ -355,14 +356,20 @@
     \do{OldTurkic}{"010C00}{"010C4F}
 %   Unicode 7.0 additions
     \do{Duployan}{"01BC00}{"01BC9F}
+    \do{Manichaean}{"010AC0}{"010AFF}
+    \do{Nabataean}{"010880}{"0108AF}
     \do{OldNorthArabian}{"010A80}{"010A9F}
+    \do{OldPermic}{"010350}{"01037F}
+    \do{Palmyrene}{"010860}{"01087F}
+    \do{PsalterPahlavi}{"010B80}{"010BAF}
     \do{ShorthandFormatControls}{"01BCA0}{"01BCAF}
 %   Unicode 8.0 additions
-    \do{Ahom}{"011700}{"01173F}
+    \do{Ahom}{"011700}{"01174F}
     \do{AnatolianHieroglyphs}{"014400}{"01467F}
     \do{EarlyDynasticCuneiform}{"012480}{"01254F}
     \do{Hatran}{"0108E0}{"0108FF}
     \do{Multani}{"011280}{"0112AF}
+    \do{OldHungarian}{"010C80}{"010CFF}
     \do{SuttonSignWriting}{"01D800}{"01DAAF}
 %   Unicode 9.0 additions
     \do{Adlam}{"01E900}{"01E95F}
@@ -402,8 +409,15 @@
     \do{KhitanSmallScript}{"018B00}{"018CFF}
     \do{LisuSupplement}{"011FB0}{"011FBF}
     \do{SymbolsForLegacyComputing}{"01FB00}{"01FBFF}
-    \do{TangutSupplement}{"018D00}{"018D8F}
+    \do{TangutSupplement}{"018D00}{"018D7F}
     \do{Yezidi}{"010E80}{"010EBF}
+%   Unicode 14.0 additions
+    \do{CyproMinoan}{"012F90}{"012FFF}
+    \do{OldUighur}{"010F70}{"010FAF}
+    \do{Tangsa}{"016A70}{"016ACF}
+    \do{Toto}{"01E290}{"01E2BF}
+    \do{Vithkuqi}{"010570}{"0105BF}
+    \do{ZnamennyMusicalNotation}{"01CF00}{"01CFCF}
   \fi
 }
 
@@ -461,6 +475,7 @@
 \def\ArabicsClasses{
   \do{Arabic}
   \do{ArabicExtendedA}
+  \do{ArabicExtendedB}
   \do{ArabicPresentationFormsA}
   \do{ArabicPresentationFormsB}
   \do{ArabicSupplement}
@@ -469,6 +484,7 @@
 \def\CanadianSyllabicsClasses{
   \do{UnifiedCanadianAboriginalSyllabics}
   \do{UnifiedCanadianAboriginalSyllabicsExtended}
+  \do{UnifiedCanadianAboriginalSyllabicsExtendedA}
 }
 
 \def\CherokeeFullClasses{
@@ -532,6 +548,7 @@
   \do{IdeographicSymbolsAndPunctuation}
   \do{KanaSupplement}
   \do{KanaExtendedA}
+  \do{KanaExtendedB}
   \do{Kanbun}
   \do{KangxiRadicals}
   \do{Katakana}
@@ -570,6 +587,7 @@
   \do{Ethiopic}
   \do{EthiopicExtended}
   \do{EthiopicExtendedA}
+  \do{EthiopicExtendedB}
   \do{EthiopicSupplement}
 }
 
@@ -615,6 +633,8 @@
   \do{LatinExtendedC}
   \do{LatinExtendedD}
   \do{LatinExtendedE}
+  \do{LatinExtendedF}
+  \do{LatinExtendedG}
   \do{LatinSupplement}
 }
 
@@ -766,7 +786,7 @@
   \do{MahjongTiles}
   \do{Malayalam}
   \do{Mandaic}
-  \do{Manichaean}
+%     Manichaean (see below)
   \do{MeeteiMayek}
   \do{MeeteiMayekExtensions}
   \do{MendeKikakui}
@@ -776,15 +796,15 @@
   \do{Modi}
   \do{Mro}
   \do{MusicalSymbols}
-  \do{Nabataean}
+%     Nabataean (see below)
   \do{NewTaiLue}
   \do{NKo}
   \do{Ogham}
   \do{OlChiki}
-  \do{OldHungarian}
+%     OldHungarian (see below)
 %     OldItalic (see below)
 %     OldNorthArabian (see below)
-  \do{OldPermic}
+%     OldPermic (see below)
   \do{OldPersian}
 %     OldSouthArabian (see below)
 %     OldTurkic (see below)
@@ -792,14 +812,14 @@
   \do{Oriya}
   \do{Osmanya}
   \do{PahawhHmong}
-  \do{Palmyrene}
+%     Palmyrene (see below)
   \do{PauCinHau}
   \do{PhagsPa}
 %     PhaistosDisc (see below)
   \do{Phoenician}
   \do{PlayingCards}
   \do{PrivateUseArea}
-  \do{PsalterPahlavi}
+%     PsalterPahlavi (see below)
   \do{Rejang}
   \do{RumiNumeralSymbols}
   \do{Runic}
@@ -847,6 +867,7 @@
     \do{Carian}
     \do{ChessSymbols}
     \do{Chorasmian}
+    \do{CyproMinoan}
     \do{DivesAkuru}
     \do{Dogra}
     \do{Duployan}
@@ -859,23 +880,30 @@
     \do{LisuSupplement}
     \do{KhitanSmallScript}
     \do{Makasar}
+    \do{Manichaean}
     \do{Marchen}
     \do{MasaramGondi}
     \do{MayanNumerals}
     \do{Medefaidrin}
     \do{Multani}
+    \do{Nabataean}
     \do{Nandinagari}
     \do{Newa}
     \do{Nushu}
     \do{NyiakengPuachueHmong}
+    \do{OldHungarian}
     \do{OldItalic}
     \do{OldNorthArabian}
+    \do{OldPermic}
     \do{OldSogdian}
     \do{OldSouthArabian}
     \do{OldTurkic}
+    \do{OldUighur}
     \do{Osage}
     \do{OttomanSiyaqNumbers}
+    \do{Palmyrene}
     \do{PhaistosDisc}
+    \do{PsalterPahlavi}
     \do{ShorthandFormatControls}
     \do{Sogdian}
     \do{Soyombo}
@@ -884,12 +912,16 @@
     \do{SuttonSignWriting}
     \do{SymbolsForLegacyComputing}
     \do{TamilSupplement}
+    \do{Tangsa}
     \do{Tangut}
     \do{TangutComponents}
     \do{TangutSupplement}
+    \do{Toto}
+    \do{Vithkuqi}
     \do{Wancho}
     \do{Yezidi}
     \do{ZanabazarSquare}
+    \do{ZnamennyMusicalNotation}
   \fi
 }
 
