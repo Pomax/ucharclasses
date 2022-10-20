@@ -41,9 +41,9 @@
 % Starting with XeTeX version 3.14159265-2.6-0.99994, the number of
 % \XeTeXcharclass registers was extended from 256 to 4096 entries; some not
 % so important blocks are thus provided only for this and newer versions.
-% The boundary of character class was changed from 255 to 4095 correspondingly.
-% The primitive \XeTeXinterwordspaceshaping was introduced by XeTeX 0.99994;
-% we use it as a flag to identify this version.
+% The boundary of character classes was changed from 255 to 4095
+% correspondingly.  The primitive \XeTeXinterwordspaceshaping was introduced
+% by XeTeX 0.99994; we use it as a flag to identify this version.
 %
 % However, earlier version of LaTeX2e (before 2016/04/22 v2.0q) didn't provide
 % support for 4096 entries; we thus have to override the hard-coded limit.
@@ -422,8 +422,8 @@
 }
 
 % ----------------------------------------------------------------------------
-%  Option handling lets the user turn off "load all" and selectively enable only those blocks
-%  they are interested in
+%  Option handling lets the user turn off "load all" and selectively enable
+%  only those blocks they are interested in
 % ----------------------------------------------------------------------------
 
 % Each option starts with \overrideClassLoading; so any specified
@@ -716,6 +716,9 @@
   \do{YiSyllables}
 }
 
+% While adding scripts defined in more recent Unicode versions it was
+% necessary to move some scripts into the block for XeTeX 0.99994 and newer;
+% those are tagged with a 'see below' comment.
 \def\OtherClasses{
   \do{AegeanNumbers}
 %     Ahom (see below)
@@ -1147,7 +1150,8 @@
 
 % ----------------------------------------------------------------------------
 %
-% based on the previous informal groups, we can define a catch-all transition command
+% based on the previous informal groups, we can define a catch-all transition
+% command
 %
 % ----------------------------------------------------------------------------
 
