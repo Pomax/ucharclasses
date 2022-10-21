@@ -5,15 +5,17 @@
 %  automatically when a transition from a character from one unicode block to a
 %  character from another unicode block is encountered by XeTeX
 %
-%  Current compatibility should be Unicode 13.0
+%  Current compatibility should be Unicode 15.0
 %
 %  Credits:
-%   v2.4-2.5: Werner Lemberg
+%   v2.5-2.6: Werner Lemberg
+%   v2.4: Werner Lemberg, Shreeshrii
 %   v2.1-2.3: Qing Lee, Werner Lemberg
 %   v2.0: Enrico Gregorio
 %   v1.0: Mike "Pomax" Kamermans
 %
 %  Significant updates:
+%   v2.6: Unicode 15 support
 %   v2.5: Unicode 14 support
 %   v2.4: Unicode 13 support
 %   v2.3: Unicode 10 support
@@ -26,7 +28,7 @@
 %
 % ----------------------------------------------------------------------------
 
-\ProvidesPackage{ucharclasses}[2022/03/01 v2.5.0 Unicode block character classes for XeLaTeX]
+\ProvidesPackage{ucharclasses}[2022/10/20 v2.6.0 Unicode block character classes for XeLaTeX]
 
 \newif\if@ucharclassverbose
 \DeclareOption{verbose}{\@ucharclassverbosetrue}
@@ -41,9 +43,9 @@
 % Starting with XeTeX version 3.14159265-2.6-0.99994, the number of
 % \XeTeXcharclass registers was extended from 256 to 4096 entries; some not
 % so important blocks are thus provided only for this and newer versions.
-% The boundary of character class was changed from 255 to 4095 correspondingly.
-% The primitive \XeTeXinterwordspaceshaping was introduced by XeTeX 0.99994;
-% we use it as a flag to identify this version.
+% The boundary of character classes was changed from 255 to 4095
+% correspondingly.  The primitive \XeTeXinterwordspaceshaping was introduced
+% by XeTeX 0.99994; we use it as a flag to identify this version.
 %
 % However, earlier version of LaTeX2e (before 2016/04/22 v2.0q) didn't provide
 % support for 4096 entries; we thus have to override the hard-coded limit.
@@ -130,7 +132,7 @@
   \do{Georgian}{"010A0}{"010FF}
   \do{GeorgianSupplement}{"02D00}{"02D2F}
   \do{Glagolitic}{"02C00}{"02C5F}
-  \do{Gothic}{"010330}{"01034F}
+%     Gothic (see below)
   \do{GreekAndCoptic}{"0370}{"03FF}
   \do{GreekExtended}{"01F00}{"01FFF}
   \do{Gujarati}{"0A80}{"0AFF}
@@ -150,7 +152,7 @@
   \do{Katakana}{"030A0}{"030FF}
   \do{KatakanaPhoneticExtensions}{"031F0}{"031FF}
   \do{KayahLi}{"0A900}{"0A92F}
-  \do{Kharoshthi}{"010A00}{"010A5F}
+%     Kharoshthi (see below)
   \do{Khmer}{"01780}{"017FF}
   \do{KhmerSymbols}{"019E0}{"019FF}
   \do{Lao}{"0E80}{"0EFF}
@@ -165,8 +167,8 @@
   \do{Limbu}{"01900}{"0194F}
   \do{LinearBIdeograms}{"010080}{"0100FF}
   \do{LinearBSyllabary}{"010000}{"01007F}
-  \do{Lycian}{"010280}{"01029F}
-  \do{Lydian}{"010920}{"01093F}
+%     Lycian (see below)
+%     Lydian (see below)
   \do{MahjongTiles}{"01F000}{"01F02F}
   \do{Malayalam}{"0D00}{"0D7F}
   \do{MathematicalAlphanumericSymbols}{"01D400}{"01D7FF}
@@ -343,10 +345,19 @@
   \do{LatinExtendedF}{"010780}{"0107BF}
   \do{LatinExtendedG}{"01DF00}{"01DFFF}
   \do{UnifiedCanadianAboriginalSyllabicsExtendedA}{"011AB0}{"011ABF}
+% Unicode 15.0 additions needed for classes
+  \do{ArabicExtendedC}{"010EC0}{"010EFF}
+  \do{CJKUnifiedIdeographsExtensionH}{"031350}{"0323AF}
+  \do{CyrillicExtendedD}{"01E030}{"01E08F}
+  \do{DevanagariExtendedA}{"011B00}{"011B5F}
 %
   \ifdefined\XeTeXinterwordspaceshaping
 %   Unicode 5.1 block definitions
     \do{Carian}{"0102A0}{"0102DF}
+    \do{Gothic}{"010330}{"01034F}
+    \do{Kharoshthi}{"010A00}{"010A5F}
+    \do{Lycian}{"010280}{"01029F}
+    \do{Lydian}{"010920}{"01093F}
     \do{OldItalic}{"010300}{"01032F}
     \do{PhaistosDisc}{"0101D0}{"0101FF}
     \do{SupplementaryPrivateUseAreaA}{"0F0000}{"0FFFFF}
@@ -396,7 +407,8 @@
     \do{OldSogdian}{"010F00}{"010F2F}
     \do{Sogdian}{"010F30}{"010F6F}
 %   Unicode 12.0 additions
-    \do{EgyptianHieroglyphFormatControls}{"013430}{"01343F}
+    % The range was extended in Unicode 15.0
+    \do{EgyptianHieroglyphFormatControls}{"013430}{"01345F}
     \do{Elymaic}{"010FE0}{"010FFF}
     \do{Nandinagari}{"0119A0}{"0119FF}
     \do{NyiakengPuachueHmong}{"01E100}{"01E14F}
@@ -418,12 +430,16 @@
     \do{Toto}{"01E290}{"01E2BF}
     \do{Vithkuqi}{"010570}{"0105BF}
     \do{ZnamennyMusicalNotation}{"01CF00}{"01CFCF}
+%   Unicode 15.0 additions
+    \do{KaktovikNumerals}{"01D2C0}{"01D2DF}
+    \do{Kawi}{"011F00}{"011F5F}
+    \do{NagMundari}{"01E4D0}{"01E4FF}
   \fi
 }
 
 % ----------------------------------------------------------------------------
-%  Option handling lets the user turn off "load all" and selectively enable only those blocks
-%  they are interested in
+%  Option handling lets the user turn off "load all" and selectively enable
+%  only those blocks they are interested in
 % ----------------------------------------------------------------------------
 
 % Each option starts with \overrideClassLoading; so any specified
@@ -476,6 +492,7 @@
   \do{Arabic}
   \do{ArabicExtendedA}
   \do{ArabicExtendedB}
+  \do{ArabicExtendedC}
   \do{ArabicPresentationFormsA}
   \do{ArabicPresentationFormsB}
   \do{ArabicSupplement}
@@ -510,6 +527,7 @@
   \do{CJKUnifiedIdeographsExtensionE}
   \do{CJKUnifiedIdeographsExtensionF}
   \do{CJKUnifiedIdeographsExtensionG}
+  \do{CJKUnifiedIdeographsExtensionH}
   \do{EnclosedCJKLettersAndMonths}
   \do{EnclosedIdeographicSupplement}
   \do{IdeographicDescriptionCharacters}
@@ -561,6 +579,7 @@
   \do{CyrillicExtendedA}
   \do{CyrillicExtendedB}
   \do{CyrillicExtendedC}
+  \do{CyrillicExtendedD}
   \do{CyrillicSupplement}
   \do{GlagoliticSupplement}
   \do{Glagolitic}
@@ -571,6 +590,7 @@
   \do{DevanagariPostDanDa}
   \do{DevanagariPostMarks}
   \do{DevanagariPreMarks}
+  \do{DevanagariExtendedA}
 }
 
 \def\DiacriticsClasses{
@@ -716,6 +736,9 @@
   \do{YiSyllables}
 }
 
+% While adding scripts defined in more recent Unicode versions it was
+% necessary to move some scripts into the block for XeTeX 0.99994 and newer;
+% those are tagged with a 'see below' comment.
 \def\OtherClasses{
   \do{AegeanNumbers}
 %     Ahom (see below)
@@ -754,7 +777,7 @@
   \do{Elbasan}
   \do{EnclosedAlphanumerics}
   \do{EnclosedAlphanumericSupplement}
-  \do{Gothic}
+%     Gothic (see below)
   \do{Grantha}
   \do{Gujarati}
   \do{Gurmukhi}
@@ -768,7 +791,7 @@
   \do{Kaithi}
   \do{Kannada}
   \do{KayahLi}
-  \do{Kharoshthi}
+%     Kharoshthi (see below)
   \do{Khmer}
   \do{KhmerSymbols}
   \do{Khojki}
@@ -780,8 +803,8 @@
   \do{LinearBIdeograms}
   \do{LinearBSyllabary}
   \do{Lisu}
-  \do{Lycian}
-  \do{Lydian}
+%     Lycian (see below)
+%     Lydian (see below)
   \do{Mahajani}
   \do{MahjongTiles}
   \do{Malayalam}
@@ -874,11 +897,17 @@
     \do{EgyptianHieroglyphFormatControls}
     \do{Elymaic}
     \do{GeorgianExtended}
+    \do{Gothic}
     \do{GunjalaGondi}
     \do{HanifiRohingya}
     \do{IndicSiyaqNumbers}
+    \do{KaktovikNumerals}
+    \do{Kawi}
     \do{LisuSupplement}
+    \do{Kharoshthi}
     \do{KhitanSmallScript}
+    \do{Lycian}
+    \do{Lydian}
     \do{Makasar}
     \do{Manichaean}
     \do{Marchen}
@@ -887,6 +916,7 @@
     \do{Medefaidrin}
     \do{Multani}
     \do{Nabataean}
+    \do{NagMundari}
     \do{Nandinagari}
     \do{Newa}
     \do{Nushu}
@@ -1147,7 +1177,8 @@
 
 % ----------------------------------------------------------------------------
 %
-% based on the previous informal groups, we can define a catch-all transition command
+% based on the previous informal groups, we can define a catch-all transition
+% command
 %
 % ----------------------------------------------------------------------------
 

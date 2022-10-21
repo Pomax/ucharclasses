@@ -8,7 +8,7 @@
 
             ucharclasses package for XeLaTex
          --------------------------------------
-           Michiel Kamermans, v2.5, March 2022
+           Michiel Kamermans, v2.6, October 2022
 
 The brief
 ---------
@@ -58,11 +58,12 @@ So what is it?
 Unicode Compatibility
 ---------------------
 
- Current compatibility is Unicode 14.0
+ Current compatibility is Unicode 15.0
 
 Changelog
 ---------
 
+ v2.6: Unicode 15 support
  v2.5: Unicode 14 support
  v2.4: Unicode 11, 12, and 13 support
  v2.3: Unicode 10 support
@@ -74,7 +75,8 @@ Changelog
 Contributors
 ------------
 
- v2.4-2.5: Werner Lemberg
+ v2.5-2.6: Werner Lemberg
+ v2.4: Werner Lemberg, Shreeshrii
  v2.1-2.3: Qing Lee, Werner Lemberg
  v2.0: Enrico Gregorio
  v1.0: Mike "Pomax" Kamermans
